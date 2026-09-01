@@ -1,0 +1,31 @@
+rules_version = '2';
+
+// The photo bytes. Metadata lives in Firestore; see firestore.rules.
+//
+// The uid prefix in the path is what makes "delete only your own" real: a device
+// can only write into photos/<its own uid>/, and can only delete from there.
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    match /photos/{uid}/{file} {
+
+      // Anyone opening the app can see the album.
+      allow read: if true;
+
+      allow write: if request.auth != null
+        && request.auth.uid == uid                       // your own prefix only
+        && request.resource.size < 4 * 1024 * 1024        // mirrors maxUploadBytes
+        && request.resource.contentType == 'image/webp';  // the client re-encodes
+
+      // Any signed-in visitor may remove any photo, matching firestore.rules.
+      // Writes are still confined to your own uid prefix, so nobody can overwrite
+      // someone else's bytes in place — removal is the only cross-user action.
+      allow delete: if request.auth != null;
+    }
+
+    // Nothing else in the bucket is reachable from the app.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

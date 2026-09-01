@@ -1,0 +1,1899 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
+<title>CHITOWN — Sept 2026</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><style>
+html,body{margin:0;height:100%;overflow:hidden;background:#000;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+a{color:#9ec8ff}a:hover{color:#eef4ff}
+@keyframes beamBreathe{0%{opacity:.86;transform:scaleX(1)}42%{opacity:1;transform:scaleX(1.035)}100%{opacity:.9;transform:scaleX(.99)}}
+@keyframes beamHaze{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(0,-90px,0)}}
+@keyframes poolBreathe{0%{opacity:.82}50%{opacity:1}100%{opacity:.86}}
+@keyframes bdrop{from{transform:translateY(-18px) scale(.3);opacity:0}to{transform:none;opacity:1}}
+@keyframes bpulse{0%{transform:scale(.7);opacity:.7}80%{transform:scale(1.95);opacity:0}100%{opacity:0}}
+.bwrap{position:relative;width:30px;height:30px;animation:bdrop .45s cubic-bezier(.3,1.6,.5,1) both;animation-delay:var(--d,0ms)}
+.bdisc{position:absolute;inset:0;border-radius:50%;border:2px solid var(--c);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;box-shadow:0 0 0 1.5px rgba(255,255,255,.5),0 3px 9px rgba(0,0,0,.7);transition:filter .3s}
+.bring{position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--c);opacity:0;animation:bpulse 2.6s ease-out infinite}
+.bnum{position:absolute;bottom:-4px;right:-5px;min-width:15px;height:15px;padding:0 3px;border-radius:8px;background:#05080c;color:#9ec8ff;font:700 9.5px/15px ui-monospace,Menlo,monospace;text-align:center;border:1px solid rgba(226,238,255,.35)}
+.blip.done .bdisc{filter:saturate(.15) brightness(.6)}
+.blip.done .bring{display:none}
+.blip.done .bnum{background:#7ee8a2;color:#04300f;border-color:rgba(255,255,255,.5)}
+.blip.hot .bring{animation-duration:1.25s;border-width:3px}
+.blip.hot .bnum{background:#ffd166;color:#2a1c00}
+.blip.sel .bdisc{transform:scale(1.22);box-shadow:0 0 0 2px #fff,0 0 20px rgba(255,255,255,.55)}
+</style>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#05080c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<script>
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      reg.update();
+      // A new worker taking over means new code: reload once so the phone runs it.
+      let reloading = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (reloading) return;
+        reloading = true;
+        location.reload();
+      });
+    }).catch(() => {});
+  });
+}
+</script>
+<script>
+// inject once — a bare helmet <script src> re-evaluates on template re-mount
+(function () {
+  if (window.__gmapsLoading || document.getElementById('gmaps-loader')) return;
+  if (window.google && window.google.maps) return;
+  window.__gmapsLoading = true;
+  var s = document.createElement('script');
+  s.id = 'gmaps-loader';
+  s.async = true;
+  s.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCq6BL8cOP_n7EO1jfoLL3S45I71_gXM6c&libraries=places&loading=async';
+  document.head.appendChild(s);
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.clouds.min.js"></script>
+<script src="./image-slot.js"></script>
+<script src="./weather.js?v=1"></script>
+<script src="./audio.js?v=1"></script>
+<script src="./firebase-config.js?v=2"></script>
+<script src="./photo-store.js?v=8"></script>
+<script src="./photo-dome.js?v=41"></script>
+<script src="./photo-ui.js?v=3"></script>
+</helmet>
+
+<div style="width:100vw;height:100dvh;background:#000;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(105% 44% at 50% 88%,#16304a 0%,#0a1420 40%,#04060a 70%,#000 100%)"></div>
+  <div style="position:absolute;left:0;top:8%;width:26%;height:26%;background:linear-gradient(160deg,rgba(216,226,236,.16) 0%,rgba(216,226,236,.03) 70%,rgba(0,0,0,0) 100%);filter:blur(4px)"></div>
+  <div style="position:absolute;left:50%;bottom:16%;width:150%;height:44%;margin-left:-75%;background:radial-gradient(ellipse at 50% 100%,rgba(200,224,255,.10) 0%,rgba(160,200,255,.03) 44%,rgba(0,0,0,0) 74%);filter:blur(16px);pointer-events:none"></div>
+  <div style="position:absolute;inset:0">
+    <x-import style="position:absolute;inset:0" component-from-global-scope="star-field" from="./constellation.js?v=8" accent="#9ec8ff" hint-size="100%,100%"></x-import>
+  </div>
+  <div id="chi-clouds" style="position:absolute;inset:0;z-index:0;background:radial-gradient(130% 62% at 50% 84%,#22242a 0%,#14151a 34%,#08080d 68%,#030307 100%)"></div>
+  <div id="gd6d" style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:1"></div>
+  <div style="position:absolute;inset:0;pointer-events:none">
+    <x-import style="position:absolute;inset:0" component-from-global-scope="globe-canvas" from="./globe-canvas.js?v=6" only-smoke="on" smoke="on" smoke-color="#cfe2ff" accent="#cfe2ff" hint-size="100%,100%"></x-import>
+  </div>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:170px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 62%);pointer-events:none"></div>
+  <div style="position:absolute;left:0;right:0;bottom:82px;height:22px;background:repeating-linear-gradient(90deg,#000 0 5px,rgba(0,0,0,0) 5px 8px);opacity:.9;pointer-events:none"></div>
+  <div style="position:absolute;left:0;right:0;bottom:90px;height:14px;background:repeating-linear-gradient(90deg,rgba(214,230,255,.45) 0 1px,rgba(0,0,0,0) 1px 19px);filter:blur(.6px);pointer-events:none"></div>
+  <div style="position:absolute;left:0;right:0;top:0;padding:max(env(safe-area-inset-top),18px) 24px 0;z-index:6;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;opacity: {{ d5.marqueeOp }};transition:opacity .35s ease">
+    <div style="font:700 clamp(44px,15vw,68px)/0.82 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;letter-spacing:-.055em;color:#eef4ff;text-transform:uppercase">Chi<br><span style="color:#ff5c1a">town</span></div>
+    <div style="margin-top:6px;text-align:right">
+      <div style="font:400 8px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:rgba(238,244,255,.4)">SOLDIER FIELD</div>
+      <div style="display: {{ d5.cdShow }};margin-top:10px">
+        <div style="font:700 24px/1 ui-monospace,Menlo,monospace;color: {{ d5.cdCol }};font-variant-numeric:tabular-nums;text-shadow:0 0 18px rgba(255,150,70,.55)">{{ d5.cdBig }}</div>
+        <div style="font:700 7px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:rgba(238,244,255,.5);margin-top:5px">{{ d5.cdSub }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:900;pointer-events: {{ d5.openPE }};opacity: {{ d5.openOp }};transition:opacity .35s ease;display:flex;flex-direction:column">
+    <div style="position:absolute;inset:0">
+      <div id="livemap" style="position:absolute;inset:0;z-index:0;background:#0a1420;opacity: {{ d5.liveMapOp }};transition:opacity .5s ease"></div>
+      <div style="position:absolute;z-index:460;right:14px;top:56px;font:400 7.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:rgba(238,244,255,.34);pointer-events:none">{{ d5.poiNote }}</div>
+      <div style="position:absolute;z-index:500;left:18px;top:48px;display:flex;align-items:center;gap:9px;padding:9px 15px 9px 11px;background:rgba(6,10,16,.82);border:1px solid rgba(226,238,255,.24);border-radius:24px;cursor:pointer;pointer-events: {{ d5.openPE }};backdrop-filter:blur(6px)" onClick="{{ d5.close }}">
+        <span style="font:700 14px/1;color:#9ec8ff">←</span>
+        <span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#eef4ff">ALL DAYS</span>
+      </div>
+    </div>
+    <div data-sheet="1" style="position:absolute;left:0;right:0;bottom:0;top: {{ d5.sheetTop }};z-index:700;background:#05080c;border-radius:20px 20px 0 0;box-shadow:0 -18px 40px -12px rgba(0,0,0,.8);transition: {{ d5.sheetTr }};display:flex;flex-direction:column;overflow:hidden">
+      <div style="flex:none;min-height:46px;padding:12px 0 9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none" onPointerDown="{{ d5.dragStart }}" onClick="{{ d5.sheetTap }}">
+        <div style="width:40px;height:4px;border-radius:2px;background:rgba(226,238,255,.32)"></div>
+        <div style="font:700 7px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:rgba(226,238,255,.3)">{{ d5.sheetHint }}</div>
+      </div>
+      <div style="display: {{ d5.upShow }};align-items:center;gap:12px;padding:13px 20px;border-bottom:1px solid rgba(226,238,255,.1);background:linear-gradient(90deg,rgba(255,209,102,.10),transparent 78%);cursor:pointer" onClick="{{ d5.upTap }}">
+        <div style="flex:1;min-width:0">
+          <div style="font:700 8px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color: {{ d5.upCol }}">{{ d5.upLabel }}</div>
+          <div style="font:600 15px/1.25 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:#eef4ff;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d5.upName }}</div>
+        </div>
+        <div style="text-align:right;flex:none">
+          <div style="font:700 19px/1 ui-monospace,Menlo,monospace;color: {{ d5.upCol }};font-variant-numeric:tabular-nums">{{ d5.upIn }}</div>
+          <div style="font:600 8px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:rgba(238,244,255,.45);margin-top:4px">{{ d5.upAt }}</div>
+        </div>
+      </div>
+      <div style="display: {{ d5.driftShow }};align-items:flex-start;gap:13px;padding:12px 20px;border-bottom:1px solid rgba(226,238,255,.1);background: {{ d5.driftBg }};cursor:pointer" onClick="{{ d5.driftTap }}">
+        <div style="flex:none;text-align:center;padding-top:1px">
+          <div style="font:700 18px/1 ui-monospace,Menlo,monospace;color: {{ d5.driftCol }};font-variant-numeric:tabular-nums">{{ d5.driftAmt }}</div>
+          <div style="font:700 7px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color: {{ d5.driftCol }};margin-top:5px">BEHIND</div>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font:400 12.5px/1.35 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:rgba(238,244,255,.88)">{{ d5.driftMsg }}</div>
+          <div style="display: {{ d5.driftWhyShow }};font:400 11px/1.35 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:rgba(255,209,102,.72);margin-top:5px">{{ d5.driftWhy }}</div>
+        </div>
+      </div>
+      <div style="padding:10px 22px 8px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+          <div style="font:700 21px/1.05 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;letter-spacing:-.03em;color:#eef4ff;text-transform:uppercase">{{ d5.title }}</div>
+          <div style="display:flex;align-items:center;gap:7px;white-space:nowrap;flex:none">
+            <weather-icon code="{{ d5.wxCode }}" size="17" style="display: {{ d5.wxShow }};color: {{ d5.wxCol }};flex:none"></weather-icon>
+            <div style="font:400 11.5px/1.4 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:rgba(238,244,255,.55)">{{ d5.weather }}</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:2px">
+          <div style="font:600 11.5px/1.45 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;letter-spacing:.02em;color:#9ec8ff">{{ d5.sub }}</div>
+        </div>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y: {{ d5.listScroll }};touch-action: {{ d5.listTouch }};-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:4px 0 calc(104px + env(safe-area-inset-bottom))" onPointerDown="{{ d5.listDrag }}">
+        <sc-for list="{{ d5.stops }}" as="s" hint-placeholder-count="4">
+          <div style="display:flex;gap:13px;padding:15px 20px;border-radius:14px;margin:0 12px;border:1px solid {{ s.cardBd }};background: {{ s.rowBg }};cursor:pointer" onClick="{{ s.tap }}">
+            <div style="width:28px;flex:none;display:flex;justify-content:center;padding-top:2px">
+              <div style="width:28px;height:28px;flex:none;box-sizing:border-box;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid {{ s.catCol }};background: {{ s.badgeBg }};font:700 12px/1 ui-monospace,Menlo,monospace;color: {{ s.numCol }}">{{ s.n }}</div>
+            </div>
+            <div style="flex:1;min-width:0;opacity: {{ s.rowOp }}">
+              <div style="font:700 20px/1.2 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;letter-spacing:-.02em;color: {{ s.titleCol }};text-decoration: {{ s.titleDec }};text-wrap:pretty">{{ s.title }}</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:3px">
+                <div style="font:400 13px/1.4 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:rgba(238,244,255,.62)">{{ s.where }}</div>
+                <a href="{{ s.insta }}" target="_blank" rel="noopener" onClick="{{ s.instaTap }}" style="display: {{ s.instaShow }};flex:none;align-items:center;justify-content:center;width:22px;height:22px;font-size:13px;line-height:1;text-decoration:none">📷</a>
+              </div>
+              <div style="display: {{ s.wxShow }};align-items:center;gap:7px;margin-top:7px;padding:5px 10px;border-radius:8px;border:1px solid {{ s.wxBd }};background: {{ s.wxBg }}">
+                <weather-icon code="{{ s.wxCode }}" size="15" style="color: {{ s.wxCol }};flex:none"></weather-icon>
+                <span style="font:600 12px/1.35 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color: {{ s.wxCol }}">{{ s.wxTxt }}</span>
+              </div>
+              <div style="display: {{ s.fixedShow }};align-items:center;gap:6px;margin-top:7px;padding:5px 10px;border-radius:8px;border:1px solid {{ s.fixedBd }};background: {{ s.fixedBg }}">
+                <span style="font:700 12px/1;color: {{ s.fixedCol }}">◆</span>
+                <span style="font:600 12px/1.35 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color: {{ s.fixedCol }}">{{ s.fixedWhy }}</span>
+              </div>
+              <div style="display: {{ s.leaveShow }};align-items:center;gap:6px;margin-top:7px;padding:5px 10px;border-radius:8px;border:1px solid {{ s.leaveBd }};background: {{ s.leaveBg }}">
+                <span style="font:600 12px/1.35 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color: {{ s.leaveCol }}">{{ s.leaveTxt }}</span>
+              </div>
+              <div style="display: {{ s.dwellShow }};align-items:center;gap:6px;margin-top:7px;padding:5px 10px;border-radius:8px;border:1px solid rgba(126,232,162,.3);background:rgba(126,232,162,.1)">
+                <span style="font:600 12px/1.35 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:#9fe8bd">{{ s.dwellTxt }}</span>
+              </div>
+              <div style="display: {{ s.againShow }};align-items:center;gap:5px;margin-top:7px;font:400 12px/1.4 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:rgba(158,200,255,.72)">↩ {{ s.again }}</div>
+              <div style="display: {{ s.notesShow }};flex-direction:column;gap:6px;margin-top:10px;padding-left:2px">
+                <sc-for list="{{ s.notes }}" as="nt" hint-placeholder-count="2">
+                  <!-- flex-start, not center: a note that wraps to three lines used to
+                       float its camera to the middle-right, far from the place name it
+                       belongs to. The camera now leads the row, level with the first
+                       line — right where the place is named. -->
+                  <div style="display:flex;gap:8px;align-items:flex-start">
+                    <span style="flex:none;width:4px;height:4px;border-radius:50%;background: {{ nt.dot }};margin-top:7px"></span>
+                    <a href="{{ nt.pics }}" target="_blank" rel="noopener" onClick="{{ nt.picsTap }}" style="display: {{ nt.picsShow }};flex:none;align-items:center;justify-content:center;width:24px;height:24px;margin-top:-2px;border-radius:7px;background:rgba(158,200,255,.13);border:1px solid rgba(158,200,255,.28);font-size:13px;line-height:1;text-decoration:none">📷</a>
+                    <span style="font:400 13px/1.4 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color: {{ nt.col }};text-decoration: {{ nt.dec }};text-decoration-color:rgba(158,200,255,.4);text-underline-offset:3px;cursor: {{ nt.cur }}" onClick="{{ nt.tap }}">{{ nt.t }}</span>
+                    <a href="{{ nt.url }}" target="_blank" rel="noopener" onClick="{{ nt.urlTap }}" style="display: {{ nt.urlShow }};flex:none;align-items:center;justify-content:center;height:22px;padding:0 9px;border-radius:11px;border:1px solid rgba(158,200,255,.45);font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#9ec8ff;text-decoration:none">OPEN</a>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display: {{ s.moreShow }};margin-top:8px;font:600 11px/1 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;letter-spacing:.04em;color:rgba(158,200,255,.65)">{{ s.moreTxt }}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:9px;flex:none">
+              <div style="font:700 17px/1 ui-monospace,Menlo,monospace;color: {{ s.timeCol }};font-variant-numeric:tabular-nums">{{ s.time }}</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                <a href="{{ s.nav }}" target="_blank" rel="noopener" onClick="{{ s.navTap }}" style="display:flex;align-items:center;justify-content:center;gap:5px;height:44px;padding:0 16px;border-radius:22px;border:1px solid rgba(255,92,26,.6);background:rgba(255,92,26,.16);font:700 12px/1 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;letter-spacing:.04em;color:#ffab77;text-decoration:none">◎ Go</a>
+                <div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer" onClick="{{ s.doneTap }}">
+                  <div style="width:24px;height:24px;flex:none;box-sizing:border-box;border-radius:50%;border:1.5px solid {{ s.chkBd }};background: {{ s.chkBg }};color: {{ s.chkCol }};font:600 12px/22px ui-monospace,Menlo,monospace;text-align:center;transition:background .2s ease,border-color .2s ease">✓</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display: {{ s.legShow }};gap:13px;align-items:stretch;padding:0 20px 0 32px">
+            <div style="width:28px;flex:none;display:flex;justify-content:center;position:relative">
+              <div style="width:0;border-left:2px dashed {{ s.legCol }};opacity:.55;min-height:46px"></div>
+            </div>
+            <div style="flex:1;display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 0">
+              <div style="display:flex;align-items:center;gap:7px;font:600 13px/1.3 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color: {{ s.legCol }}">
+                <span style="font:400 13px/1">↓</span><span>{{ s.legMins }}</span><span style="font-weight:400;color:rgba(238,244,255,.62)">{{ s.legHow }}</span><a href="{{ s.uber }}" target="_blank" rel="noopener" onClick="{{ s.uberTap }}" style="display: {{ s.uberShow }};align-items:center;justify-content:center;height:26px;padding:0 11px;border-radius:13px;border:1px solid rgba(238,244,255,.34);background:rgba(238,244,255,.08);font:700 10.5px/1 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;letter-spacing:.05em;color:#eef4ff;text-decoration:none;white-space:nowrap">Uber</a>
+              </div>
+              <div style="font:400 12px/1.3 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:rgba(238,244,255,.45)">{{ s.legMeta }}</div>
+              <div style="flex-basis:100%;font:400 11.5px/1.5 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:rgba(238,244,255,.38)">{{ s.legNote }}</div>
+              
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;bottom:104px;z-index:6;padding:0 34px;text-align:center;pointer-events:none;opacity: {{ d5.marqueeOp }}">
+    <div style="opacity: {{ d5.quoteOp }};transition:opacity .85s ease">
+      <div style="font:400 12.5px/1.45 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;font-style:italic;color:rgba(238,244,255,.72);text-wrap:pretty">{{ d5.quote }}</div>
+      <div style="font:700 7.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:rgba(158,200,255,.55);margin-top:7px">{{ d5.quoteBy }}</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;z-index:950;left:0;right:0;bottom:0;padding:10px 14px calc(18px + env(safe-area-inset-bottom));background: {{ d5.railBg }};display:flex;gap:5px">
+    <sc-for list="{{ d5.chips }}" as="c" hint-placeholder-count="4">
+      <div style="flex:1;padding:11px 0 10px;text-align:center;cursor:pointer;background: {{ c.bg }};border:1px solid {{ c.bd }};transition:background .25s ease" onClick="{{ c.pick }}">
+        <div style="font:700 11px/1.1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color: {{ c.fg }}">{{ c.label }}</div>
+        <div style="font:400 7.5px/1.6 ui-monospace,Menlo,monospace;color: {{ c.sub }}">{{ c.date }}</div>
+        <div style="height:3px;margin:4px 9px 0;border-radius:2px;background:rgba(255,255,255,.16);overflow:hidden">
+          <div style="height:100%;width: {{ c.pct }};background: {{ c.pctBg }};border-radius:2px;transition:width .4s ease"></div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="position:absolute;left:0;right:0;top:14%;bottom:52.6%;min-height:190px;overflow:hidden;z-index:5;pointer-events:none;opacity: {{ d5.marqueeOp }};transition:opacity .4s ease" id="marquee-band">
+    <div style="position:absolute;left:0;right:0;bottom:21px;height:min(300px,34vh)">
+      <div style="position:absolute;left:50%;bottom:0;width:min(300px,78vw);height:100%;margin-left:calc(min(300px,78vw) / -2);clip-path:polygon(0 0,100% 0,63% 100%,37% 100%);background:linear-gradient(0deg,rgba(226,242,255,.26) 0%,rgba(198,226,255,.13) 30%,rgba(176,212,255,.05) 64%,rgba(170,205,255,.012) 88%,rgba(170,205,255,0) 100%);filter:blur(9px);mask-image:radial-gradient(ellipse 70% 100% at 50% 100%,#000 40%,rgba(0,0,0,.55) 72%,rgba(0,0,0,0) 100%);-webkit-mask-image:radial-gradient(ellipse 70% 100% at 50% 100%,#000 40%,rgba(0,0,0,.55) 72%,rgba(0,0,0,0) 100%);transform-origin:50% 100%;animation:beamBreathe 5.5s ease-in-out infinite alternate"></div>
+      <div style="position:absolute;left:50%;bottom:0;width:min(190px,50vw);height:93%;margin-left:calc(min(190px,50vw) / -2);clip-path:polygon(0 0,100% 0,58% 100%,42% 100%);background:linear-gradient(0deg,rgba(255,255,255,.34) 0%,rgba(232,244,255,.14) 34%,rgba(200,226,255,.04) 70%,rgba(200,226,255,0) 100%);filter:blur(5px);mask-image:radial-gradient(ellipse 75% 100% at 50% 100%,#000 45%,rgba(0,0,0,.5) 76%,rgba(0,0,0,0) 100%);-webkit-mask-image:radial-gradient(ellipse 75% 100% at 50% 100%,#000 45%,rgba(0,0,0,.5) 76%,rgba(0,0,0,0) 100%);transform-origin:50% 100%;animation:beamBreathe 3.7s ease-in-out infinite alternate"></div>
+      <div style="position:absolute;left:50%;bottom:0;width:min(300px,78vw);height:100%;margin-left:calc(min(300px,78vw) / -2);clip-path:polygon(0 0,100% 0,63% 100%,37% 100%);opacity:.45;mix-blend-mode:screen;mask-image:radial-gradient(ellipse 70% 100% at 50% 100%,#000 40%,rgba(0,0,0,.5) 74%,rgba(0,0,0,0) 100%);-webkit-mask-image:radial-gradient(ellipse 70% 100% at 50% 100%,#000 40%,rgba(0,0,0,.5) 74%,rgba(0,0,0,0) 100%)">
+        <div style="position:absolute;left:-10%;top:-40%;width:120%;height:190%;background:repeating-linear-gradient(96deg,rgba(255,255,255,.06) 0 3px,rgba(255,255,255,0) 3px 21px);filter:blur(4px);animation:beamHaze 11s linear infinite"></div>
+      </div>
+      <div style="position:absolute;left:50%;bottom:-34px;width:180px;height:76px;margin-left:-90px;background:radial-gradient(ellipse at 50% 50%,rgba(240,249,255,.5) 0%,rgba(196,224,255,.2) 36%,rgba(170,205,255,.04) 66%,rgba(170,205,255,0) 84%);filter:blur(8px);animation:poolBreathe 4.6s ease-in-out infinite alternate"></div>
+    </div>
+    
+    <div id="marquee-stack" style="position:absolute;left:0;right:0;bottom:80px;max-height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap: {{ d5.rowGap }}">
+      <div style="font:700 26px/1 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;letter-spacing:-.03em;color:#f2f7ff;text-shadow:0 0 24px rgba(180,215,255,.8)">{{ d5.facingName }}</div>
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:4px">
+        <div style="font:700 8px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color: {{ d5.modeChipCol }};text-shadow:0 0 12px rgba(160,200,255,.8)">{{ d5.modeChip }}</div>
+        <div style="width:3px;height:3px;border-radius:50%;background:rgba(206,228,255,.5)"></div>
+        <div style="font:700 8px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:rgba(206,228,255,.85);text-shadow:0 0 12px rgba(160,200,255,.7)">{{ d5.facingDate }} · {{ d5.facingCount }}</div>
+      </div>
+      <sc-for list="{{ d5.facingRows }}" as="r" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:268px">
+          <div style="display: {{ r.gapShow }};font:700 7px/1.7 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:rgba(206,228,255,.42);text-shadow:0 0 8px rgba(160,200,255,.4)">··· {{ r.gapTxt }} ···</div>
+          <div style="display:flex;gap:8px;align-items:baseline;width:100%;opacity: {{ r.op }}">
+            <div style="width:7px;flex:none;font:700 7px/1.5 ui-monospace,Menlo,monospace;color:#ff5c1a;text-shadow:0 0 10px rgba(255,92,26,.9)">{{ r.dot }}</div>
+            <div style="width:52px;flex:none;white-space:nowrap;text-align:right;font:700 {{ r.fsTime }}/1.45 ui-monospace,Menlo,monospace;color:rgba(206,228,255,.8);text-shadow:0 0 10px rgba(160,200,255,.6)">{{ r.time }}</div>
+            <div style="flex:1;font:400 {{ r.fsTitle }}/1.35 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color: {{ r.col }};text-shadow: {{ r.glow }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const TRIP = [
+  { label: 'THU', date: '9/3', weather: '78° / HUMID · CLEAR PM',
+    legs: [
+    { mode: 'car', line: '', mins: 35, cost: 0, note: 'UBER FROM DEPARTURES LEVEL' },
+    { mode: 'walk', line: '', mins: 6, cost: 0, note: '' },
+    { mode: 'walk', line: '', mins: 13, cost: 0, note: '' },
+    { mode: 'walk', line: '', mins: 10, cost: 0, note: '' },
+    { mode: 'car', line: '', mins: 12, cost: 0, note: 'LEAVE 5:45 PM' },
+    { mode: 'car', line: '', mins: 10, cost: 0, note: 'RIDE TO THE LOOP AFTER THE CHECK' },
+    { mode: 'walk', line: '', mins: 25, cost: 0, note: 'PAST MARINA CITY + WRIGLEY — ALL BETTER LIT UP', fixed: true },
+    { mode: 'walk', line: '', mins: 11, cost: 0, note: '' } ],
+    items: [
+    { time: '11:53', walk: '', title: 'Land at O\'Hare', meta: '', pin: '01', cat: 'plane', where: 'O\'Hare Terminal 5', notes: ['Uber pickup is on the DEPARTURES level, not Arrivals', 'Baggage claim first, then back UP an escalator', 'Be at the curb by 12:40'], place: 'O\'Hare International Airport Chicago', leave: '12:40', ll: [41.9742, -87.9073] },
+    { time: '13:25', walk: '', title: 'Hotel — bag drop only', meta: '', pin: '02', cat: 'hotel', where: '640 N Wabash Ave', notes: ['Check-in isn\'t until 3pm — bags to the desk'], place: 'Holiday Inn Express Chicago Magnificent Mile', leave: '13:39', ll: [41.89382, -87.62706] },
+    { time: '13:45', walk: '', title: 'Gino\'s East', meta: '', pin: '03', cat: 'deli', where: '162 E Superior St', notes: ['This one decides whether the afternoon works'], fixed: true, fixedWhy: 'Order the pizza the second we sit — 45 minute bake', place: 'Gino\'s East Superior Chicago', ig: 'ginoseast', leave: '15:24', ll: [41.8958, -87.6237] },
+    { time: '15:37', walk: '', title: 'Chicago Riverwalk', meta: '', pin: '04', cat: 'skyline', where: 'Michigan Ave bridge, north-east corner', notes: ['Down the stairs at the north-east corner of the bridge'], place: 'Chicago Riverwalk', ig: 'chicagoriverwalk', leave: '16:08', ll: [41.8885, -87.6244] },
+    { time: '16:18', walk: '', title: 'Hotel — break', meta: '', pin: '05', cat: 'hotel', where: '640 N Wabash Ave', notes: ['Check in properly, rest', 'No chance to change later', 'Bring a jacket — it cools off tonight'], fixed: true, fixedWhy: 'Change into smart casual now — LH enforces a dress code', place: 'Holiday Inn Express Chicago Magnificent Mile', leave: '17:48', ll: [41.89382, -87.62706] },
+    { time: '18:00', walk: '', title: 'Zanies — Jay Jurden', meta: '', pin: '06', cat: 'theater', where: '1548 N Wells St, Old Town', notes: ['21+, photo ID required', 'Jay Jurden on at 7:00', 'Two-item minimum per person', 'Ask for the check at 8:20 — every table settles at once'], fixed: true, fixedWhy: 'Doors 6pm, first come — arriving at doors is what gets us a good spot', place: 'Zanies Comedy Night Club Chicago', ig: 'zaniescomedyclub', leave: '20:43', ll: [41.91163, -87.63446] },
+    { time: '21:00', walk: '', title: 'Chicago Theatre sign', meta: '', pin: '07', cat: 'skyline', where: '175 N State St', notes: ['Marina City', 'Wrigley Building', 'Skip Marina City if we are running late'], waypoints: [{ name: 'Marina City', place: 'Marina City Chicago', ig: 'marinacity', ll: [41.88797, -87.62897] }, { name: 'Wrigley Building', place: 'The Wrigley Building Chicago', ig: 'wrigleybuilding', ll: [41.8897, -87.62459] }], place: 'The Chicago Theatre', ig: 'chicagotheatre', leave: '21:05', ll: [41.8853, -87.62775] },
+    { time: '21:30', walk: '', title: 'LH Rooftop', meta: '', pin: '08', cat: 'bar', where: 'LondonHouse, 85 E Wacker Dr', notes: ['90 minute table limit', 'Order food as soon as we sit'], fixed: true, fixedWhy: 'Food service stops at 11pm — order early', place: 'LH Rooftop Chicago', ig: 'lhrooftop', leave: '23:03', ll: [41.88777, -87.62531] },
+    { time: '23:15', walk: '', title: 'Hotel', meta: '', pin: '09', cat: 'hotel', where: '640 N Wabash Ave', place: 'Holiday Inn Express Chicago Magnificent Mile', ll: [41.89382, -87.62706] } ] },
+  { label: 'FRI', date: '9/4', weather: '81° / CLEAR · SHOW NIGHT',
+    legs: [
+    { mode: 'walk', line: '', mins: 33, cost: 0, note: 'SOUTH-EAST TO THE WATER TOWER' },
+    { mode: 'walk', line: '', mins: 16, cost: 0, note: 'NORTH TO SOUTH DOWN MICHIGAN AVE' },
+    { mode: 'car', line: '', mins: 11, cost: 0, note: 'UBER — SAVE THE LEGS FOR THE SHOW' },
+    { mode: 'walk', line: '', mins: 13, cost: 0, note: '' },
+    { mode: 'car', line: '', mins: 25, cost: 0, note: 'UBER XL · DROP PIN MANUALLY AT THE 18TH STREET TURNAROUND · BAIL OUT AND WALK IF WE CRAWL PAST 18TH & PRAIRIE' },
+    { mode: 'walk', line: '', mins: 15, cost: 0, note: 'PICKUP IS NOT AT THE STADIUM', fixed: true },
+    { mode: 'car', line: '', mins: 14, cost: 0, note: '' } ],
+    items: [
+    { time: '10:00', walk: '', title: '3 Arts Club Café', meta: '', pin: '01', cat: 'brunch', where: '1300 N Dearborn Pkwy', notes: ['Inside RH Chicago — the atrium courtyard', 'Fills up by 11, worth being early', 'Water Tower', 'Tribune Tower', 'Wrigley Building'], waypoints: [{ name: 'Water Tower', place: 'Chicago Water Tower', ig: 'chicagowatertower', ll: [41.8971, -87.6247] }, { name: 'Tribune Tower', place: 'Tribune Tower Chicago', ig: 'tribunetower', ll: [41.8902, -87.6238] }, { name: 'Wrigley Building', place: 'The Wrigley Building Chicago', ig: 'wrigleybuilding', ll: [41.8897, -87.62459] }], place: '3 Arts Club Cafe Chicago', ig: '3artsclubcafe', leave: '11:16', ll: [41.906, -87.63] },
+    { time: '11:49', walk: '', title: 'Magnificent Mile walk', meta: '', pin: '02', cat: 'skyline', where: 'North to south, ending at DuSable Bridge', notes: ['North to south, ending at DuSable Bridge'], place: 'DuSable Bridge Chicago', ig: 'magnificentmile', leave: '12:30', ll: [41.8885, -87.6244] },
+    { time: '12:46', walk: '', title: 'Art Institute', meta: '', pin: '03', cat: 'museum', where: '111 S Michigan Ave', notes: ['Coat check, then straight down to the lower level', { t: '1:20 — "What to See in an Hour" route on your phone', url: 'https://www.artic.edu/highlights/3/what-to-see-in-an-hour' }, '2:20 — free time', 'Download the museum app at the hotel, gallery wifi is patchy'], fixed: true, fixedWhy: 'Thorne Miniature Rooms first, 12:55 — easy to run out of time for', place: 'Art Institute of Chicago', ig: 'artinstituteofchicago', leave: '14:51', ll: [41.8796, -87.6237] },
+    { time: '15:02', walk: '', title: 'Hotel — break', meta: '', pin: '04', cat: 'hotel', where: '640 N Wabash Ave', notes: ['Clear bag only: max 12"x6"x12", or a clutch under 4.5"x6.5"', 'Tickets in your phone wallet — 63,000 phones at the gates', 'A light layer each', 'Check which gate your ticket says'], fixed: true, fixedWhy: 'Pack the clear bag now — no bag check at the stadium', place: 'Holiday Inn Express Chicago Magnificent Mile', leave: '16:22', ll: [41.89382, -87.62706] },
+    { time: '16:35', walk: '', title: 'Naia', meta: '', pin: '05', cat: 'deli', where: '300 N LaSalle Dr', notes: ['90 minutes at the table'], fixed: true, fixedWhy: 'Off the table by 5:56 pm — the car leaves at 6:05 pm', place: 'NAIA Chicago Riverwalk restaurant', ig: 'naiachicago', leave: '18:05', ll: [41.88812, -87.63285] },
+    { time: '18:30', walk: '', title: 'YE — Soldier Field', meta: '', pin: '06', cat: 'show', where: '1410 S Museum Campus Dr', notes: ['Through security, then: food → bathroom → seats', 'Food queues peak at 8:15 when everyone realises he is not on yet', 'YE on at about 9:00 — 8pm is the ticketed time, he has run an hour late all tour', 'Show ends about 11:00'], fixed: true, fixedWhy: 'Security line at 6:30 — 63,000 people go through these gates', place: 'Soldier Field Chicago', ig: 'soldierfield', leave: '23:18', hero: true, ll: [41.8623, -87.6167] },
+    { time: '23:33', walk: '', title: 'Columbus & Balbo — pickup', meta: '', pin: '07', cat: 'stop', where: 'North of the stadium', notes: ['Rideshare pickup is NOT at the stadium', 'The walk also lets the surge break'], place: 'Columbus Drive and Balbo Drive Chicago', leave: '23:48', ll: [41.8737, -87.6199] },
+    { time: '00:02', walk: '', title: 'Hotel', meta: '', pin: '08', cat: 'hotel', where: '640 N Wabash Ave', place: 'Holiday Inn Express Chicago Magnificent Mile', ll: [41.89382, -87.62706] } ] },
+  { label: 'SAT', date: '9/5', weather: '79° / CLEAR · COOL BY THE LAKE',
+    legs: [
+    { mode: 'walk', line: '', mins: 17, cost: 0, note: '' },
+    { mode: 'walk', line: '', mins: 14, cost: 0, note: '' },
+    { mode: 'walk', line: '', mins: 16, cost: 0, note: '' },
+    { mode: 'walk', line: '', mins: 7, cost: 0, note: '' },
+    { mode: 'walk', line: '', mins: 3, cost: 0, note: '' },
+    { mode: 'walk', line: '', mins: 4, cost: 0, note: 'THROUGH THE PARK', fixed: true },
+    { mode: 'walk', line: '', mins: 12, cost: 0, note: '' },
+    { mode: 'car', line: '', mins: 10, cost: 0, note: '' },
+    { mode: 'walk', line: '', mins: 8, cost: 0, note: '' },
+    { mode: 'car', line: '', mins: 12, cost: 0, note: 'LEAVE 8:38 PM AT THE LATEST' },
+    { mode: 'walk', line: '', mins: 3, cost: 0, note: '' } ],
+    items: [
+    { time: '09:30', walk: '', title: 'Beatrix', meta: '', pin: '01', cat: 'brunch', where: '519 N Clark St', notes: ['Reservation booked', 'Saturday brunch — they will hold it 15 min'], place: 'Beatrix River North Chicago', ig: 'beatrixrestaurants', leave: '11:16', ll: [41.8913, -87.6314] },
+    { time: '11:33', walk: '', title: '360 Chicago + TILT', meta: '', pin: '02', cat: 'skyline', where: '875 N Michigan Ave', notes: ['The ride is 2 minutes, the line can be 45', 'It builds all afternoon'], fixed: true, fixedWhy: 'Join the TILT queue FIRST, before wandering the deck', place: '360 Chicago Observation Deck', ig: '360chicago', leave: '13:22', ll: [41.8989, -87.6236] },
+    { time: '13:36', walk: '', title: 'Portillo\'s & Barnelli\'s', meta: '', pin: '03', cat: 'deli', where: '100 W Ontario St', notes: ['Order ahead on the Portillo\'s app before we leave 360', 'Non-beef at Barnelli\'s: portobello, chicken pesto, tuna, pasta, chopped salad', 'Plant-based Garden Dog — order it by name'], place: 'Portillo\'s Hot Dogs Ontario Chicago', ig: 'portillos', leave: '14:37', ll: [41.8931, -87.6312] },
+    { time: '14:53', walk: '', title: 'Picasso + Miró', meta: '', pin: '04', cat: 'museum', where: 'Daley Plaza, 50 W Washington', place: 'Chicago Picasso Daley Plaza', ig: 'chicagopicasso', leave: '15:13', ll: [41.884, -87.63] },
+    { time: '15:20', walk: '', title: 'Cultural Center', meta: '', pin: '05', cat: 'museum', where: '78 E Washington St', notes: ['Free entry', 'Preston Bradley Hall for the Tiffany dome', 'Then the GAR rotunda for the second one most people miss'], fixed: true, fixedWhy: 'Closes at 5', place: 'Chicago Cultural Center', ig: 'chicagoculturalcenter', leave: '15:54', ll: [41.8837, -87.6247] },
+    { time: '15:57', walk: '', title: 'Cloud Gate (The Bean)', meta: '', pin: '06', cat: 'skyline', where: 'Millennium Park', notes: ['Pritzker Pavilion', 'BP Bridge', 'Jazz Festival is on — bigger crowds and a bag check at the perimeter'], waypoints: [{ name: 'Pritzker Pavilion', place: 'Jay Pritzker Pavilion', ig: 'pritzkerpavilion', ll: [41.8826, -87.6216] }, { name: 'BP Bridge', place: 'BP Pedestrian Bridge Chicago', ig: 'bpbridge', ll: [41.8823, -87.6197] }], place: 'Cloud Gate Chicago', ig: 'cloudgate', leave: '16:23', ll: [41.8827, -87.6233] },
+    { time: '16:27', walk: '', title: 'Crown Fountain', meta: '', pin: '07', cat: 'skyline', where: 'Millennium Park', place: 'Crown Fountain Chicago', ig: 'crownfountain', leave: '16:59', ll: [41.8814, -87.6242] },
+    { time: '17:11', walk: '', title: 'Buckingham Fountain', meta: '', pin: '08', cat: 'skyline', where: 'Grant Park', notes: ['Big display runs 20 min on the hour — we catch the tail of the 5:00'], place: 'Buckingham Fountain Chicago', ig: 'buckinghamfountain', leave: '17:39', ll: [41.8758, -87.6189] },
+    { time: '17:49', walk: '', title: 'Hotel — break', meta: '', pin: '09', cat: 'hotel', where: '640 N Wabash Ave', notes: ['Shower, change', 'Jacket for the pier'], fixed: true, fixedWhy: 'Shortest break of the trip — 65 minutes', place: 'Holiday Inn Express Chicago Magnificent Mile', leave: '18:54', ll: [41.89382, -87.62706] },
+    { time: '19:02', walk: '', title: 'Roka Akor', meta: '', pin: '10', cat: 'deli', where: '456 N Clark St', fixed: true, fixedWhy: 'Off the table by 8:30 — the car leaves at 8:38', place: 'Roka Akor Chicago', ig: 'rokaakor', leave: '20:40', ll: [41.8905, -87.6312] },
+    { time: '20:52', walk: '', title: 'Centennial Wheel', meta: '', pin: '11', cat: 'skyline', where: 'Navy Pier', fixed: true, fixedWhy: 'Closes at 10 — ride first, wander after', place: 'Centennial Wheel Navy Pier', ig: 'centennialwheel', leave: '21:26', ll: [41.8917, -87.6086] },
+    { time: '21:30', walk: '', title: 'Fireworks — South Dock', meta: '', pin: '12', cat: 'show', where: 'Navy Pier, south side', notes: ['Last Saturday show of the season', 'Weather dependent with no rain date — check Navy Pier socials before dinner'], fixed: true, fixedWhy: 'Fireworks at 10 — claim a spot by 9:30', place: 'Navy Pier South Dock', ig: 'navypier', hero: true, ll: [41.8913, -87.607] } ] },
+  { label: 'SUN', date: '9/6', weather: '77° / CLEAR',
+    legs: [
+    { mode: 'car', line: '', mins: 35, cost: 0, note: '' } ],
+    items: [
+    { time: '08:30', walk: '', title: 'Hotel breakfast', meta: '', pin: '01', cat: 'hotel', where: '640 N Wabash Ave', notes: ['Included', 'Check out by 9:45', 'Uber at 10:15'], place: 'Holiday Inn Express Chicago Magnificent Mile', leave: '10:15', ll: [41.89382, -87.62706] },
+    { time: '10:50', walk: '', title: 'O\'Hare', meta: '', pin: '02', cat: 'plane', where: 'Terminal 5, departures', notes: ['Nothing planned — take it easy'], fixed: true, fixedWhy: 'Hard deadline is 11am at the airport', place: 'O\'Hare International Airport Chicago', ll: [41.9742, -87.9073] } ] }
+];
+// Demo clock: Friday of the trip, 17:52 — mid-pregame, 2h to doors.
+const SIM = new Date('2026-09-04T16:40:00-05:00').getTime();
+let SHOW_AT = new Date('2026-09-04T20:00:00-05:00').getTime();
+const TRIP_DATES = ['2026-09-03', '2026-09-04', '2026-09-05', '2026-09-06'];
+const MIN = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+// A stop in the small hours belongs to the night before it, not the morning after.
+// Friday's timeline ends at 00:02, which is minute 1442 of Friday — not minute 2, which
+// would place it before breakfast and make every comparison run backwards. Anything
+// before 4am counts as an extension of the previous evening, the same rule liveDay()
+// already uses to decide which trip day "now" falls in.
+const DMIN = (t) => { const m = MIN(t); return m < 240 ? m + 1440 : m; };
+const NOWMIN = (c) => (c.min < 240 ? c.min + 1440 : c.min);
+// 24h data, 12h display — "18:00" → "6:00 pm", midnight → "12:00 am"
+const T12 = (t) => {
+  if (!t) return '';
+  const [h, m] = String(t).split(':').map(Number);
+  if (isNaN(h)) return t;
+  const ap = h >= 12 && h < 24 ? 'pm' : 'am';
+  const hh = h % 12 === 0 ? 12 : h % 12;
+  return hh + ':' + String(m || 0).padStart(2, '0') + ' ' + ap;
+};
+const T12MIN = (mins) => T12(String(Math.floor(mins / 60) % 24).padStart(2, '0') + ':' + String(mins % 60).padStart(2, '0'));
+// Chicago wall clock regardless of the phone's timezone (CDT/CST safe)
+function chiParts(ms) {
+  const p = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hour12: false
+  }).formatToParts(new Date(ms)).reduce((a, x) => (a[x.type] = x.value, a), {});
+  return { y: +p.year, m: +p.month, d: +p.day, min: (+p.hour % 24) * 60 + +p.minute };
+}
+const chiMin = (ms) => chiParts(ms).min;
+function nowSlot(ms) {
+  const dayIdx = Math.min(TRIP.length - 1, Math.max(0, Math.round((ms - new Date('2026-09-03T12:00:00-05:00').getTime()) / 864e5)));
+  const day = TRIP[dayIdx];
+  const nowM = NOWMIN(chiParts(ms));
+  let cur = 0;
+  day.items.forEach((it, i) => { if (DMIN(it.time) <= nowM) cur = i; });
+  const next = day.items[cur + 1] || null;
+  const mins = next ? DMIN(next.time) - nowM : 0;
+  return { dayIdx, cur, item: day.items[cur], next, mins, since: nowM - DMIN(day.items[cur].time) };
+}
+const PINS = [[41.8688, -87.6503], [41.8826, -87.6226], [41.8865, -87.6265], [41.8623, -87.6167]];
+
+const QUOTES = [
+  { t: 'He doesn\u2019t want to walk, but he is willing to swim. We have to take what we get.', by: 'GRACE' },
+  { t: 'This man. Want to walk Central Park. Over and over. It\u2019s the same trees we seeing.', by: 'VIVEK' },
+  { t: 'My version of planning is just telling Vivek what NOT to do.', by: 'VIRANA' },
+  { t: 'I regret teaching you how to use Ai.', by: 'DALE' },
+  { t: 'Dale like a peasant ate a baigan stem lol', by: 'GRACE' },
+  { t: 'And I was happy with my whole baigan. I got my money\u2019s worth.', by: 'DALE' },
+  { t: 'Man eat he stem and buy a Rolex.', by: 'VIVEK' },
+  { t: 'You can bath in it. It have a section. Yea concrete beach. Maracas. Pack swim wear.', by: 'VIVEK' },
+  { t: 'I not bathing in no city river. So you leaving trinidad to do that.', by: 'DALE' },
+  { t: 'Na na that nasty for sure. That is chaguaramas. I good.', by: 'VIRANA' },
+  { t: 'Or maybe his plan was to drop us off at Costco and then go to the AMEX lounge.', by: 'GRACE' },
+  { t: 'Dale is a good friend. My best friend. But he does sections us.', by: 'VIVEK' },
+  { t: 'Ok i convinced. We going in Chicago. Na allyuh make me want to go now.', by: 'DALE' },
+  { t: 'They don\u2019t accept amex tho.', by: 'GRACE' },
+  { t: 'You see how I eating off the side like a peasant lol. And he ate alll the ribs too.', by: 'GRACE' },
+  { t: 'OK fine. I ate more ribs than him, but it\u2019s ok. He didn\u2019t starve.', by: 'GRACE' },
+  { t: 'When I tell him he\u2019s sounding a chainsaw whole night, he\u2019s say I overreacting.', by: 'VIRANA' },
+  { t: 'I wish it had a outside to go.', by: 'DALE' },
+  { t: 'Don\u2019t compare yourself to this because this is child\u2019s playyy compared to you.', by: 'VIRANA' },
+  { t: 'Bodoe have a pharmacist, PA and a internist in a group chat. A whole clinic.', by: 'DALE' },
+  { t: 'You need to start paying to be in this chat. First night dinner on you.', by: 'VIRANA' },
+  { t: 'He only listening to Dr Dale. So i hope Dr Dale give him good advice.', by: 'GRACE' },
+  { t: 'Anyway, I\u2019ll send my bill in the mail. Thanks.', by: 'DALE' },
+  { t: 'Dale did say that it\u2019s Claude that told him how to ask me out.', by: 'GRACE' },
+  { t: 'Aye that supposed to be a secret.', by: 'DALE' },
+  { t: 'Our section 207 reselling for $1439. Let\u2019s just sell tickets and stay home?', by: 'VIVEK' },
+  { t: 'I say so. I selling mine. I\u2019ll still come lime in the line with allyuh.', by: 'DALE' },
+  { t: 'Kanye fraid bsb? And he fraid a boy band from the 90s.', by: 'DALE' },
+  { t: 'When I was negotiating with apple it was Larry and me, told Tim Cook to call me.', by: 'DALE' },
+  { t: 'Huh. I thought you was a fan. Listen to Saint Pablo.', by: 'DALE' },
+  { t: 'The waiter was shock when he pick up Dale plate. He never encounter that.', by: 'VIVEK' },
+  { t: 'One thing, ah man could travel and live abroad, you can\u2019t take the Trini out of him.', by: 'VIVEK' }
+];
+
+
+// minimal line glyphs, colour-coded by kind of stop
+const CAT = {
+  deli:    { col: '#ffb35c', d: 'M3 2v5M3 7v5M6.5 2v4.5a1.6 1.6 0 0 1-3 0M10.5 2c-1 1.4-1 3.3 0 4.6V12' },
+  brunch:  { col: '#ffb35c', d: 'M2 6.5h10M3.4 6.5v3.2a1.8 1.8 0 0 0 1.8 1.8h3.6a1.8 1.8 0 0 0 1.8-1.8V6.5M5 4.2c0-1 1-1 1-2M8 4.2c0-1 1-1 1-2' },
+  market:  { col: '#ffb35c', d: 'M2 3h1.8l1.6 6.4h5.2l1.4-4.6H4.4M5.6 11.6h.01M10.2 11.6h.01' },
+  hotel:   { col: '#8fa6bf', d: 'M2 11V4M2 7.4h10V11M4.6 5.6h.01M12 11v-1.4' },
+  theater: { col: '#c58bff', d: 'M2.4 3.2h9.2v4.2a4.6 4.6 0 0 1-9.2 0zM5 5.2h.01M9 5.2h.01M5.4 8.4a2.6 2.6 0 0 0 3.2 0' },
+  bar:     { col: '#c58bff', d: 'M2.6 2.6h8.8L7 7.2V11M4.6 11h4.8' },
+  show:    { col: '#ff5c1a', d: 'M7.6 1.6 3.4 7.6h3l-1 4.8 4.4-6.2h-3z' },
+  museum:  { col: '#5fd6c0', d: 'M7 1.8 12 4.4H2zM3.6 6v4.2M6 6v4.2M8.4 6v4.2M10.8 6v4.2M2.2 12h9.6' },
+  skyline: { col: '#5fd6c0', d: 'M2 12V6.4h3V12M5 12V3.2h4V12M9 12V7.4h3V12M6.6 5.2h.01M6.6 7.6h.01' },
+  plane:   { col: '#9ec8ff', d: 'M1.8 7.4 12.2 3l-2.6 4.2 1 4.4-2-2.4-3.4 1.6.6-2.2z' },
+  stop:    { col: '#9ec8ff', d: 'M7 1.8c2.3 0 4 1.8 4 4 0 2.9-4 6.4-4 6.4S3 8.7 3 5.8c0-2.2 1.7-4 4-4zM7 5.8h.01' }
+};
+const catIcon = (k, size) => {
+  const c = CAT[k] || CAT.stop;
+  return '<svg viewBox="0 0 14 14" width="' + (size || 13) + '" height="' + (size || 13) +
+    '" fill="none" stroke="' + c.col + '" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="' + c.d + '"/></svg>';
+};
+const MODE = {
+  walk:  { col: '#9ec8ff', label: 'WALK', d: 'M8.4 2.6h.01M7.4 5 5.8 6.2l-.9 2.6M7.4 5l2.3 1.1.9 2M7.4 5 6 9l1.9 1.6.5 2.2M7.3 10.6 5 12.8' },
+  train: { col: '#7ee8a2', label: 'CTA',  d: 'M4 2.2h6a1.6 1.6 0 0 1 1.6 1.6v5.4A1.6 1.6 0 0 1 10 10.8H4a1.6 1.6 0 0 1-1.6-1.6V3.8A1.6 1.6 0 0 1 4 2.2zM2.6 5.6h8.8M4.6 8.4h.01M9.4 8.4h.01M4.4 10.8 3 13M9.6 10.8 11 13' },
+  car:   { col: '#ff8a4a', label: 'UBER', d: 'M2.4 8.6h9.2M3.4 8.6 4.6 4.4A1.4 1.4 0 0 1 6 3.4h2a1.4 1.4 0 0 1 1.4 1l1.2 4.2M3 8.6v2.2M11 8.6v2.2M4.6 10.2h.01M9.4 10.2h.01' },
+  none:  { col: '#6b7a8d', label: '',     d: 'M7 6.8h.01' }
+};
+const modeIcon = (k, size) => {
+  const m = MODE[k] || MODE.walk;
+  return '<svg viewBox="0 0 14 14" width="' + (size || 12) + '" height="' + (size || 12) +
+    '" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="' + m.d + '"/></svg>';
+};
+
+class Component extends DCLogic {
+  state = { phase: {}, prog: {}, day: { '3a': 1, '3b': 1 }, now: Date.now() };
+  componentDidMount() {
+    this._iv = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    // Live forecast: fetch once now, refresh hourly, and redraw whenever it lands.
+    this._wx = () => this.forceUpdate();
+    window.addEventListener('chi-weather', this._wx);
+    if (window.chiWeather) {
+      window.chiWeather.load(TRIP_DATES);
+      this._wxIv = setInterval(() => window.chiWeather.load(TRIP_DATES), 36e5);
+    }
+    this._wake = () => { if (!document.hidden) this._wakeUp(); };
+    document.addEventListener('visibilitychange', this._wake);
+    window.addEventListener('focus', this._wake);
+    this._loadItinerary();
+    this._qOrder = QUOTES.map((_, i) => i).sort(() => Math.random() - 0.5);
+    this._qi = 0;
+    this.setState({ q: this._qOrder[0] });
+    this._qv = setInterval(() => {
+      this.setState({ qOn: false });
+      setTimeout(() => {
+        this._qi = (this._qi + 1) % this._qOrder.length;
+        this.setState({ q: this._qOrder[this._qi], qOn: true });
+      }, 900);
+    }, 6200);
+    const mountDays = (n, hostId, look, accent) => {
+      hostId = hostId || 'gd5';
+      const host = document.getElementById(hostId);
+      if (!host) return;
+      if (!window.customElements.get('photo-dome')) {
+        if (n < 80) setTimeout(() => mountDays(n + 1, hostId, look, accent), 150);
+        return;
+      }
+      if (host.querySelector('photo-dome')) return;
+      const el = document.createElement('photo-dome');
+      el.setAttribute('accent', accent || '#ff5c1a');
+      el.setAttribute('color', '#fff3e6');
+      if (look) el.setAttribute('look', look);
+      if (look === 'earth') {
+        el.setAttribute('tiles', 'satellite');
+        el.setAttribute('sparks', 'on');
+      }
+      el.addEventListener('domebuilt', e => {
+        const px = Math.round(e.detail.overshoot || 0);
+        if (this._overshoot === px) return;
+        this._overshoot = px;
+        const stack = document.getElementById('marquee-stack');
+        if (stack) stack.style.bottom = (px + 12) + 'px';
+        this.forceUpdate();
+      });
+      host.appendChild(el);
+      if (el.overshoot) el.dispatchEvent(new CustomEvent('domebuilt', { detail: { overshoot: el.overshoot } }));
+      if (hostId !== 'gd5' && hostId !== 'gd6d') {
+        el.days = this._domeDays();
+        return;
+      }
+      el.days = this._domeDays();
+      el.addEventListener('daychange', e => this.setState({ facing: e.detail, tick: Date.now() }));
+      el.addEventListener('dayopen', e => this.setState({ dayOpen: e.detail }));
+      el.addEventListener('dayclose', () => this.setState({ dayOpen: null }));
+      // Someone added or removed a photo — ours or, on the shared album, anyone's.
+      // Guarded so remounts don't stack listeners.
+      if (!this._photoSub) {
+        this._photoSub = () => this._each(g => { g.days = this._domeDays(); });
+        window.addEventListener('chi-photos', this._photoSub);
+      }
+      // the schedule must clear the top frames, whose edge sits above the pole
+
+      this._gds = (this._gds || []).concat(el);
+      this._gd = this._gds[0];
+      this._applyMode();
+      this._initClouds(0);
+    };
+    mountDays(0);
+    setTimeout(() => mountDays(0, 'gd6d', 'earth', '#ff5c1a'), 700);
+    this._maps = {};
+  }
+  componentWillUnmount() {
+    clearInterval(this._iv); clearInterval(this._qv); clearInterval(this._rIv);
+    document.removeEventListener('visibilitychange', this._wake);
+    window.removeEventListener('focus', this._wake);
+  }
+
+  // The day objects the dome renders. Curated photos from itinerary.json come
+  // first and are permanent; anything the group uploads follows, so a visitor's
+  // additions extend the row rather than displacing the trip's own pictures.
+  _domeDays() {
+    const cp = window.chiPhotos;
+    const up = (cp && cp.byDay()) || {};
+    const ov = (cp && cp.overrides()) || {};
+    return TRIP.map((d, i) => ({
+      label: d.label, date: d.date,
+      photos: (d.photos || []).map((p, si) => {
+        const o = ov[i + ':' + si];
+        // an override renders in the curated photo's place; drop it and the
+        // original is still sitting in itinerary.json, untouched
+        return o
+          ? { src: o.src, id: o.id, mine: o.mine, slot: si, override: true }
+          : { src: p.src, slot: si, stock: true };
+      }).concat(up[i] || []),
+      stops: d.items.map(it => ({ time: it.time, title: it.title, ll: it.ll }))
+    }));
+  }
+
+  // Content lives in itinerary.json so plans can change without touching code.
+  _loadItinerary() {
+    fetch('./itinerary.json?v=' + Date.now(), { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).then(j => {
+      if (!j || !Array.isArray(j.days) || !j.days.length) return;
+      TRIP.length = 0;
+      j.days.forEach(d => TRIP.push({
+        label: d.label, date: d.date, weather: d.weather,
+        legs: d.legs || [], photos: d.photos || [],
+        items: d.items.map((it, i) => ({ ...it, pin: String(i + 1).padStart(2, '0') }))
+      }));
+      if (j.show && j.show.starts) SHOW_AT = new Date(j.show.starts).getTime();
+      TRIP_DATES.length = 0;
+      const yr = new Date(SHOW_AT).getFullYear();
+      j.days.forEach(d => {
+        const [m, dd] = d.date.split('/').map(Number);
+        TRIP_DATES.push(`${yr}-${String(m).padStart(2, '0')}-${String(dd).padStart(2, '0')}`);
+      });
+      this._each(g => { g.days = this._domeDays(); });
+      // itinerary.json can move the dates, so re-ask for the forecast that matches
+      if (window.chiWeather) window.chiWeather.load(TRIP_DATES);
+      this.forceUpdate();
+    }).catch(() => {});
+  }
+
+  // Chicago wall-clock, wherever the phone thinks it is.
+  chiNow(ms) { return chiParts(ms); }
+
+  // Recompute the moment the app comes back from the background.
+  _wakeUp() {
+    this.setState({ now: Date.now() });
+    this._applyMode();
+    if (this._gmap) setTimeout(() => window.google.maps.event.trigger(this._gmap, 'resize'), 60);
+  }
+
+  // Resolve each named venue to its real Google Places coordinates, then cache —
+  // hand-typed lat/lngs drift, Places is the source of truth for where a POI is.
+  _resolvePlaces() {
+    if (this._placesRun || !window.google || !window.google.maps) return;
+    this._placesRun = true;
+    try { this._places = JSON.parse(localStorage.getItem('chitown.places') || '{}'); } catch (e) { this._places = {}; }
+    const queries = [...new Set(TRIP.flatMap(d => d.items.flatMap(it =>
+      [it.place, ...(it.waypoints || []).map(w => w.place)])).filter(q => q && !this._places[q]))];
+    if (!queries.length) { this._applyPlaces(); return; }
+    (async () => {
+      try {
+        const { Place } = await window.google.maps.importLibrary('places');
+        for (const q of queries) {
+          try {
+            const { places } = await Place.searchByText({
+              textQuery: q, fields: ['location', 'displayName'], maxResultCount: 1,
+              locationBias: { center: { lat: 41.8781, lng: -87.6298 }, radius: 40000 }
+            });
+            if (places && places[0] && places[0].location) {
+              this._places[q] = { ll: [places[0].location.lat(), places[0].location.lng()], name: places[0].displayName };
+            }
+          } catch (err) {
+            if (!this._placesWarned) {
+              this._placesWarned = true;
+              console.warn('[chitown] Places lookup failed — POIs fall back to authored coordinates:', err && err.message);
+              this.setState({ poiWarn: true });
+            }
+          }
+        }
+        try { localStorage.setItem('chitown.places', JSON.stringify(this._places)); } catch (e) {}
+        this._applyPlaces();
+      } catch (err) {
+        this._placesWarned = true;
+        console.warn('[chitown] Places library unavailable:', err && err.message);
+        this.setState({ poiWarn: true });
+      }
+    })();
+  }
+  _applyPlaces() {
+    let changed = false;
+    TRIP.forEach(d => d.items.forEach(it => {
+      const p = it.place && this._places[it.place];
+      if (p && (it.ll[0] !== p.ll[0] || it.ll[1] !== p.ll[1])) { it.ll = p.ll; changed = true; }
+      (it.waypoints || []).forEach(w => {
+        const q = w.place && this._places[w.place];
+        if (q && (w.ll[0] !== q.ll[0] || w.ll[1] !== q.ll[1])) { w.ll = q.ll; changed = true; }
+      });
+    }));
+    if (!changed) return;
+    if (this._gres) this._gres = {};
+    this._lday = null;
+    this._lframed = null;
+    this.forceUpdate();
+  }
+
+  // Real Google map for the open day, with live Directions routes.
+  _syncLiveMap() {
+    const open = this.state.dayOpen;
+    const node = document.getElementById('livemap');
+    if (!node || !window.google || !window.google.maps) return;
+    if (open === null || open === undefined) return;
+    this._resolvePlaces();
+    const G = window.google.maps;
+    if (!this._gmap) {
+      this._gmap = new G.Map(node, {
+        center: { lat: 41.8781, lng: -87.6298 }, zoom: 13,
+        mapTypeId: 'hybrid', tilt: 0,
+        disableDefaultUI: true, gestureHandling: 'greedy', clickableIcons: false,
+        backgroundColor: '#0b1016'
+      });
+      this._gover = [];
+      this._gline = [];
+      this._traffic = new G.TrafficLayer(); // attached only when a car leg is in play
+      // the projection isn't ready on the first paint, so declutter silently no-ops;
+      // redraw once the map settles, and after any zoom
+      this._gmap.addListener('zoom_changed', () => {
+        clearTimeout(this._zt);
+        this._zt = setTimeout(() => { this._lday = null; this.forceUpdate(); }, 260);
+      });
+      this._gmap.addListener('idle', () => {
+        this._settleOverlap();
+        if (this._settled) return;
+        this._settled = true;
+        this._lday = null;
+        this.forceUpdate();
+      });
+      // routes are time-sensitive: re-ask Google every 90s while a day is open
+      // This refresh exists for road traffic: driving is the only mode whose answer
+      // actually moves. Walking paths are static, and transit is asked for the
+      // planned departure time, so both return the same result every time. Five
+      // minutes tracks traffic closely enough at a third of the Directions requests.
+      this._rIv = setInterval(() => {
+        const d = this.state.dayOpen;
+        if (d === null || d === undefined) return;
+        // Traffic only means anything on the day itself. Any other day is routed from
+        // its planned departure, which never changes, so there is nothing to re-ask.
+        if (this.liveDay() !== d) return;
+        const store = (this._gres || {})[d];
+        if (!store) return;
+        // Drop ONLY the car legs. Walking and transit would come back identical.
+        let any = false;
+        ((TRIP[d] || {}).legs || []).forEach((lg, k) => {
+          if (lg.mode === 'car' && store[k]) { delete store[k]; any = true; }
+        });
+        if (!any) return;
+        this._lday = null;
+        this.forceUpdate();
+      }, 300000);
+    }
+    if (this._lday === open) return;
+    this._lday = open;
+    const day = TRIP[open];
+    (this._gover || []).forEach(o => o.setMap(null));
+    (this._gline || []).forEach(l => l.setMap(null));
+    this._gover = []; this._gline = [];
+
+    const pts = day.items.filter(it => it.ll).map(it => it.ll);
+    const legs = day.legs || [];
+    this._routeGoogle(open, day, pts, legs);
+    const selIdx = this.state.stopSel ?? -1;
+    const nxi = this.nextInfo(open);
+    const focus = selIdx >= 0 ? selIdx : nxi ? nxi.idx : -1;
+    const carLive = focus > 0 && (legs[focus - 1] || {}).mode === 'car';
+    if (this._traffic) this._traffic.setMap(carLive ? this._gmap : null);
+
+    const pillDefs = [];
+    for (let k = 0; k < pts.length - 1; k++) {
+      const lg = legs[k] || { mode: 'walk' };
+      const st = MODE[lg.mode] || MODE.walk;
+      if (lg.mode === 'none') continue;
+      const real = ((this._gres || {})[open] || {})[k];
+      const oi = lg.from !== undefined ? lg.from : k;
+      const path = real ? real.path.map(p => ({ lat: p[0], lng: p[1] }))
+        : [{ lat: pts[oi][0], lng: pts[oi][1] }, { lat: pts[k + 1][0], lng: pts[k + 1][1] }];
+      const col = real && real.col ? real.col : st.col;
+      const walking = lg.mode === 'walk';
+      const dashed = walking || !real;
+      const icons = dashed ? [{
+        icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, strokeWeight: walking ? 3 : 4, scale: 3 },
+        offset: '0', repeat: walking ? '11px' : '18px'
+      }] : null;
+      this._gline.push(new G.Polyline({
+        path, map: this._gmap, strokeColor: '#05080c', strokeOpacity: 0.85, strokeWeight: 9, zIndex: 1
+      }));
+      this._gline.push(new G.Polyline({
+        path, map: this._gmap, strokeColor: col, zIndex: 2,
+        strokeOpacity: dashed ? 0 : 0.95, strokeWeight: walking ? 3 : 5, icons
+      }));
+
+      const fare = this.fareFor(lg) === 'FREE' ? '' : this.fareFor(lg);
+      const mid = path[Math.floor(path.length / 2)];
+      pillDefs.push({ chars: (real ? real.label : lg.mins + 'm').length + (fare ? fare.length + 3 : 0), pos: [mid.lat, mid.lng], html: `<div style="white-space:nowrap;display:flex;align-items:center;gap:5px;padding:3px 8px;border-radius:12px;
+          background:rgba(6,10,16,.94);border:1px solid ${col};box-shadow:0 2px 8px rgba(0,0,0,.35);font:700 9px/1 ui-monospace,Menlo,monospace;
+          color:${col};letter-spacing:.06em"><span style="display:flex;align-items:center">${modeIcon(lg.mode, 12)}</span>${real ? real.label : lg.mins + 'm'}${fare ? ' · ' + fare : ''}</div>` });
+    }
+
+    const sel = this.state.stopSel ?? -1;
+    const done = this.doneSet();
+    const nx = this.nextInfo(open);
+    const nextIdx = nx ? nx.idx : -1;
+    // sights passed along a stop (e.g. the city walk) get their own small markers
+    const wps = [];
+    day.items.forEach((it, i) => (it.waypoints || []).forEach((w, k) =>
+      wps.push({ ...w, of: i, order: k })));
+    const nStops = day.items.length;
+    const sizes = day.items.map(() => ({ x: 19, y: 19 }))
+      .concat(pillDefs.map(p => ({ x: 16 + p.chars * 3.9, y: 12 })));
+    const placed = this._declutter(
+      day.items.map(it => it.ll).concat(pillDefs.map(p => p.pos)), nStops, sizes);
+    const at = placed.slice(0, nStops);
+    // stops that share a venue get ONE marker carrying every visit number
+    const seenLL = {};
+    const merged = day.items.map(() => null);
+    day.items.forEach((it, i) => {
+      if (!it.ll) return;
+      const key = it.ll[0].toFixed(5) + ',' + it.ll[1].toFixed(5);
+      if (seenLL[key] === undefined) {
+        seenLL[key] = i;
+        merged[i] = { host: true, all: [i] };
+      } else {
+        merged[seenLL[key]].all.push(i);
+        merged[i] = { host: false, of: seenLL[key] };
+      }
+    });
+    pillDefs.forEach((p, i) => {
+      const pos = placed[nStops + i] || p.pos;
+      this._gover.push(this._htmlMarker(pos, p.html, 'legpill', 400, null));
+    });
+    day.items.forEach((it, i) => {
+      if (!it.ll) return;
+      const m = merged[i];
+      if (m && !m.host) return; // a return visit — the host marker speaks for it
+      const group = (m && m.all) || [i];
+      const hero = group.some(g => day.items[g].hero);
+      const isSel = group.includes(sel);
+      const isDone = group.every(g => done.has(open + ':' + g));
+      const hot = group.includes(nextIdx);
+      const cc = (CAT[it.cat] || CAT.stop).col;
+      const ring = isSel ? '#ffffff' : hot ? '#ffd166' : cc;
+      const fill = 'rgba(6,12,20,.94)';
+      this._gover.push(this._htmlMarker(at[i],
+        `<div class="bwrap" style="--c:${ring};--d:${i * 70}ms">
+          <div class="bring"></div>${group.length > 1
+            ? '<div style="position:absolute;inset:-7px;border-radius:50%;border:1px dashed ' + ring + '88"></div>' : ''}
+          <div class="bdisc" style="background:${fill};border-color:${ring}">${catIcon(it.cat, 14)}</div>
+          <div class="bnum">${isDone ? '✓' : group.map(g => g + 1).join('·')}</div>
+        </div>`,
+        'blip' + (isDone ? ' done' : '') + (hot ? ' hot' : '') + (isSel ? ' sel' : ''),
+        isSel ? 1000 : hot ? 600 : 500,
+        () => this.selectStop(group.includes(nextIdx) ? nextIdx : group.find(g => !done.has(open + ':' + g)) ?? group[0])));
+    });
+
+    this._settleOverlap();
+    wps.forEach(w => {
+      const live = sel === w.of || nextIdx === w.of;
+      this._gover.push(this._htmlMarker(w.ll,
+        `<div style="display:flex;align-items:center;gap:6px;transform:translateX(9px)">
+          <div style="width:11px;height:11px;flex:none;border-radius:50%;border:2px solid ${live ? '#ffd166' : '#9ec8ff'};background:#05080c;box-shadow:0 0 0 3px rgba(5,8,12,.75)"></div>
+          <div style="white-space:nowrap;padding:2px 7px;border-radius:9px;background:rgba(5,8,12,.86);border:1px solid ${live ? 'rgba(255,209,102,.5)' : 'rgba(158,200,255,.34)'};font:600 9px/1.4 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:${live ? '#ffe0a3' : 'rgba(238,244,255,.82)'}">${w.name}</div>
+        </div>`,
+        'wpin', live ? 420 : 300, () => this.selectStop(w.of)));
+    });
+
+    if (pts.length && this._lframed !== open) {
+      this._lframed = open;
+      const b = new G.LatLngBounds();
+      pts.forEach(p => b.extend({ lat: p[0], lng: p[1] }));
+      wps.forEach(w => b.extend({ lat: w.ll[0], lng: w.ll[1] }));
+      if (b.isEmpty()) return;
+      this._fit(b);
+      // fitBounds may resolve to the same zoom, so zoom_changed can't be relied on
+      window.google.maps.event.addListenerOnce(this._gmap, 'idle', () => {
+        this._lday = null;
+        this.forceUpdate();
+        this._settleOverlap();
+      });
+    }
+  }
+
+  // Estimated sizes can still leave a pill touching a blip; settle it with the
+  // real rendered boxes once the overlays are in the DOM.
+  // Overlays reposition after we measure, so a single pass can settle on a stale
+  // answer. Keep re-running until the blip geometry stops changing.
+  _settleOverlap() {
+    cancelAnimationFrame(this._settleRaf);
+    let last = '', same = 0, tries = 0;
+    const step = () => {
+      const node = document.getElementById('livemap');
+      if (!node) return;
+      const sig = [...node.querySelectorAll('.bwrap')]
+        .map(b => { const r = b.getBoundingClientRect(); return Math.round(r.left) + ',' + Math.round(r.top); }).join('|');
+      same = sig === last ? same + 1 : 0;
+      last = sig;
+      this._avoidOverlap();
+      // hold on until the geometry has been stable for a while, then verify once more
+      if (same < 12 && ++tries < 240) this._settleRaf = requestAnimationFrame(step);
+      else { setTimeout(() => this._avoidOverlap(), 250); setTimeout(() => this._avoidOverlap(), 900); }
+    };
+    this._settleRaf = requestAnimationFrame(step);
+  }
+
+  _avoidOverlap() {
+    const node = document.getElementById('livemap');
+    if (!node) return;
+    const blips = [...node.querySelectorAll('.bwrap, .wpin')].map(b => b.getBoundingClientRect());
+    const pills = [...node.querySelectorAll('[data-pill]')];
+    pills.forEach(p => {
+      const cur = parseFloat(p.style.marginTop || '0') || 0;
+      const r = p.getBoundingClientRect();
+      // where the pill sits with no offset at all
+      const top = r.top - cur, bottom = r.bottom - cur;
+      // blips that share this pill's horizontal band — moving vertically must clear ALL of them
+      const lane = blips.filter(b => r.left < b.right + 6 && r.right > b.left - 6);
+      const clear = (s) => !lane.some(b => (top + s) < b.bottom + 7 && (bottom + s) > b.top - 7);
+      // keep the current offset only if it is STILL clear at this geometry
+      if (cur && clear(cur)) return;
+      let shift = null;
+      for (let d = 0; d <= 140 && shift === null; d += 3) {
+        if (clear(-d)) shift = -d;
+        else if (d && clear(d)) shift = d;
+      }
+      if (shift === null) shift = -140;
+      if (Math.abs(shift - cur) > 0.5) p.style.marginTop = shift + 'px';
+    });
+  }
+
+  // HTML overlay so the blips keep their design instead of a flat pin image
+  _htmlMarker(pos, html, cls, z, onClick) {
+    const G = window.google.maps;
+    if (!this._HM) {
+      this._HM = class extends G.OverlayView {
+        constructor(pos, html, cls, z, onClick) {
+          super(); this.pos = pos; this.html = html; this.cls = cls; this.z = z; this.cb = onClick;
+        }
+        onAdd() {
+          const d = document.createElement('div');
+          d.className = this.cls;
+          d.style.cssText = 'position:absolute;transform:translate(-50%,-50%);z-index:' + this.z;
+          if (this.cls === 'legpill') d.setAttribute('data-pill', '1');
+          d.innerHTML = this.html;
+          if (this.cb) {
+            d.style.cursor = 'pointer';
+            d.addEventListener('click', e => { e.stopPropagation(); this.cb(); });
+          } else { d.style.pointerEvents = 'none'; }
+          this.div = d;
+          this.getPanes().overlayMouseTarget.appendChild(d);
+        }
+        draw() {
+          if (!this.div) return;
+          const p = this.getProjection().fromLatLngToDivPixel(new G.LatLng(this.pos[0], this.pos[1]));
+          if (!p) return;
+          this.div.style.left = p.x + 'px';
+          this.div.style.top = p.y + 'px';
+        }
+        onRemove() { if (this.div && this.div.parentNode) this.div.parentNode.removeChild(this.div); this.div = null; }
+      };
+    }
+    const m = new this._HM(pos, html, cls, z, onClick);
+    m.setMap(this._gmap);
+    return m;
+  }
+
+  // a short tap of feedback — never on passive state changes, only real taps
+  buzz(ms) { if (navigator.vibrate) navigator.vibrate(ms || 12); }
+
+  // The map is full-height with the drawer OVER it, so bottom padding must equal the
+  // band the drawer covers — otherwise the route frames underneath it.
+  _mapPad() {
+    const node = document.getElementById('livemap');
+    const h = node ? node.clientHeight : 0;
+    const covered = h ? h * (100 - this.sheetStop()) / 100 : 0;
+    // padding must leave a usable viewport: Google gives up and zooms to the world
+    // when top + bottom approaches the map height
+    const top = 86;
+    const bottom = Math.round(Math.max(24, Math.min(covered + 24, h * 0.62 - top)));
+    return { top, right: 42, left: 42, bottom };
+  }
+  // The drawer moved, so shift the map by half the change in the band it covers —
+  // the same ground stays centred in whatever is still visible. A pan, never a
+  // fitBounds: re-fitting re-derived the zoom from the new drawer height, which threw
+  // away any pinch or pan the user had made the moment they nudged the sheet.
+  _panForSheet(prevStop) {
+    if (!this._gmap) return;
+    const node = document.getElementById('livemap');
+    const h = node ? node.clientHeight : 0;
+    if (!h) return;
+    const covered = (stop) => h * (100 - stop) / 100;
+    const dy = (covered(this.sheetStop()) - covered(prevStop)) / 2;
+    if (Math.abs(dy) >= 1) this._gmap.panBy(0, dy);
+  }
+  // A stray coordinate (a bad Places match) can blow the bounds up to the whole globe.
+  // Fit, then clamp — a day's stops are always within a city.
+  _fit(b) {
+    const G = window.google.maps;
+    const sw = b.getSouthWest(), ne = b.getNorthEast();
+    const span = Math.max(Math.abs(ne.lat() - sw.lat()), Math.abs(ne.lng() - sw.lng()));
+    if (span > 2) { // degrees — anything larger is not a city
+      const c = b.getCenter();
+      this._gmap.setCenter(c);
+      this._gmap.setZoom(12);
+      return;
+    }
+    this._gmap.fitBounds(b, this._mapPad());
+    G.event.addListenerOnce(this._gmap, 'idle', () => {
+      if (this._gmap.getZoom() < 10) this._gmap.setZoom(12);
+    });
+  }
+
+  // sheet detents, as % from the top: peek (handle only, clear of the rail) / half / full
+  sheetStop() {
+    const s = this.state.sheet ?? 1;
+    return [84, 44, 16][s];
+  }
+  setSheet(s) {
+    const prevStop = this.sheetStop();   // capture before the state change
+    if (s !== (this.state.sheet ?? 1)) this.buzz(10);
+    this.setState({ sheet: Math.max(0, Math.min(2, s)), drag: null });
+    setTimeout(() => {
+      if (this._gmap) {
+        window.google.maps.event.trigger(this._gmap, 'resize');
+        this._panForSheet(prevStop);
+      }
+      this._settleOverlap();
+    }, 340);
+  }
+  dragStart(e, fromList) {
+    // the handle is the sheet's first child; the sheet's parent is the day layer
+    const sheet = fromList ? e.currentTarget.closest('[data-sheet]') : e.currentTarget.parentElement;
+    const phone = sheet && sheet.parentElement ? sheet.parentElement.getBoundingClientRect() : null;
+    if (!phone || !phone.height) return;
+    const stops = [84, 44, 16];
+    const y0 = e.clientY;
+    const base = this.sheetStop();
+    const target = e.currentTarget;
+    try { target.setPointerCapture(e.pointerId); } catch (err) {}
+    if (e.preventDefault) e.preventDefault();
+    let moved = false;
+    const move = (ev) => {
+      const pct = base + ((ev.clientY - y0) / phone.height) * 100;
+      if (Math.abs(ev.clientY - y0) > 4) { moved = true; this._dragged = Date.now(); }
+      this.setState({ drag: Math.max(10, Math.min(92, pct)) });
+    };
+    let done = false;
+    const up = (ev) => {
+      if (done) return;
+      done = true;
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+      target.removeEventListener('pointermove', move);
+      target.removeEventListener('pointerup', up);
+      target.removeEventListener('pointercancel', up);
+      if (!moved) { this.setState({ drag: null }); return; } // a tap, not a drag
+      this._dragged = Date.now();
+      const pct = base + ((ev.clientY - y0) / phone.height) * 100;
+      let best = 0;
+      stops.forEach((s, i) => { if (Math.abs(s - pct) < Math.abs(stops[best] - pct)) best = i; });
+      this.setSheet(best); // stops[] is indexed by sheet state already
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
+    target.addEventListener('pointermove', move);
+    target.addEventListener('pointerup', up);
+    target.addEventListener('pointercancel', up);
+  }
+
+  // The drawer covers the lower part of the map, so the map's geometric centre is
+  // usually hidden. Shift the pan so the point lands in the band you can actually see.
+  _visibleShift() {
+    const node = document.getElementById('livemap');
+    if (!node) return 0;
+    const m = node.getBoundingClientRect();
+    const sheet = node.parentElement && node.parentElement.parentElement
+      ? node.parentElement.parentElement.querySelector('[data-sheet]') : null;
+    const cover = sheet ? sheet.getBoundingClientRect().top : m.bottom;
+    const bandBottom = Math.max(m.top + 80, Math.min(cover, m.bottom));
+    const bandCentre = (m.top + bandBottom) / 2;      // where the eye actually looks
+    return (m.top + m.height / 2) - bandCentre;        // px to push the point up by
+  }
+  // centre the map on a single point (a walk sight), without changing the selected stop
+  focusPoint(ll) {
+    if (!this._gmap || !ll) return;
+    if ((this.state.sheet ?? 1) === 2) this.setSheet(1); // full drawer hides everything
+    const go = () => {
+      this._gmap.panTo({ lat: ll[0], lng: ll[1] });
+      if (this._gmap.getZoom() < 16) this._gmap.setZoom(16);
+      const dy = this._visibleShift();
+      if (dy) this._gmap.panBy(0, dy);
+    };
+    (this.state.sheet ?? 1) === 2 ? setTimeout(go, 340) : go();
+  }
+
+  componentDidUpdate() { this._syncLiveMap(); }
+
+  // "up next" for a day: the next leave-by, else the next arrival. null if not today.
+  nextInfo(dayIdx) {
+    if (dayIdx === null || dayIdx === undefined) return null;
+    if (this.liveDay() !== dayIdx) return null;
+    const day = TRIP[dayIdx];
+    const c = this.chiNow(this.state.demoLive ? SIM : Date.now());
+    const done = this.doneSet();
+    for (let i = 0; i < day.items.length; i++) {
+      if (done.has(dayIdx + ':' + i)) continue;
+      const it = day.items[i];
+      const lv = it.leave ? DMIN(it.leave) : null;
+      const wh = it.time ? DMIN(it.time) : null;
+      const now = NOWMIN(c);
+      if (lv !== null && now < lv) return { idx: i, at: lv, label: 'LEAVE', item: it };
+      if (wh !== null && now < wh) return { idx: i, at: wh, label: lv ? 'ARRIVE' : 'NEXT', item: it };
+    }
+    return false;
+  }
+  // Real routes from Google Directions — transit lines use their official colours
+  // and reported durations; falls back silently to the drawn estimates.
+  // Directions is billed per request, so nothing is asked for twice when the answer
+  // cannot have changed. The cache survives reloads; only genuinely live traffic on
+  // the day itself is ever re-fetched.
+  _routeCache() {
+    if (!this._rc) {
+      try { this._rc = JSON.parse(localStorage.getItem('chitown.routes') || '{}'); }
+      catch (e) { this._rc = {}; }
+    }
+    return this._rc;
+  }
+  _routeCachePut(sig, v) {
+    const c = this._routeCache();
+    c[sig] = { at: Date.now(), v: v };
+    try { localStorage.setItem('chitown.routes', JSON.stringify(c)); } catch (e) {}
+  }
+
+  _routeGoogle(dayIdx, day, pts, legs) {
+    if (!window.google || !window.google.maps) return;
+    this._gres = this._gres || {};
+    // Per LEG, not per day: the old whole-day latch meant refreshing traffic on one
+    // car leg re-queried every walking and transit leg alongside it.
+    const store = (this._gres[dayIdx] = this._gres[dayIdx] || {});
+    this._pending = this._pending || {};
+    const liveToday = this.liveDay() === dayIdx;
+    const TTL = 7 * 864e5;
+    const ds = new window.google.maps.DirectionsService();
+    const MODES = { walk: 'WALKING', car: 'DRIVING', bus: 'TRANSIT', train: 'TRANSIT' };
+    const plannedAt = (i) => {
+      const t = (day.items[i + 1] || {}).time;
+      const base = new Date(TRIP_DATES[dayIdx] + 'T12:00:00-05:00');
+      if (t) {
+        const [h, m] = t.split(':').map(Number);
+        base.setHours(h, m, 0, 0);
+        // a stop in the small hours is tomorrow's clock on tonight's day — without
+        // this, Friday's 00:02 hotel leg asks Google about midnight a day early
+        if (h < 4) base.setDate(base.getDate() + 1);
+      }
+      return base;
+    };
+    const p5 = (o) => (+o.lat).toFixed(5) + ',' + (+o.lng).toFixed(5);
+    const pillDefs = [];
+    for (let k = 0; k < pts.length - 1; k++) {
+      const lg = legs[k] || { mode: 'walk' };
+      if (lg.mode === 'none') continue;
+      if (store[k] !== undefined) continue;                 // already have this leg
+      const pk = dayIdx + ':' + k;
+      if (this._pending[pk]) continue;                      // request already in flight
+      const mode = MODES[lg.mode] || 'WALKING';
+      const oi = lg.from !== undefined ? lg.from : k;
+      const dest = day.items[k + 1] || {};
+      const via = (lg.mode === 'walk' && dest.waypoints) ? dest.waypoints : [];
+      const req = {
+        waypoints: via.map(w => ({ location: { lat: w.ll[0], lng: w.ll[1] }, stopover: false })),
+        origin: { lat: pts[oi][0], lng: pts[oi][1] },
+        destination: { lat: pts[k + 1][0], lng: pts[k + 1][1] },
+        travelMode: window.google.maps.TravelMode[mode]
+      };
+      // A fixed leg keeps its authored duration, but if it carries waypoints the drawn
+      // path must still follow them — otherwise the sights float off a straight line.
+      if (lg.fixed && !via.length) continue;
+      // A departure in the future is a fixed question with a fixed answer, so it can be
+      // cached. "Now" cannot, which is why only the live day re-asks.
+      let depTag = '';
+      if (mode === 'DRIVING') {
+        const planned = plannedAt(k);
+        const future = planned > new Date();
+        // Off the day itself, ask about the planned departure rather than this minute —
+        // more useful as a preview, and cacheable besides.
+        const when = (liveToday || !future) ? new Date() : planned;
+        req.drivingOptions = { departureTime: when, trafficModel: 'bestguess' };
+        if (!liveToday && future) depTag = 'd' + planned.getTime();
+      }
+      if (mode === 'TRANSIT') {
+        const planned = plannedAt(k);
+        const future = planned > new Date();
+        req.transitOptions = {
+          departureTime: future ? planned : new Date(Date.now() + 6e4),
+          // honour the curated choice: CTA rail stays rail, bus stays bus
+          modes: ['SUBWAY', 'TRAM']
+        };
+        if (future) depTag = 't' + planned.getTime();
+      }
+      // Walking geometry never changes, so it needs no departure in its signature.
+      const cacheable = mode === 'WALKING' || depTag !== '';
+      const sig = mode + '|' + p5(req.origin) + '|' + p5(req.destination) + '|'
+        + req.waypoints.map(w => p5(w.location)).join(';') + '|' + depTag;
+      if (cacheable) {
+        const hit = this._routeCache()[sig];
+        if (hit && Date.now() - hit.at < TTL && hit.v) { store[k] = hit.v; continue; }
+      }
+      const idx = k;
+      this._pending[pk] = true;
+      try {
+        ds.route(req, (res, status) => {
+          delete this._pending[pk];
+          if (status !== 'OK' || !res.routes[0]) return;
+          const leg = res.routes[0].legs[0];
+          const path = res.routes[0].overview_path.map(p => [p.lat(), p.lng()]);
+          let col = null, icon = null, lineName = null, label = (leg.duration_in_traffic || leg.duration).text.replace(' mins', 'm').replace(' min', 'm');
+          if (mode === 'TRANSIT') {
+            const ts = (leg.steps || []).find(s => s.travel_mode === 'TRANSIT');
+            const line = ts && ts.transit && ts.transit.line;
+            if (line) {
+              if (line.color) col = line.color;
+              const ln = line.short_name || line.name || '';
+              if (ln) { label = ln + ' · ' + label; lineName = ln; }
+              const vt = (line.vehicle && line.vehicle.type) || '';
+              icon = '▤';
+            }
+          }
+          const v = { path, col, icon, label, lineName };
+          store[idx] = v;
+          if (cacheable) this._routeCachePut(sig, v);
+          if (this.state.dayOpen === dayIdx) { this._lday = null; this.forceUpdate(); }
+        });
+      } catch (e) { delete this._pending[pk]; }
+    }
+  }
+  // The CTA is flat-fare and transit requests are restricted to the 'L', so which
+  // colour line Google picks never changes the price.
+  fareFor(lg) {
+    if (!lg || lg.mode === 'car' || lg.mode === 'walk') return ''; // no Uber estimates, no "FREE" on walks
+    return lg.cost ? '$' + lg.cost.toFixed(2) : 'FREE';
+  }
+  _declutter(lls, fixedCount, sizes) {
+    const m = this._gmap, G = window.google && window.google.maps;
+    const proj = m && m.getProjection && m.getProjection();
+    if (!m || !proj) return lls;
+    const scale = Math.pow(2, m.getZoom());
+    const half = (i) => (sizes && sizes[i]) || { x: 19, y: 19 };
+    const pts = lls.map(ll => {
+      if (!ll) return null;
+      const w = proj.fromLatLngToPoint(new G.LatLng(ll[0], ll[1]));
+      return { x: w.x * scale, y: w.y * scale };
+    });
+    const seen = {};
+    pts.forEach(p => {
+      if (!p) return;
+      const key = Math.round(p.x) + ':' + Math.round(p.y);
+      const n = seen[key] = (seen[key] || 0) + 1;
+      if (n > 1) {
+        const a = (n - 2) * (Math.PI * 2 / 6) - Math.PI / 2;
+        p.x += Math.cos(a) * 34; p.y += Math.sin(a) * 34;
+      }
+    });
+    for (let pass = 0; pass < 40; pass++) {
+      let moved = false;
+      for (let i = 0; i < pts.length; i++) {
+        for (let k = i + 1; k < pts.length; k++) {
+          const a = pts[i], b = pts[k];
+          if (!a || !b) continue;
+          const ha = half(i), hb = half(k);
+          const needX = ha.x + hb.x + 4, needY = ha.y + hb.y + 4;
+          const dx = b.x - a.x, dy = b.y - a.y;
+          const ox = needX - Math.abs(dx), oy = needY - Math.abs(dy);
+          if (ox <= 0 || oy <= 0) continue; // rects already clear
+          // "fixed" only means outranking a pill — two stops still resolve each other
+          const aFixed = fixedCount !== undefined && i < fixedCount;
+          const bFixed = fixedCount !== undefined && k < fixedCount;
+          // resolve on the cheaper axis; vertical for wide pills
+          let px = 0, py = 0;
+          if (oy <= ox) py = (dy >= 0 ? oy : -oy); else px = (dx >= 0 ? ox : -ox);
+          if (aFixed && !bFixed) { b.x += px; b.y += py; }
+          else if (bFixed && !aFixed) { a.x -= px; a.y -= py; }
+          else { a.x -= px / 2; a.y -= py / 2; b.x += px / 2; b.y += py / 2; }
+          moved = true;
+        }
+      }
+      if (!moved) break;
+    }
+    return pts.map(p => {
+      if (!p) return null;
+      const ll = proj.fromPointToLatLng(new G.Point(p.x / scale, p.y / scale));
+      return [ll.lat(), ll.lng()];
+    });
+  }
+  doneSet() {
+    if (!this._done) {
+      let saved = [];
+      try { saved = JSON.parse(localStorage.getItem('chitown.done') || '[]'); } catch (e) { saved = []; }
+      this._done = new Set(saved);
+    }
+    return this._done;
+  }
+  toggleDone(dayIdx, i) {
+    const s = this.doneSet(), k = dayIdx + ':' + i;
+    s.has(k) ? s.delete(k) : s.add(k);
+    try { localStorage.setItem('chitown.done', JSON.stringify([...s])); } catch (e) {}
+    this._lday = null;
+    this.forceUpdate();
+  }
+  selectStop(i) {
+    const day = TRIP[this.state.dayOpen];
+    if (!day) return;
+    const n = day.items.length;
+    const k = ((i % n) + n) % n;
+    this.setState({ stopSel: k });
+    this._lday = null;
+    const ll = day.items[k].ll;
+    if (this._gmap && ll) {
+      this._gmap.panTo({ lat: ll[0], lng: ll[1] });
+      if (this._gmap.getZoom() < 15) this._gmap.setZoom(15);
+      const dy = this._visibleShift();
+      if (dy) this._gmap.panBy(0, dy);
+    }
+  }
+  clearStop() {
+    this.setState({ stopSel: -1 });
+    this._lday = null;
+  }
+  _el(id) {
+    return document.querySelector('#g' + id) || document.querySelector('#g' + id + ' globe-canvas');
+  }
+  _setDive(el, e) {
+    if (!el) return;
+    if ('progress' in el) el.progress = e; else el.zoom = 1 + e * 4.6;
+  }
+  enter(id, dur) {
+    const el = this._el(id);
+    const t0 = performance.now();
+    const step = () => {
+      const k = Math.min(1, (performance.now() - t0) / (dur || 950));
+      const e = k * k * (3 - 2 * k);
+      this._setDive(el, e);
+      this.setState(s => ({ prog: { ...s.prog, [id]: e }, phase: { ...s.phase, [id]: k < 1 ? 1 : 2 } }));
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  back(id) {
+    this._setDive(this._el(id), 0);
+    this.setState(s => ({ prog: { ...s.prog, [id]: 0 }, phase: { ...s.phase, [id]: 0 } }));
+  }
+  // The moment the trip starts: the first stop of day one, on Chicago's clock.
+  // -05:00 matches the rest of the app's trip-window arithmetic (September is CDT).
+  tripStart() {
+    const first = ((TRIP[0] || {}).items || [])[0];
+    if (!first || !TRIP_DATES[0]) return null;
+    return new Date(TRIP_DATES[0] + 'T' + first.time + ':00-05:00').getTime();
+  }
+
+  // Home-screen countdown. Three states, because the same corner should stay useful
+  // the whole way through: counting down before, placing you during, quiet after.
+  countdown() {
+    const now = this.state.demoLive ? SIM : this.state.now;
+    const live = this.liveDay();
+    if (live !== null) return { big: 'DAY ' + (live + 1), sub: 'OF ' + TRIP.length, col: '#ff5c1a' };
+    const start = this.tripStart();
+    if (start === null) return null;
+    const d = start - now;
+    if (d <= 0) return { big: '★', sub: 'THAT WAS CHICAGO', col: 'rgba(238,244,255,.45)' };
+    const dd = Math.floor(d / 864e5), hh = Math.floor(d / 36e5) % 24;
+    const mm = Math.floor(d / 6e4) % 60, ss = Math.floor(d / 1000) % 60;
+    // Days out, a ticking second hand is just noise — show it only once it matters.
+    if (dd >= 1) return { big: String(dd), sub: dd === 1 ? 'DAY TO GO' : 'DAYS TO GO', col: '#ff5c1a' };
+    return {
+      big: String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0') + ':' + String(ss).padStart(2, '0'),
+      sub: 'UNTIL CHICAGO', col: '#ff5c1a'
+    };
+  }
+
+  // "We're 20 minutes late — what breaks?"
+  //
+  // Drift is measured from the first stop still unticked: if its leave-by has already
+  // passed, that is how far behind we are. The delay is then carried forward
+  // UNABSORBED onto the next stop that genuinely cannot move, which is the honest
+  // worst case — the app has no way to know which dwells are compressible.
+  drift(dayIdx) {
+    if (dayIdx === null || dayIdx === undefined) return null;
+    if (this.liveDay() !== dayIdx) return null;          // only ever about today
+    const day = TRIP[dayIdx];
+    if (!day) return null;
+    const c = this.chiNow(this.state.demoLive ? SIM : Date.now());
+    const done = this.doneSet();
+    let idx = -1, due = null;
+    for (let i = 0; i < day.items.length; i++) {
+      if (done.has(dayIdx + ':' + i)) continue;
+      const it = day.items[i];
+      const at = it.leave ? DMIN(it.leave) : (it.time ? DMIN(it.time) : null);
+      if (at === null) continue;
+      idx = i; due = at; break;
+    }
+    if (due === null) return null;                       // nothing left to be late for
+    // Ticking stops off is the only signal of actual progress, so drift is only
+    // meaningful once at least one is ticked. Without that guard an untouched day
+    // reads as hours behind at teatime purely because nobody pressed anything.
+    if (idx === 0) return null;
+    const late = NOWMIN(c) - due;
+    if (late < 3) return null;                           // on time, or close enough
+    // Beyond a few hours this is far more likely to be stale ticks than a real
+    // delay, and "4H BEHIND" would be alarming nonsense. Say nothing instead.
+    if (late > 180) return null;
+    // From idx+1, not idx: we are late LEAVING the current stop, so its own arrival
+    // is already behind us. The threat is the next fixed thing still ahead.
+    let hard = null;
+    for (let i = idx + 1; i < day.items.length; i++) {
+      const it = day.items[i];
+      if (it.fixed && it.time) { hard = { it: it, i: i, at: DMIN(it.time) }; break; }
+    }
+    return { late: late, idx: idx, hard: hard, eta: hard ? hard.at + late : null };
+  }
+  dayVals(id) {
+    const sel = this.state.day[id] ?? 1;
+    const map = this._maps && this._maps[id];
+    return {
+      days: TRIP.map((d, i) => ({
+        label: d.label, date: d.date,
+        bg: i === sel ? '#ff5c1a' : 'rgba(255,243,230,.07)',
+        fg: i === sel ? '#0d0906' : 'rgba(255,243,230,.6)',
+        pick: () => {
+          this.setState(s => ({ day: { ...s.day, [id]: i } }));
+          if (map) map.flyTo([41.8781 + (i - 1) * 0.006, -87.6298 - (i - 1) * 0.01], 12.4, { duration: 0.9 });
+        }
+      })),
+      items: TRIP[sel].items.map(it => ({
+        ...it,
+        bg: it.hero ? 'rgba(255,92,26,.13)' : 'transparent',
+        tc: it.hero ? '#ff5c1a' : 'rgba(255,92,26,.75)'
+      })),
+      weather: TRIP[sel].weather,
+      photos: TRIP[sel].photos
+    };
+  }
+  vals(id) {
+    const e = this.state.prog[id] || 0;
+    return {
+      heroOp: String(Math.max(0, 1 - e * 1.8)),
+      mapOp: String(Math.max(0, (e - 0.55) / 0.45)),
+      mapPE: e > 0.9 ? 'auto' : 'none',
+      mapT: `translateY(${(1 - e) * 26}px) scale(${1 + (1 - e) * 0.05})`
+    };
+  }
+  liveVals() {
+    const s = nowSlot(SIM);
+    const day = TRIP[s.dayIdx];
+    const pad = n => String(n).padStart(2, '0');
+    return {
+      dayLabel: day.label + ' ' + day.date,
+      weather: day.weather,
+      nowTitle: s.item.title,
+      nowMeta: s.item.meta,
+      nowTime: s.item.time,
+      nowSince: s.since >= 0 ? 'STARTED ' + s.since + ' MIN AGO' : 'IN ' + (-s.since) + ' MIN',
+      nextTitle: s.next ? s.next.title : 'Nothing else today',
+      nextTime: s.next ? s.next.time : '',
+      nextWalk: s.next ? s.next.walk + ' walk' : '',
+      nextIn: s.next ? `${Math.floor(s.mins / 60)}H ${pad(s.mins % 60)}M` : '—',
+      hasRest: day.items.length > s.cur + 2 ? 'block' : 'none',
+      rest: day.items.slice(s.cur + 2).map(it => ({
+        ...it, bg: it.hero ? 'rgba(255,92,26,.13)' : 'transparent',
+        tc: it.hero ? '#ff5c1a' : 'rgba(255,92,26,.7)'
+      })),
+      pills: TRIP.map((d, i) => ({
+        label: d.label,
+        bg: i === s.dayIdx ? '#ff5c1a' : 'rgba(255,243,230,.07)',
+        fg: i === s.dayIdx ? '#0d0906' : 'rgba(255,243,230,.5)'
+      }))
+    };
+  }
+  // before the trip the globe drifts as a preview; during it, it parks on today.
+  // Which trip day is it in CHICAGO right now? Works from any phone timezone,
+  // and a day rolls over at 4am local, not midnight.
+  liveDay() {
+    const ms = this.state.demoLive ? SIM : Date.now();
+    const c = this.chiNow(ms);
+    const shifted = c.min < 240 ? new Date(Date.UTC(c.y, c.m - 1, c.d) - 864e5) : new Date(Date.UTC(c.y, c.m - 1, c.d));
+    const key = shifted.toISOString().slice(0, 10);
+    const i = TRIP_DATES.indexOf(key);
+    return i >= 0 && i < TRIP.length ? i : null;
+  }
+  _each(fn) { (this._gds || []).forEach(fn); }
+  _applyMode() {
+    if (!this._gds || !this._gds.length) return;
+    const i = this.liveDay();
+    if (i === null) { this._each(g => g.unlock()); this.setState({ facing: this.state.facing ?? 0 }); }
+    else { this._each(g => g.lockDay(i)); this.setState({ facing: i }); }
+  }
+  // One cloud shader for the whole app, warm sodium to match the stadium light.
+  _initClouds(n) {
+    const el = document.getElementById('chi-clouds');
+    if (!el || el.dataset.ready === '1') return;
+    // Vanta needs the THREE global; and never latch ready before the effect has
+    // actually constructed, or one transient failure is permanent
+    if (!window.THREE || !window.VANTA || !window.VANTA.CLOUDS || !el.clientWidth) {
+      if (n < 80) setTimeout(() => this._initClouds(n + 1), 250);
+      return;
+    }
+    try {
+      this._clouds = window.VANTA.CLOUDS({
+        el, mouseControls: false, touchControls: false, gyroControls: false,
+        minHeight: 200, minWidth: 200, speed: 0.3, scale: 2.4, scaleMobile: 5,
+        backgroundAlpha: 1, backgroundColor: 0x050403,
+        skyColor: 0x05050a, cloudColor: 0x545a63, cloudShadowColor: 0x1e2128,
+        sunColor: 0xc9a887, sunGlareColor: 0xa8825f, sunlightColor: 0xdcc6ad
+      });
+      // clouds are soft — half resolution is indistinguishable and much cheaper
+      this._clouds.renderer.setPixelRatio(0.6);
+      this._clouds.resize();
+      const c = el.querySelector('canvas');
+      if (c) { c.style.width = '100%'; c.style.height = '100%'; c.style.display = 'block'; }
+      el.dataset.ready = '1';
+    } catch (e) {
+      this._clouds = null;
+      if (n < 80) setTimeout(() => this._initClouds(n + 1), 400);
+    }
+  }
+
+  // How many schedule rows fit above the dome apex on THIS screen. The band is
+  // 14%→52.6% of the viewport, so a short phone gets fewer rows, never an overflow.
+  marqueeCap() {
+    // Measure the band itself — window.innerHeight is the canvas viewport in the
+    // design preview and the phone in the app, which made the two truncate differently.
+    const el = document.getElementById('marquee-band');
+    const band = (el && el.clientHeight ? el.clientHeight
+      : (typeof window !== 'undefined' ? window.innerHeight : 844) * 0.386)
+      - 8 - ((this._overshoot || 80) + 12);   // the top frames eat into the band
+    const headings = 29 + 16 + 10;       // day name + chip + its margin
+    const row = 16;                      // tightened row + gap
+    return Math.max(3, Math.min(14, Math.floor((band - headings) / row)));
+  }
+
+  // Which rows to show when a day has more stops than fit. Never a blind prefix:
+  // live mode centres on what is happening now; otherwise the hero row is always
+  // kept and the omission is taken from the middle, marked at the gap.
+  marqueeWindow(items, cap, curIdx) {
+    if (items.length <= cap) return items.map((it, i) => ({ it, i }));
+    const keep = new Set();
+    if (curIdx !== null && curIdx !== undefined && curIdx >= 0) {
+      let start = Math.max(0, Math.min(items.length - cap, curIdx - 1));
+      for (let i = start; i < start + cap; i++) keep.add(i);
+    } else {
+      const heroIdx = items.findIndex(x => x.hero);
+      const anchors = heroIdx >= 0 ? [heroIdx, items.length - 1] : [items.length - 1];
+      anchors.forEach(a => keep.add(a));
+      // fill from the top, then from the end, leaving the gap in the middle
+      for (let i = 0; keep.size < cap && i < items.length; i++) keep.add(i);
+    }
+    const idx = [...keep].sort((a, b) => a - b).slice(0, cap);
+    return idx.map((i, k) => ({ it: items[i], i, gap: k > 0 && i !== idx[k - 1] + 1 ? i - idx[k - 1] - 1 : 0 }));
+  }
+
+  d5Vals() {
+    const sel = this.state.day5;
+    const open = this.state.dayOpen;
+    const day = TRIP[open ?? sel ?? 1];
+    const dayIdx = open ?? sel ?? 1;
+    const selIdx = this.state.stopSel ?? -1;
+    const selStop = selIdx >= 0 ? day.items[selIdx] : null;
+    const doneSet = this.doneSet();
+    const upNext = open !== null && open !== undefined ? this.nextInfo(open) : null;
+    const dr = open !== null && open !== undefined ? this.drift(open) : null;
+    const cd = this.countdown();
+    const wx = window.chiWeather;
+    const wxDate = TRIP_DATES[open ?? sel ?? 1];
+    const wxDay = wx && wxDate ? wx.day(wxDate) : null;
+    // normalised, so it compares correctly against a day that runs past midnight
+    const chiMin = NOWMIN(this.chiNow(this.state.demoLive ? SIM : Date.now()));
+    const upMins = upNext ? Math.max(0, upNext.at - chiMin) : 0;
+    const liveIdx = this.liveDay();
+    const facingIdx = this.state.facing ?? 0;
+    const slot = liveIdx === null ? null : nowSlot(this.state.demoLive ? SIM : Date.now());
+    const facing = TRIP[facingIdx];
+    const NAMES = { THU: 'Thursday', FRI: 'Friday', SAT: 'Saturday', SUN: 'Sunday', MON: 'Monday' };
+    return {
+      marqueeOp: open === null || open === undefined ? '1' : '0',
+      facingName: NAMES[facing.label],
+      facingDate: facing.date,
+      facingCount: facing.items.length + ' STOPS',
+      quote: '“' + QUOTES[this.state.q || 0].t + '”',
+      quoteBy: '— ' + QUOTES[this.state.q || 0].by,
+      quoteOp: this.state.qOn === false ? '0' : '1',
+      cdShow: cd ? 'block' : 'none',
+      cdBig: cd ? cd.big : '',
+      cdSub: cd ? cd.sub : '',
+      cdCol: cd ? cd.col : '#ff5c1a',
+      modeChip: liveIdx === null ? 'PREVIEW' : 'NOW',
+      modeChipCol: liveIdx === null ? 'rgba(255,190,140,.6)' : '#ff5c1a',
+      demoLabel: this.state.demoLive ? 'Showing: Friday of the trip, 17:52 — live' : 'Showing: today, before the trip — preview',
+      demoToggle: () => { this.setState({ demoLive: !this.state.demoLive }, () => this._applyMode()); },
+      // Dense days must fit the band, not grow out of it: tighten type and gaps,
+      // and cap the rows so the stack can never reach the wordmark.
+      rowGap: facing.items.length > 8 ? '2px' : facing.items.length > 6 ? '4px' : '7px',
+      facingRows: this.marqueeWindow(facing.items, this.marqueeCap(),
+        (slot && facingIdx === liveIdx) ? slot.cur : null).map(({ it, i, gap }) => {
+        const on = slot && facingIdx === liveIdx && i === slot.cur;
+        return {
+          time: T12(it.time), title: it.title,
+          dot: on ? '●' : ' ',
+          col: on ? '#fff3e6' : it.hero ? '#ffd9b0' : 'rgba(255,243,230,.7)',
+          glow: on ? '0 0 18px rgba(255,150,70,.95)' : it.hero ? '0 0 14px rgba(255,150,70,.6)' : '0 0 10px rgba(255,150,70,.28)',
+          op: !slot || on ? '1' : '.62',
+          fsTime: facing.items.length > 8 ? '8.5px' : '9px',
+          fsTitle: facing.items.length > 8 ? '10px' : '11px',
+          gapShow: gap ? 'block' : 'none',
+          gapTxt: gap ? '+' + gap + ' MORE' : ''
+        };
+      }),
+      titleOp: sel === null || sel === undefined ? '1' : '0',
+      poiNote: this.state.poiWarn ? 'PINS UNVERIFIED · ROUTE LINES ESTIMATED' : 'ESTIMATED ROUTE LINES SHOWN',
+      liveMapOp: open === null || open === undefined ? '0' : '1',
+      // over the globe the rail fades out; under the drawer it must be solid,
+      // or the map shows through the band the sheet leaves clear
+      railBg: open === null || open === undefined
+        ? 'linear-gradient(180deg,rgba(5,8,12,0) 0%,rgba(5,8,12,.9) 46%,#05080c 100%)'
+        : '#05080c',
+      sheetTop: (this.state.drag !== null && this.state.drag !== undefined ? this.state.drag : this.sheetStop()) + '%',
+      sheetTr: this.state.drag !== null && this.state.drag !== undefined ? 'none' : 'top .32s cubic-bezier(.32,.72,0,1)',
+      sheetHint: (this.state.sheet ?? 1) === 2 ? 'DRAG DOWN FOR MAP' : (this.state.sheet ?? 1) === 0 ? 'DRAG UP FOR SCHEDULE' : 'DRAG TO RESIZE',
+      // pointerup after a drag also fires click — ignore that one
+      sheetTap: () => {
+        if (this._dragged && Date.now() - this._dragged < 400) return;
+        this.setSheet((this.state.sheet ?? 1) === 2 ? 1 : 2);
+      },
+      dragStart: (e) => this.dragStart(e),
+      // collapsed, the list has nothing to scroll — let it drag the sheet instead
+      listScroll: (this.state.sheet ?? 1) === 0 ? 'hidden' : 'auto',
+      listTouch: (this.state.sheet ?? 1) === 0 ? 'none' : 'pan-y',
+      listDrag: (e) => { if ((this.state.sheet ?? 1) === 0) this.dragStart(e, true); },
+      openOp: open === null || open === undefined ? '0' : '1',
+      openPE: open === null || open === undefined ? 'none' : 'auto',
+      title: { THU: 'Thursday', FRI: 'Friday', SAT: 'Saturday', SUN: 'Sunday', MON: 'Monday' }[day.label],
+      sub: day.date + ' · ' + day.items.length + ' STOPS',
+      // Live forecast when we have one, the authored string when we don't — beyond
+      // the forecast horizon, or offline with nothing cached.
+      weather: wxDay
+        ? wxDay.hi + '° / ' + wxDay.lo + '° · ' + wxDay.text + (wxDay.rain >= 25 ? ' · ' + wxDay.rain + '% RAIN' : '')
+        : day.weather,
+      wxShow: wxDay ? 'inline-flex' : 'none',
+      wxCode: wxDay ? String(wxDay.code) : '',
+      wxCol: wxDay && wxDay.rain >= 50 ? '#ff8a5c'
+        : wxDay && wxDay.kind === 'clear' ? '#ffd166' : 'rgba(206,228,255,.8)',
+      upShow: upNext ? 'flex' : 'none',
+      upLabel: upNext ? '▲ UP NEXT · ' + upNext.label : '',
+      upName: upNext ? upNext.item.title : '',
+      upIn: upNext ? (upMins < 60 ? upMins + ' MIN' : Math.floor(upMins / 60) + 'H ' + String(upMins % 60).padStart(2, '0') + 'M') : '',
+      upAt: upNext ? T12(upNext.item[upNext.label === 'LEAVE' ? 'leave' : 'time']) : '',
+      upCol: upNext && upMins < 15 ? '#ff5c4a' : '#ffd166',
+      upTap: () => { if (!upNext) return; this.buzz(10); this.selectStop(upNext.idx); },
+      driftShow: dr ? 'flex' : 'none',
+      driftAmt: dr ? (dr.late < 60 ? dr.late + ' MIN'
+        : Math.floor(dr.late / 60) + 'H ' + String(dr.late % 60).padStart(2, '0')) : '',
+      driftCol: dr && dr.late >= 15 ? '#ff5c4a' : '#ffb454',
+      driftBg: dr && dr.late >= 15
+        ? 'linear-gradient(90deg,rgba(255,92,74,.16),transparent 78%)'
+        : 'linear-gradient(90deg,rgba(255,180,84,.13),transparent 78%)',
+      driftMsg: dr
+        ? (dr.hard
+          ? dr.hard.it.title + ' is fixed at ' + T12(dr.hard.it.time)
+            + ' — at this pace we get there ' + T12MIN(dr.eta)
+          : 'Nothing fixed left today, so this one can absorb')
+        : '',
+      driftWhy: dr && dr.hard && dr.hard.it.fixedWhy ? dr.hard.it.fixedWhy : '',
+      driftWhyShow: dr && dr.hard && dr.hard.it.fixedWhy ? 'block' : 'none',
+      driftTap: () => { if (!dr) return; this.buzz(12); this.selectStop(dr.hard ? dr.hard.i : dr.idx); },
+      stops: day.items.map((it, i) => {
+        const expanded = this.state.stopSel === i;
+        // Only stops marked weather-dependent get an hourly forecast — a chip on all
+        // forty would be wallpaper. The hour the stop happens is what decides it.
+        const hw = it.weatherWatch && wx && wxDate ? wx.at(wxDate, it.time) : null;
+        const wet = hw && hw.rain >= 40;
+        // `leave` means "depart THIS stop" — reading the next stop's was off by one
+        const nextLeave = it.leave || '';
+        // gentle escalation: only inside 30 min does the wording change
+        let leaveSoon = false;
+        if (nextLeave && liveIdx === dayIdx) {
+          // chiMin is shadowed above as a NUMBER (the current Chicago minute); calling
+          // it as the module-level function threw, but only ever on a live trip day,
+          // which is why it sat here unnoticed.
+          const mins = DMIN(nextLeave) - chiMin;
+          leaveSoon = mins <= 30 && mins > -20;
+        }
+        const lg = (day.legs || [])[i];
+        const grx = ((this._gres || {})[dayIdx] || {})[i];
+        // Google labels read "51m" or "1 hour 3 mins" — parse both shapes
+        // Google's duration for this leg, or null when absent/implausible.
+        const liveMinutes = (() => {
+          if (!lg || lg.fixed) return null;
+          // A waypointed leg's Google duration covers the sightseeing detour, but the
+          // destination's time marks where that sightseeing STARTS — it would double-count.
+          if (((day.items[i] || {}).waypoints || []).length) return null;
+          const lab = grx && grx.label ? grx.label : '';
+          const h = +(lab.match(/(\d+)\s*(?:h(?:ours?)?)\b/i) || [])[1] || 0;
+          const m = +(lab.match(/(\d+)\s*(?:m(?:in(?:ute)?s?)?)\b/i) || [])[1] || 0;
+          const mins = h * 60 + m;
+          if (!mins) return null;
+          // sanity: a 161 m walk is not 24 minutes. Discard anything under ~40 m/min.
+          if (lg.mode === 'walk') {
+            const a = (day.items[i] || {}).ll, b = (day.items[i + 1] || {}).ll;
+            if (a && b) {
+              const R = 6371000, p = Math.PI / 180;
+              const dLat = (b[0] - a[0]) * p, dLon = (b[1] - a[1]) * p;
+              const hv = Math.sin(dLat / 2) ** 2 +
+                Math.cos(a[0] * p) * Math.cos(b[0] * p) * Math.sin(dLon / 2) ** 2;
+              const metres = 2 * R * Math.asin(Math.sqrt(hv));
+              if (metres / mins < 40) return null;
+            }
+          }
+          return mins;
+        })();
+        // The itinerary is timed off authored minutes, so the row must show the same
+        // number — otherwise the arrival it prints contradicts the schedule beneath it.
+        const legMinutes = (lg && lg.mins) || liveMinutes || 0;
+        // departure basis: the next stop's leave-by, else back-solve from its start
+        const depMin = (() => {
+          if (it.leave) return DMIN(it.leave);
+          const nx = day.items[i + 1];
+          if (nx && nx.time && legMinutes) return DMIN(nx.time) - legMinutes;
+          return null;
+        })();
+        const gr = ((this._gres || {})[dayIdx] || {})[i];
+        const isDone = doneSet.has(dayIdx + ':' + i);
+        const st = lg ? (MODE[lg.mode] || MODE.walk) : null;
+        const show = !!lg && lg.mode !== 'none' && i < day.items.length - 1;
+        return {
+        n: isDone ? '✓' : i + 1,
+        time: T12(it.time), title: it.title, meta: it.meta,
+        catCol: (CAT[it.cat] || CAT.stop).col,
+        catFill: it.hero ? (CAT[it.cat] || CAT.stop).col : 'transparent',
+        again: (() => {
+          const same = day.items.map((o, oi) => (oi !== i && o.ll && it.ll &&
+            o.ll[0] === it.ll[0] && o.ll[1] === it.ll[1]) ? oi : -1).filter(x => x >= 0);
+          if (!same.length) return '';
+          const earlier = same.filter(x => x < i);
+          return earlier.length ? 'BACK TO STOP ' + (earlier[0] + 1) : 'YOU RETURN HERE LATER';
+        })(),
+        againShow: day.items.some((o, oi) => oi !== i && o.ll && it.ll &&
+          o.ll[0] === it.ll[0] && o.ll[1] === it.ll[1]) ? 'inline-flex' : 'none',
+        // origin omitted → Google routes from the phone's current location
+        nav: (() => {
+          if (!it.ll) return '#';
+          const ll = (p) => p[0] + ',' + p[1];
+          const wp = it.waypoints || [];
+          // A stop with sights is a multi-stop walk: route through every one of them,
+          // ending at the stop itself, so Maps shows the full path and distance.
+          if (wp.length) {
+            // the walk ends AT this stop, threading its sights on the way
+            const via = wp.filter(w => ll(w.ll) !== ll(it.ll));
+            return 'https://www.google.com/maps/dir/?api=1&travelmode=walking'
+              + '&destination=' + encodeURIComponent(ll(it.ll))
+              + (via.length ? '&waypoints=' + via.map(w => encodeURIComponent(ll(w.ll))).join('|') : '');
+          }
+          const mode = ((day.legs || [])[i - 1] || {}).mode;
+          return 'https://www.google.com/maps/dir/?api=1&destination=' + ll(it.ll)
+            + '&travelmode=' + (mode === 'car' ? 'driving' : mode === 'walk' ? 'walking' : 'transit');
+        })(),
+        navTap: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.buzz(14); },
+        // Uber sits with the journey it belongs to, so its dropoff is the NEXT stop.
+        // Universal link: opens the app with the destination already set (pickup =
+        // wherever you are), or the mobile site if the app isn't installed.
+        uberShow: (lg && lg.mode === 'car' && (day.items[i + 1] || {}).ll) ? 'inline-flex' : 'none',
+        uberTo: (day.items[i + 1] || {}).title || '',
+        uber: (() => {
+          const nx = day.items[i + 1];
+          if (!nx || !nx.ll) return '#';
+          return 'https://m.uber.com/ul/?action=setPickup&pickup=my_location'
+            + '&dropoff[latitude]=' + nx.ll[0] + '&dropoff[longitude]=' + nx.ll[1]
+            + '&dropoff[nickname]=' + encodeURIComponent(nx.title)
+            + (nx.where ? '&dropoff[formatted_address]=' + encodeURIComponent(nx.where) : '');
+        })(),
+        uberTap: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.buzz(14); },
+        where: it.where || it.meta || '',
+        // "What does it look like" only makes sense for places worth looking at —
+        // not the hotel, the airport, or a rideshare corner. Query the verified
+        // Places string, never the human title.
+        // Instagram's app claims instagram.com universal links but only honours a few
+        // routes — /explore/search/keyword lands on the home feed. /explore/tags does
+        // open, so link a curated hashtag per venue.
+        instaShow: it.ig ? 'inline-flex' : 'none',
+        insta: it.ig ? 'https://www.instagram.com/explore/tags/' + it.ig + '/' : '#',
+        instaTap: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.buzz(10); },
+        // the NEXT stop's leave-by is a departure from THIS one
+        leaveShow: nextLeave ? 'flex' : 'none',
+        leaveTxt: nextLeave ? (leaveSoon ? 'Time to head off — leave by ' + T12(nextLeave) : 'Leave here by ' + T12(nextLeave)) : '',
+        leaveCol: leaveSoon ? '#ffd8a8' : 'rgba(238,244,255,.72)',
+        leaveBd: leaveSoon ? 'rgba(255,168,74,.5)' : 'rgba(226,238,255,.16)',
+        leaveBg: leaveSoon ? 'rgba(255,168,74,.14)' : 'rgba(226,238,255,.05)',
+        fixedShow: it.fixed ? 'flex' : 'none',
+        wxShow: hw ? 'flex' : 'none',
+        wxCode: hw ? String(hw.code) : '',
+        wxTxt: hw ? T12(it.time) + ' · ' + hw.temp + '° · ' + hw.text
+          + ' · ' + hw.rain + '% rain' : '',
+        wxCol: wet ? '#ff8a5c' : '#9fe8bd',
+        wxBd: wet ? 'rgba(255,138,92,.35)' : 'rgba(126,232,162,.3)',
+        wxBg: wet ? 'rgba(255,138,92,.11)' : 'rgba(126,232,162,.1)',
+        fixedWhy: it.fixedWhy || '',
+        fixedCol: '#ffd166',
+        fixedBd: 'rgba(255,209,102,.42)',
+        fixedBg: 'rgba(255,209,102,.11)',
+        // a note naming one of this stop's waypoints becomes a link to it on the map
+        // a note is a string, or {t, url} when it points somewhere worth opening
+        notes: (expanded ? (it.notes || []) : []).map(raw => {
+          const t = typeof raw === 'string' ? raw : raw.t;
+          const url = typeof raw === 'string' ? '' : (raw.url || '');
+          // A note can name its own photo tag: {t, ig}. Without this a camera could
+          // only attach to a note naming a waypoint of the SAME stop, so a place
+          // mentioned anywhere else — the first half of a two-stop walk, say — was
+          // named with no way to see it. The picture belongs wherever the place is.
+          const noteIg = typeof raw === 'string' ? '' : (raw.ig || '');
+          const linkTap = (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.buzz(10); };
+          const w = (it.waypoints || []).find(x => t === x.name || t.startsWith(x.name + ' —'));
+          if (!w) {
+            // an explicit tag, else a note naming this stop's own landmark
+            const tag = noteIg || (/^ends at /i.test(t) && it.ig ? it.ig : '');
+            return {
+              t, cur: 'default', dot: 'rgba(158,200,255,.6)', col: 'rgba(238,244,255,.8)', dec: 'none',
+              urlShow: url ? 'inline-flex' : 'none', url: url || '#', urlTap: linkTap,
+              picsShow: tag ? 'inline-flex' : 'none',
+              pics: tag ? 'https://www.instagram.com/explore/tags/' + tag + '/' : '#',
+              picsTap: linkTap
+            };
+          }
+          const wTag = noteIg || w.ig;
+          return {
+            t, cur: 'pointer', dot: '#9ec8ff', col: '#cfe2ff', dec: 'underline',
+            urlShow: url ? 'inline-flex' : 'none', url: url || '#', urlTap: linkTap,
+            picsShow: wTag ? 'inline-flex' : 'none',
+            pics: wTag ? 'https://www.instagram.com/explore/tags/' + wTag + '/' : '#',
+            picsTap: linkTap,
+            tap: (e) => {
+              if (e && e.stopPropagation) e.stopPropagation();
+              this.buzz(10);
+              this.focusPoint(w.ll);
+            }
+          };
+        }),
+        notesShow: expanded && (it.notes || []).length ? 'flex' : 'none',
+        moreShow: !expanded && (it.notes || []).length ? 'block' : 'none',
+        moreTxt: (it.notes || []).length + ' more detail' + ((it.notes || []).length === 1 ? '' : 's') + ' — tap',
+        timeCol: it.fixed ? '#ffd166' : 'rgba(238,244,255,.72)',
+        isNext: upNext && upNext.idx === i ? 'linear-gradient(90deg,rgba(255,209,102,.14),transparent 76%)' : '',
+        doneTap: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.buzz(isDone ? 8 : 18); this.toggleDone(dayIdx, i); },
+        chkBg: isDone ? '#7ee8a2' : 'transparent',
+        chkCol: isDone ? '#04300f' : 'transparent',
+        chkBd: isDone ? '#7ee8a2' : 'rgba(226,238,255,.28)',
+        tap: () => { this.buzz(8); this.selectStop(i); },
+        numCol: isDone ? '#7ee8a2' : '#9ec8ff',
+        titleCol: isDone ? 'rgba(238,244,255,.45)' : '#eef4ff',
+        rowBg: i === selIdx ? 'rgba(158,200,255,.10)'
+          : (upNext && upNext.idx === i) ? 'linear-gradient(90deg,rgba(255,209,102,.14),transparent 76%)'
+          : it.hero ? 'rgba(255,92,26,.12)' : 'transparent',
+        rowOp: isDone ? '.45' : '1',
+        titleDec: isDone ? 'line-through' : 'none',
+        legShow: show ? 'flex' : 'none',
+        legCol: gr && gr.col ? gr.col : st ? st.col : '#9ec8ff',
+
+        // mode reads as a word, not a code
+        legHow: (() => {
+          if (!lg) return '';
+          const line = (gr && gr.lineName) || lg.line;
+          if (lg.mode === 'walk') return 'on foot';
+          if (lg.mode === 'car') return 'by'; // the pill next to this says "Uber"
+          if (lg.mode === 'train') return line ? 'on the ' + line : 'on the L';
+          return '';
+        })(),
+        dwellShow: it.dwell ? 'flex' : 'none',
+        dwellTxt: it.dwell ? it.dwell + ' here before you head out' : '',
+        badgeBg: isDone ? 'rgba(126,232,162,.18)'
+          : it.hero ? 'rgba(255,92,26,.3)' : 'rgba(226,238,255,.06)',
+        cardBd: isDone ? 'rgba(126,232,162,.2)'
+          : (upNext && upNext.idx === i) ? 'rgba(255,209,102,.45)'
+          : it.hero ? 'rgba(255,92,26,.4)' : 'rgba(226,238,255,.1)',
+        // minutes for this leg: Google's when we have it, else the authored estimate.
+        // ONE value drives both the headline and the arrival maths.
+        legMins: (() => {
+          const m = legMinutes;
+          if (!m) return '';
+          return m >= 60 ? Math.floor(m / 60) + 'h ' + (m % 60 ? (m % 60) + 'm' : '') : m + ' min';
+        })(),
+        // when you'd land if you set off at the stated departure. Needs a real
+        // departure — a stop's START time is not when you leave it.
+        legMeta: (() => {
+          if (!lg) return '';
+          const bits = [];
+          if (depMin !== null && legMinutes) bits.push('arrive ~' + T12MIN(depMin + legMinutes));
+          // surface the live figure only when it disagrees with the plan
+          if (liveMinutes && Math.abs(liveMinutes - legMinutes) >= 3) {
+            bits.push('live ' + liveMinutes + 'm');
+          }
+          const c = this.fareFor(lg);
+          if (c) bits.push(c);
+          return bits.join(' · ');
+        })(),
+        // drop the station-name half of the note once real data names the line
+        legNote: lg ? ((gr && gr.lineName && (lg.line || /→|LINE|STATION/i.test(lg.note))) ? '' : lg.note) : '',
+        bg: it.hero ? 'rgba(255,92,26,.12)' : 'transparent'
+        };
+      }),
+      chips: TRIP.map((d, i) => ({
+        pct: Math.round(d.items.filter((_, k) => doneSet.has(i + ':' + k)).length / d.items.length * 100) + '%',
+        pctBg: i === (open ?? sel) ? 'rgba(0,0,0,.7)' : '#7ee8a2',
+        label: d.label, date: d.date,
+        bg: i === sel ? '#ff5c1a' : 'rgba(255,243,230,.06)',
+        bd: i === sel ? '#ff5c1a' : 'rgba(255,243,230,.14)',
+        fg: i === sel ? '#0d0906' : '#fff3e6',
+        sub: i === sel ? 'rgba(13,9,6,.65)' : 'rgba(255,243,230,.4)',
+        pick: () => {
+          this.buzz(14);
+          if (this.state.dayOpen === i) return;
+          // straight to the day: no dome animation between days
+          this._lframed = null;
+          this.setState({ day5: i, dayOpen: i, stopSel: -1 });
+          this._each(g => g.jumpDay(i));
+        }
+      })),
+      close: () => { this.buzz(10); this.setState({ day5: null, dayOpen: null }); this._each(g => g.unfocus()); }
+    };
+  }
+  renderVals() {
+    const a = this.dayVals('3a'), b = this.dayVals('3b');
+    const L = this.liveVals();
+    const g4b = this.state.prog['4b'] || 0;
+    return {
+      d5: this.d5Vals(),
+      live: L,
+      v4a: this.vals('4a'), v4b: this.vals('4b'),
+      orbOpen4b: g4b > 0.02 ? '1' : '0',
+      orbPE4b: g4b > 0.02 ? 'auto' : 'none',
+      openOrb4b: () => this.enter('4b', 700),
+      closeOrb4b: () => this.back('4b'),
+      replay4a: () => { this.back('4a'); setTimeout(() => this.enter('4a', 1500), 60); },
+      countdown: this.countdown(),
+      v3a: this.vals('3a'), v3b: this.vals('3b'),
+      days3a: a.days, items3a: a.items, weather3a: a.weather, photos3a: a.photos,
+      days3b: b.days, items3b: b.items,
+      enter3a: () => this.enter('3a'), back3a: () => this.back('3a'),
+      enter3b: () => this.enter('3b'), back3b: () => this.back('3b'),
+      v1a: this.vals('1a'), v1b: this.vals('1b'), v1c: this.vals('1c'),
+      enter1a: () => this.enter('1a'), back1a: () => this.back('1a'),
+      enter1b: () => this.enter('1b'), back1b: () => this.back('1b'),
+      enter1c: () => this.enter('1c'), back1c: () => this.back('1c')
+    };
+  }
+}
+</script>
+</body>
+</html>

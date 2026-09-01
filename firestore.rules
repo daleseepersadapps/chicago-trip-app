@@ -1,0 +1,51 @@
+rules_version = '2';
+
+// Photo metadata. The bytes live in Storage; see storage.rules.
+//
+// What these rules genuinely enforce: you must be signed in to write, a document
+// must have exactly the expected shape, you cannot forge another device's uid, and
+// you can only delete what you uploaded.
+//
+// What they cannot enforce: the trip passcode. A static site has nowhere to keep a
+// secret, so the passcode in firebase-config.js is a UI latch only. Anyone who
+// reads the page source and signs in anonymously can write. If that matters, move
+// uploads behind a Cloud Function or a Worker that holds the secret server-side.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /photos/{photoId} {
+
+      // The album is meant to be seen by anyone who opens the app.
+      allow read: if true;
+
+      // 'slot' is optional and marks a replacement for the curated photo at that
+      // index of the day. hasOnly permits its absence, so plain uploads written
+      // before this field existed still validate.
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['day', 'url', 'path', 'by', 'at', 'slot'])
+        && (!('slot' in request.resource.data)
+            || (request.resource.data.slot is int
+                && request.resource.data.slot >= 0
+                && request.resource.data.slot <= 100))
+        && request.resource.data.by == request.auth.uid          // no forging authorship
+        && request.resource.data.day is int
+        && request.resource.data.day >= 0
+        && request.resource.data.day <= 30
+        && request.resource.data.url is string
+        && request.resource.data.url.size() < 2000
+        // the object must sit under this uid's own prefix, matching storage.rules
+        && request.resource.data.path is string
+        && request.resource.data.path.matches('photos/' + request.auth.uid + '/.*')
+        && request.resource.data.at is int;
+
+      // Photos are immutable: edit means remove and re-add. Nothing in the app
+      // updates a doc, so allowing it would only widen the surface.
+      allow update: if false;
+
+      // Any signed-in visitor may remove any photo. The album is shared property
+      // among the trip group, and ownership was stranding photos: anonymous uids are
+      // per-browser, so clearing site data made your own uploads undeletable.
+      // 'by' is still recorded and still unforgeable on create.
+      allow delete: if request.auth != null;
+    }
+  }
+}

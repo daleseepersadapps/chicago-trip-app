@@ -1,0 +1,1267 @@
+{
+  "days": [
+    {
+      "label": "THU",
+      "date": "9/3",
+      "weather": "78° / HUMID · CLEAR PM",
+      "photos": [
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Deep-Dish_Pizza_Chicago_Style_%2816934681309%29.jpg/960px-Deep-Dish_Pizza_Chicago_Style_%2816934681309%29.jpg",
+          "credit": "Prayitno / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Deep-Dish_Pizza_Chicago_Style_(16934681309).jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Chicago_Riverwalk_at_River_East_IMG_5514.jpg/960px-Chicago_Riverwalk_at_River_East_IMG_5514.jpg",
+          "credit": "SecretName101 / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Riverwalk_at_River_East_IMG_5514.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Chicago_Theatre_2.jpg/960px-Chicago_Theatre_2.jpg",
+          "credit": "Daniel Schwen / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Theatre_2.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Chicago-style_pizza.jpg/960px-Chicago-style_pizza.jpg",
+          "credit": "L. W. Yang / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago-style_pizza.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Giordano%27s_Deep_Dish_Pizza.jpg/960px-Giordano%27s_Deep_Dish_Pizza.jpg",
+          "credit": "Belinda Hankins Miller / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Giordano%27s_Deep_Dish_Pizza.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Pizzeria_Uno_Chicago-style_deep-dish_pizza.jpg/960px-Pizzeria_Uno_Chicago-style_deep-dish_pizza.jpg",
+          "credit": "Bobak Ha'Eri / CC BY 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Pizzeria_Uno_Chicago-style_deep-dish_pizza.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/20090524_Buildings_along_Chicago_River_line_the_south_border_of_the_Near_North_Side_and_Streeterville_and_the_north_border_of_Chicago_Loop%2C_Lakeshore_East_and_Illinois_Center.jpg/960px-thumbnail.jpg",
+          "credit": "flickr user mindfrieze / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:20090524_Buildings_along_Chicago_River_line_the_south_border_of_the_Near_North_Side_and_Streeterville_and_the_north_border_of_Chicago_Loop%2C_Lakeshore_East_and_Illinois_Center.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Chicago_River_in_Chicago_2012-0241.jpg/960px-Chicago_River_in_Chicago_2012-0241.jpg",
+          "credit": "Victorgrigas / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_River_in_Chicago_2012-0241.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Chicago_Theatre_blend.jpg/960px-Chicago_Theatre_blend.jpg",
+          "credit": "Daniel Schwen / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Theatre_blend.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Chicago_%28ILL%29_River_North%2C_Marina_city%2C_1964.jpg/960px-Chicago_%28ILL%29_River_North%2C_Marina_city%2C_1964.jpg",
+          "credit": "Vincent Desjardins / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_%28ILL%29_River_North%2C_Marina_city%2C_1964.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Marina_City%2C_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_01.jpg/960px-Marina_City%2C_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_01.jpg",
+          "credit": "Diego Delso / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Marina_City%2C_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_01.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Wrigley_Building_-_Chicago%2C_Illinois.JPG/960px-Wrigley_Building_-_Chicago%2C_Illinois.JPG",
+          "credit": "Daderot / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Wrigley_Building_-_Chicago%2C_Illinois.JPG"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Equitable_Chicago_1.jpg/960px-Equitable_Chicago_1.jpg",
+          "credit": "Daniel Schwen / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Equitable_Chicago_1.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Old_town_sign.JPG/960px-Old_town_sign.JPG",
+          "credit": "Victorgrigas / CC BY-SA 2.5",
+          "href": "https://commons.wikimedia.org/wiki/File:Old_town_sign.JPG"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Green_Chicago_River_on_Saint_Patricks_Day_2009.jpg/960px-Green_Chicago_River_on_Saint_Patricks_Day_2009.jpg",
+          "credit": "Mike Boehmer / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Green_Chicago_River_on_Saint_Patricks_Day_2009.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Chicago_sunrise_1.jpg/960px-Chicago_sunrise_1.jpg",
+          "credit": "Daniel Schwen / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_sunrise_1.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Chicago_Grant_Park_night_pano.jpg/960px-Chicago_Grant_Park_night_pano.jpg",
+          "credit": "Daniel Schwen / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Grant_Park_night_pano.jpg"
+        }
+      ],
+      "items": [
+        {
+          "time": "11:53",
+          "title": "Land at O'Hare",
+          "where": "O'Hare Terminal 5",
+          "cat": "plane",
+          "place": "O'Hare International Airport Chicago",
+          "ll": [
+            41.9742,
+            -87.9073
+          ],
+          "notes": [
+            "Uber pickup is on the DEPARTURES level, not Arrivals",
+            "Baggage claim first, then back UP an escalator",
+            "Be at the curb by 12:40"
+          ],
+          "walk": "",
+          "meta": "",
+          "pin": "01",
+          "leave": "12:40"
+        },
+        {
+          "time": "13:25",
+          "title": "Hotel — bag drop only",
+          "where": "640 N Wabash Ave",
+          "cat": "hotel",
+          "place": "Holiday Inn Express Chicago Magnificent Mile",
+          "ll": [
+            41.89382,
+            -87.62706
+          ],
+          "notes": [
+            "Check-in isn't until 3pm — bags to the desk"
+          ],
+          "leave": "13:39",
+          "walk": "",
+          "meta": "",
+          "pin": "02"
+        },
+        {
+          "time": "13:45",
+          "title": "Gino's East",
+          "where": "162 E Superior St",
+          "cat": "deli",
+          "place": "Gino's East Superior Chicago",
+          "ll": [
+            41.8958,
+            -87.6237
+          ],
+          "fixed": true,
+          "fixedWhy": "Order the pizza the second we sit — 45 minute bake",
+          "notes": [
+            "This one decides whether the afternoon works"
+          ],
+          "leave": "15:24",
+          "walk": "",
+          "meta": "",
+          "pin": "03",
+          "ig": "ginoseast"
+        },
+        {
+          "time": "15:37",
+          "title": "Chicago Riverwalk",
+          "where": "Michigan Ave bridge, north-east corner",
+          "cat": "skyline",
+          "place": "Chicago Riverwalk",
+          "ll": [
+            41.8885,
+            -87.6244
+          ],
+          "notes": [
+            "Down the stairs at the north-east corner of the bridge"
+          ],
+          "leave": "16:08",
+          "walk": "",
+          "meta": "",
+          "pin": "04",
+          "ig": "chicagoriverwalk"
+        },
+        {
+          "time": "16:18",
+          "title": "Hotel — break",
+          "where": "640 N Wabash Ave",
+          "cat": "hotel",
+          "place": "Holiday Inn Express Chicago Magnificent Mile",
+          "ll": [
+            41.89382,
+            -87.62706
+          ],
+          "fixed": true,
+          "fixedWhy": "Change into smart casual now — LH enforces a dress code",
+          "notes": [
+            "Check in properly, rest",
+            "No chance to change later",
+            "Bring a jacket — it cools off tonight"
+          ],
+          "leave": "17:48",
+          "walk": "",
+          "meta": "",
+          "pin": "05"
+        },
+        {
+          "time": "18:00",
+          "title": "Zanies — Jay Jurden",
+          "where": "1548 N Wells St, Old Town",
+          "cat": "theater",
+          "place": "Zanies Comedy Night Club Chicago",
+          "ll": [
+            41.91163,
+            -87.63446
+          ],
+          "fixed": true,
+          "fixedWhy": "Doors 6pm, first come — arriving at doors is what gets us a good spot",
+          "notes": [
+            "21+, photo ID required",
+            "Jay Jurden on at 7:00",
+            "Two-item minimum per person",
+            "Ask for the check at 8:20 — every table settles at once"
+          ],
+          "leave": "20:43",
+          "walk": "",
+          "meta": "",
+          "pin": "06",
+          "ig": "zaniescomedyclub"
+        },
+        {
+          "time": "20:55",
+          "title": "Night walk starts — Chicago Theatre sign",
+          "where": "Uber drops us at State & Lake, under the marquee",
+          "cat": "skyline",
+          "place": "The Chicago Theatre",
+          "ll": [
+            41.8853,
+            -87.62775
+          ],
+          "walk": "",
+          "meta": "",
+          "pin": "07",
+          "leave": "21:00",
+          "ig": "chicagotheatrenight",
+          "notes": [
+            {
+              "t": "Chicago Theatre — the drop-off. Stand across State to get the whole marquee in frame",
+              "ig": "chicagotheatrenight"
+            },
+            {
+              "t": "Marina City — 5 min north up State. The two corncob towers, right on the river",
+              "ig": "marinacity"
+            },
+            {
+              "t": "Wrigley Building — 6 min further east along the north bank. Floodlit white",
+              "ig": "wrigleybuilding"
+            },
+            "11 min of walking in total, the rest is standing and looking",
+            "Skip Marina City if we are running late — it saves 5 min"
+          ]
+        },
+        {
+          "time": "21:18",
+          "title": "Night walk ends — Wrigley Building",
+          "where": "400 N Michigan Ave, on the north bank",
+          "cat": "skyline",
+          "place": "The Wrigley Building Chicago",
+          "ll": [
+            41.8897,
+            -87.62459
+          ],
+          "walk": "",
+          "meta": "",
+          "pin": "08",
+          "leave": "21:26",
+          "ig": "wrigleybuilding",
+          "waypoints": [
+            {
+              "name": "Marina City",
+              "place": "Marina City Chicago",
+              "ll": [
+                41.88797,
+                -87.62897
+              ],
+              "ig": "marinacity"
+            }
+          ],
+          "notes": [
+            {
+              "t": "Marina City — passed on the way here, 5 min back down the river",
+              "ig": "marinacity"
+            },
+            "Floodlit white, and it faces the bridge — best seen from across the river",
+            "Uber to LondonHouse from here, or walk it in 3 min over the bridge"
+          ]
+        },
+        {
+          "time": "21:31",
+          "title": "LH Rooftop",
+          "where": "LondonHouse, 85 E Wacker Dr",
+          "cat": "bar",
+          "place": "LH Rooftop Chicago",
+          "ll": [
+            41.88777,
+            -87.62531
+          ],
+          "fixed": true,
+          "fixedWhy": "Food service stops at 11pm — order early",
+          "notes": [
+            "Only 3 min on foot from the Wrigley Building, straight over the DuSable bridge — walk it if the car is more than a few minutes away",
+            "90 minute table limit",
+            "Order food as soon as we sit"
+          ],
+          "leave": "23:03",
+          "walk": "",
+          "meta": "",
+          "pin": "09",
+          "ig": "lhrooftop",
+          "weatherWatch": true
+        },
+        {
+          "time": "23:15",
+          "title": "Hotel",
+          "where": "640 N Wabash Ave",
+          "cat": "hotel",
+          "place": "Holiday Inn Express Chicago Magnificent Mile",
+          "ll": [
+            41.89382,
+            -87.62706
+          ],
+          "walk": "",
+          "meta": "",
+          "pin": "10"
+        }
+      ],
+      "legs": [
+        {
+          "mode": "car",
+          "mins": 35,
+          "note": "UBER FROM DEPARTURES LEVEL",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 6,
+          "note": "",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 13,
+          "note": "",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 10,
+          "note": "",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "car",
+          "mins": 12,
+          "note": "LEAVE 5:45 PM",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "car",
+          "mins": 12,
+          "note": "RIDE TO THE LOOP · DROPS US UNDER THE CHICAGO THEATRE SIGN",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 18,
+          "note": "THE WALK · UP STATE, PAST MARINA CITY, EAST ALONG THE RIVER",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "car",
+          "mins": 5,
+          "note": "UBER OVER THE BRIDGE TO LONDONHOUSE",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 12,
+          "note": "",
+          "line": "",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "label": "FRI",
+      "date": "9/4",
+      "weather": "81° / CLEAR · SHOW NIGHT",
+      "photos": [
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Chicago_Water_Tower%2C_Michigan_Avenue%2C_Streeterville%2C_Chicago%2C_IL.jpg/960px-Chicago_Water_Tower%2C_Michigan_Avenue%2C_Streeterville%2C_Chicago%2C_IL.jpg",
+          "credit": "w_lemay / CC0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Water_Tower,_Michigan_Avenue,_Streeterville,_Chicago,_IL.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Art_Institute_of_Chicago_Building%2C_Chicago%2C_Illinois_%2811004251406%29.jpg/960px-Art_Institute_of_Chicago_Building%2C_Chicago%2C_Illinois_%2811004251406%29.jpg",
+          "credit": "Ken Lund / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Art_Institute_of_Chicago_Building,_Chicago,_Illinois_(11004251406).jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Soldier_Field-_Chicago_%285392940417%29.jpg/960px-Soldier_Field-_Chicago_%285392940417%29.jpg",
+          "credit": "Loco Steve / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Soldier_Field-_Chicago_(5392940417).jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/20070513_Magnificent_Mile.JPG/960px-20070513_Magnificent_Mile.JPG",
+          "credit": "TonyTheTiger / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:20070513_Magnificent_Mile.JPG"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Chicago-_Magnificent_Mile_%289694622524%29.jpg/960px-Chicago-_Magnificent_Mile_%289694622524%29.jpg",
+          "credit": "Roman Boed / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago-_Magnificent_Mile_%289694622524%29.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/The_Magnificent_Mile%2C_Michigan_Avenue%2C_Chicago%2C_Illinois_%289181674658%29.jpg/960px-The_Magnificent_Mile%2C_Michigan_Avenue%2C_Chicago%2C_Illinois_%289181674658%29.jpg",
+          "credit": "Ken Lund / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:The_Magnificent_Mile%2C_Michigan_Avenue%2C_Chicago%2C_Illinois_%289181674658%29.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Chicago_The_Magnificent_Mile_%2847203862811%29.jpg/960px-Chicago_The_Magnificent_Mile_%2847203862811%29.jpg",
+          "credit": "tomislav medak / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_The_Magnificent_Mile_%2847203862811%29.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Water_Tower_-_Chicago_Nov_2004.jpg/960px-Water_Tower_-_Chicago_Nov_2004.jpg",
+          "credit": "Didier B / CC BY-SA 2.5",
+          "href": "https://commons.wikimedia.org/wiki/File:Water_Tower_-_Chicago_Nov_2004.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Chicago_Water_Tower_%28October_2008%29.jpg/960px-Chicago_Water_Tower_%28October_2008%29.jpg",
+          "credit": "Zol87 / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Water_Tower_%28October_2008%29.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Chicago_Water_Tower_by_night.JPG/960px-Chicago_Water_Tower_by_night.JPG",
+          "credit": "Afries52 / CC BY 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Water_Tower_by_night.JPG"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Art_Institute_of_Chicago_from_south.jpg/960px-Art_Institute_of_Chicago_from_south.jpg",
+          "credit": "Beyond My Ken / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Art_Institute_of_Chicago_from_south.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Art_Institute_of_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_01.jpg/960px-Art_Institute_of_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_01.jpg",
+          "credit": "Diego Delso / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Art_Institute_of_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_01.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Art_Institute_of_Chicago_%287415244162%29.jpg/960px-Art_Institute_of_Chicago_%287415244162%29.jpg",
+          "credit": "Teemu008 / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Art_Institute_of_Chicago_%287415244162%29.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Soldier_Field_Chicago_aerial_view.jpg/960px-Soldier_Field_Chicago_aerial_view.jpg",
+          "credit": "Dale Fisher, U.S. Army Corps of Engineers / Public domain",
+          "href": "https://commons.wikimedia.org/wiki/File:Soldier_Field_Chicago_aerial_view.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Chicago_Fire_at_Soldier_field_in_2005.jpg/960px-Chicago_Fire_at_Soldier_field_in_2005.jpg",
+          "credit": "Ben W / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Fire_at_Soldier_field_in_2005.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Soldier_Field_Chicago.jpg/960px-Soldier_Field_Chicago.jpg",
+          "credit": "BryanDavis / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Soldier_Field_Chicago.jpg"
+        }
+      ],
+      "items": [
+        {
+          "time": "10:00",
+          "title": "3 Arts Club Café",
+          "where": "1300 N Dearborn Pkwy",
+          "cat": "brunch",
+          "place": "3 Arts Club Cafe Chicago",
+          "ll": [
+            41.906,
+            -87.63
+          ],
+          "notes": [
+            "Inside RH Chicago — the atrium courtyard",
+            "Fills up by 11, worth being early",
+            "Water Tower",
+            "Tribune Tower",
+            "Wrigley Building"
+          ],
+          "leave": "11:40",
+          "walk": "",
+          "meta": "",
+          "pin": "01",
+          "ig": "3artsclubcafe",
+          "waypoints": [
+            {
+              "name": "Water Tower",
+              "place": "Chicago Water Tower",
+              "ll": [
+                41.8971,
+                -87.6247
+              ],
+              "ig": "chicagowatertower"
+            },
+            {
+              "name": "Tribune Tower",
+              "place": "Tribune Tower Chicago",
+              "ll": [
+                41.8902,
+                -87.6238
+              ],
+              "ig": "tribunetower"
+            },
+            {
+              "name": "Wrigley Building",
+              "place": "The Wrigley Building Chicago",
+              "ll": [
+                41.8897,
+                -87.62459
+              ],
+              "ig": "wrigleybuilding"
+            }
+          ]
+        },
+        {
+          "time": "11:49",
+          "title": "Magnificent Mile walk",
+          "where": "North to south, ending at DuSable Bridge",
+          "cat": "skyline",
+          "place": "DuSable Bridge Chicago",
+          "ll": [
+            41.8885,
+            -87.6244
+          ],
+          "notes": [
+            "North to south, ending at DuSable Bridge"
+          ],
+          "leave": "12:30",
+          "walk": "",
+          "meta": "",
+          "pin": "02",
+          "ig": "magnificentmile"
+        },
+        {
+          "time": "12:46",
+          "title": "Art Institute",
+          "where": "111 S Michigan Ave",
+          "cat": "museum",
+          "place": "Art Institute of Chicago",
+          "ll": [
+            41.8796,
+            -87.6237
+          ],
+          "fixed": true,
+          "fixedWhy": "Thorne Miniature Rooms first, 12:55 — easy to run out of time for",
+          "notes": [
+            "Coat check, then straight down to the lower level",
+            {
+              "t": "1:20 — \"What to See in an Hour\" route on your phone",
+              "url": "https://www.artic.edu/highlights/3/what-to-see-in-an-hour"
+            },
+            "2:20 — free time",
+            "Download the museum app at the hotel, gallery wifi is patchy"
+          ],
+          "leave": "14:51",
+          "walk": "",
+          "meta": "",
+          "pin": "03",
+          "ig": "artinstituteofchicago"
+        },
+        {
+          "time": "15:02",
+          "title": "Hotel — break",
+          "where": "640 N Wabash Ave",
+          "cat": "hotel",
+          "place": "Holiday Inn Express Chicago Magnificent Mile",
+          "ll": [
+            41.89382,
+            -87.62706
+          ],
+          "fixed": true,
+          "fixedWhy": "Pack the clear bag now — no bag check at the stadium",
+          "notes": [
+            "Clear bag only: max 12\"x6\"x12\", or a clutch under 4.5\"x6.5\"",
+            "Tickets in your phone wallet — 63,000 phones at the gates",
+            "A light layer each",
+            "Check which gate your ticket says"
+          ],
+          "leave": "16:22",
+          "walk": "",
+          "meta": "",
+          "pin": "04"
+        },
+        {
+          "time": "16:35",
+          "title": "Naia",
+          "where": "300 N LaSalle Dr",
+          "cat": "deli",
+          "place": "NAIA Chicago Riverwalk restaurant",
+          "ll": [
+            41.88812,
+            -87.63285
+          ],
+          "fixed": true,
+          "fixedWhy": "Off the table by 5:56 pm — the car leaves at 6:05 pm",
+          "notes": [
+            "90 minutes at the table"
+          ],
+          "leave": "18:05",
+          "walk": "",
+          "meta": "",
+          "pin": "05",
+          "ig": "naiachicago"
+        },
+        {
+          "time": "18:30",
+          "title": "YE — Soldier Field",
+          "where": "1410 S Museum Campus Dr",
+          "cat": "show",
+          "place": "Soldier Field Chicago",
+          "hero": true,
+          "ll": [
+            41.8623,
+            -87.6167
+          ],
+          "fixed": true,
+          "fixedWhy": "Security line at 6:30 — 63,000 people go through these gates",
+          "notes": [
+            "Through security, then: food → bathroom → seats",
+            "Food queues peak at 8:15 when everyone realises he is not on yet",
+            "YE on at about 9:00 — 8pm is the ticketed time, he has run an hour late all tour",
+            "Show ends about 11:00"
+          ],
+          "leave": "23:18",
+          "walk": "",
+          "meta": "",
+          "pin": "06",
+          "ig": "soldierfield",
+          "weatherWatch": true
+        },
+        {
+          "time": "23:33",
+          "title": "Columbus & Balbo — pickup",
+          "where": "North of the stadium",
+          "cat": "stop",
+          "place": "Columbus Drive and Balbo Drive Chicago",
+          "ll": [
+            41.8737,
+            -87.6199
+          ],
+          "notes": [
+            "Rideshare pickup is NOT at the stadium",
+            "The walk also lets the surge break"
+          ],
+          "walk": "",
+          "meta": "",
+          "pin": "07",
+          "leave": "23:48"
+        },
+        {
+          "time": "00:02",
+          "title": "Hotel",
+          "where": "640 N Wabash Ave",
+          "cat": "hotel",
+          "place": "Holiday Inn Express Chicago Magnificent Mile",
+          "ll": [
+            41.89382,
+            -87.62706
+          ],
+          "walk": "",
+          "meta": "",
+          "pin": "08"
+        }
+      ],
+      "legs": [
+        {
+          "mode": "car",
+          "line": "",
+          "mins": 9,
+          "cost": 0,
+          "note": "UBER TO THE WATER TOWER · THE MILE STARTS THERE"
+        },
+        {
+          "mode": "walk",
+          "line": "",
+          "mins": 16,
+          "cost": 0,
+          "note": "NORTH TO SOUTH DOWN MICHIGAN AVE"
+        },
+        {
+          "mode": "car",
+          "line": "",
+          "mins": 11,
+          "cost": 0,
+          "note": "UBER — SAVE THE LEGS FOR THE SHOW"
+        },
+        {
+          "mode": "walk",
+          "line": "",
+          "mins": 13,
+          "cost": 0,
+          "note": ""
+        },
+        {
+          "mode": "car",
+          "line": "",
+          "mins": 25,
+          "cost": 0,
+          "note": "UBER XL · DROP PIN MANUALLY AT THE 18TH STREET TURNAROUND · BAIL OUT AND WALK IF WE CRAWL PAST 18TH & PRAIRIE"
+        },
+        {
+          "mode": "walk",
+          "line": "",
+          "mins": 15,
+          "cost": 0,
+          "fixed": true,
+          "note": "PICKUP IS NOT AT THE STADIUM"
+        },
+        {
+          "mode": "car",
+          "line": "",
+          "mins": 14,
+          "cost": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "label": "SAT",
+      "date": "9/5",
+      "weather": "79° / CLEAR · COOL BY THE LAKE",
+      "photos": [
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Tiffany_Glass_Dome_-_Chicago_Cultural_Center.jpg/960px-Tiffany_Glass_Dome_-_Chicago_Cultural_Center.jpg",
+          "credit": "Grant Henninger / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Tiffany_Glass_Dome_-_Chicago_Cultural_Center.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Buckingham_Fountain_-_Chicago_%28957256405%29.jpg/960px-Buckingham_Fountain_-_Chicago_%28957256405%29.jpg",
+          "credit": "Josh Hallett / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Buckingham_Fountain_-_Chicago_(957256405).jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Chicago_in_2022_Centennial_Wheel_%2852059724068%29.jpg/960px-Chicago_in_2022_Centennial_Wheel_%2852059724068%29.jpg",
+          "credit": "Chris Rycroft / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_in_2022_Centennial_Wheel_(52059724068).jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/John_Hancock_Center_June_6_08_sunlight.jpg/960px-John_Hancock_Center_June_6_08_sunlight.jpg",
+          "credit": "Golbez / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:John_Hancock_Center_June_6_08_sunlight.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/John_Hancock_Center_2.jpg/960px-John_Hancock_Center_2.jpg",
+          "credit": "Joe Ravi / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:John_Hancock_Center_2.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/John_Hancock_Center%2C_Michigan_Avenue%2C_Streeterville%2C_Chicago%2C_IL.jpg/960px-John_Hancock_Center%2C_Michigan_Avenue%2C_Streeterville%2C_Chicago%2C_IL.jpg",
+          "credit": "w_lemay / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:John_Hancock_Center%2C_Michigan_Avenue%2C_Streeterville%2C_Chicago%2C_IL.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Chicago_Cultural_Center.jpg/960px-Chicago_Cultural_Center.jpg",
+          "credit": "DS1953 / CC BY-SA 2.5",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Cultural_Center.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Door%2C_Chicago_Cultural_Center_%28Former_Chicago_Public_Library_Central_Building%29%2C_Michigan_Avenue%2C_Chicago%2C_IL.jpg/960px-Door%2C_Chicago_Cultural_Center_%28Former_Chicago_Public_Library_Central_Building%29%2C_Michigan_Avenue%2C_Chicago%2C_IL.jpg",
+          "credit": "w_lemay / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Door%2C_Chicago_Cultural_Center_%28Former_Chicago_Public_Library_Central_Building%29%2C_Michigan_Avenue%2C_Chicago%2C_IL.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Curtain_Wall%2C_Chicago_Cultural_Center_%28Former_Chicago_Public_Library_Central_Building%29%2C_Michigan_Avenue%2C_Chicago%2C_IL.jpg/960px-Curtain_Wall%2C_Chicago_Cultural_Center_%28Former_Chicago_Public_Library_Central_Building%29%2C_Michigan_Avenue%2C_Chicago%2C_IL.jpg",
+          "credit": "w_lemay / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Curtain_Wall%2C_Chicago_Cultural_Center_%28Former_Chicago_Public_Library_Central_Building%29%2C_Michigan_Avenue%2C_Chicago%2C_IL.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/2005-10-13_2880x1920_chicago_above_millennium_park.jpg/960px-2005-10-13_2880x1920_chicago_above_millennium_park.jpg",
+          "credit": "Photograph: J. Crocker / Attribution",
+          "href": "https://commons.wikimedia.org/wiki/File:2005-10-13_2880x1920_chicago_above_millennium_park.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Calle_E_Monroe_St%2C_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_04.jpg/960px-Calle_E_Monroe_St%2C_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_04.jpg",
+          "credit": "Diego Delso / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Calle_E_Monroe_St%2C_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_04.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/BuckinghamFountain_ChicagoIL.jpg/960px-BuckinghamFountain_ChicagoIL.jpg",
+          "credit": "not specified / Public domain",
+          "href": "https://commons.wikimedia.org/wiki/File:BuckinghamFountain_ChicagoIL.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Grant_Park%2C_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_05.jpg/960px-Grant_Park%2C_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_05.jpg",
+          "credit": "Diego Delso / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Grant_Park%2C_Chicago%2C_Illinois%2C_Estados_Unidos%2C_2012-10-20%2C_DD_05.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Chicago_-_Buckingham_Fountain_%284284462009%29.jpg/960px-Chicago_-_Buckingham_Fountain_%284284462009%29.jpg",
+          "credit": "Roger W / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_-_Buckingham_Fountain_%284284462009%29.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Navy_pier.jpg/960px-Navy_pier.jpg",
+          "credit": "Banpei / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Navy_pier.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Navy_Pier_1190x1585.jpg/960px-Navy_Pier_1190x1585.jpg",
+          "credit": "Hbodine / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Navy_Pier_1190x1585.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Navy_Pier_%26_Skyline%2C_Chicago%2C_Illinois%2C_U.S.A.jpg/960px-Navy_Pier_%26_Skyline%2C_Chicago%2C_Illinois%2C_U.S.A.jpg",
+          "credit": "IIP Photo Archive / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Navy_Pier_%26_Skyline%2C_Chicago%2C_Illinois%2C_U.S.A.jpg"
+        }
+      ],
+      "items": [
+        {
+          "time": "09:30",
+          "title": "Beatrix",
+          "where": "519 N Clark St",
+          "cat": "brunch",
+          "place": "Beatrix River North Chicago",
+          "ll": [
+            41.8913,
+            -87.6314
+          ],
+          "notes": [
+            "Reservation booked",
+            "Saturday brunch — they will hold it 15 min"
+          ],
+          "leave": "11:25",
+          "walk": "",
+          "meta": "",
+          "pin": "01",
+          "ig": "beatrixrestaurants"
+        },
+        {
+          "time": "11:33",
+          "title": "360 Chicago + TILT",
+          "where": "875 N Michigan Ave",
+          "cat": "skyline",
+          "place": "360 Chicago Observation Deck",
+          "ll": [
+            41.8989,
+            -87.6236
+          ],
+          "fixed": true,
+          "fixedWhy": "Join the TILT queue FIRST, before wandering the deck",
+          "notes": [
+            "The ride is 2 minutes, the line can be 45",
+            "It builds all afternoon"
+          ],
+          "leave": "13:22",
+          "walk": "",
+          "meta": "",
+          "pin": "02",
+          "ig": "360chicago"
+        },
+        {
+          "time": "13:36",
+          "title": "Portillo's & Barnelli's",
+          "where": "100 W Ontario St",
+          "cat": "deli",
+          "place": "Portillo's Hot Dogs Ontario Chicago",
+          "ll": [
+            41.8931,
+            -87.6312
+          ],
+          "notes": [
+            "Order ahead on the Portillo's app before we leave 360",
+            "Non-beef at Barnelli's: portobello, chicken pesto, tuna, pasta, chopped salad",
+            "Plant-based Garden Dog — order it by name"
+          ],
+          "leave": "14:37",
+          "walk": "",
+          "meta": "",
+          "pin": "03",
+          "ig": "portillos"
+        },
+        {
+          "time": "14:45",
+          "title": "Cultural Center",
+          "where": "78 E Washington St",
+          "cat": "museum",
+          "place": "Chicago Cultural Center",
+          "ll": [
+            41.8837,
+            -87.6247
+          ],
+          "fixed": true,
+          "fixedWhy": "Closes at 5",
+          "notes": [
+            "Free entry",
+            "Preston Bradley Hall for the Tiffany dome",
+            "Then the GAR rotunda for the second one most people miss"
+          ],
+          "leave": "15:54",
+          "walk": "",
+          "meta": "",
+          "pin": "04",
+          "ig": "chicagoculturalcenter"
+        },
+        {
+          "time": "15:57",
+          "title": "Cloud Gate (The Bean)",
+          "where": "Millennium Park",
+          "cat": "skyline",
+          "place": "Cloud Gate Chicago",
+          "ll": [
+            41.8827,
+            -87.6233
+          ],
+          "notes": [
+            "Pritzker Pavilion",
+            "BP Bridge",
+            "Jazz Festival is on — bigger crowds and a bag check at the perimeter"
+          ],
+          "waypoints": [
+            {
+              "name": "Pritzker Pavilion",
+              "place": "Jay Pritzker Pavilion",
+              "ll": [
+                41.8826,
+                -87.6216
+              ],
+              "ig": "pritzkerpavilion"
+            },
+            {
+              "name": "BP Bridge",
+              "place": "BP Pedestrian Bridge Chicago",
+              "ll": [
+                41.8823,
+                -87.6197
+              ],
+              "ig": "bpbridge"
+            }
+          ],
+          "leave": "16:23",
+          "walk": "",
+          "meta": "",
+          "pin": "05",
+          "ig": "cloudgate"
+        },
+        {
+          "time": "16:27",
+          "title": "Crown Fountain",
+          "where": "Millennium Park",
+          "cat": "skyline",
+          "place": "Crown Fountain Chicago",
+          "ll": [
+            41.8814,
+            -87.6242
+          ],
+          "leave": "16:59",
+          "walk": "",
+          "meta": "",
+          "pin": "06",
+          "ig": "crownfountain"
+        },
+        {
+          "time": "17:11",
+          "title": "Buckingham Fountain",
+          "where": "Grant Park",
+          "cat": "skyline",
+          "place": "Buckingham Fountain Chicago",
+          "ll": [
+            41.8758,
+            -87.6189
+          ],
+          "notes": [
+            "Big display runs 20 min on the hour — we catch the tail of the 5:00"
+          ],
+          "leave": "17:39",
+          "walk": "",
+          "meta": "",
+          "pin": "07",
+          "ig": "buckinghamfountain"
+        },
+        {
+          "time": "17:49",
+          "title": "Hotel — break",
+          "where": "640 N Wabash Ave",
+          "cat": "hotel",
+          "place": "Holiday Inn Express Chicago Magnificent Mile",
+          "ll": [
+            41.89382,
+            -87.62706
+          ],
+          "fixed": true,
+          "fixedWhy": "Shortest break of the trip — 65 minutes",
+          "notes": [
+            "Shower, change",
+            "Jacket for the pier"
+          ],
+          "leave": "18:54",
+          "walk": "",
+          "meta": "",
+          "pin": "08"
+        },
+        {
+          "time": "19:02",
+          "title": "Roka Akor",
+          "where": "456 N Clark St",
+          "cat": "deli",
+          "place": "Roka Akor Chicago",
+          "ll": [
+            41.8905,
+            -87.6312
+          ],
+          "fixed": true,
+          "fixedWhy": "Off the table by 8:30 — the car leaves at 8:38",
+          "notes": [],
+          "leave": "20:40",
+          "walk": "",
+          "meta": "",
+          "pin": "09",
+          "ig": "rokaakor"
+        },
+        {
+          "time": "20:52",
+          "title": "Centennial Wheel",
+          "where": "Navy Pier",
+          "cat": "skyline",
+          "place": "Centennial Wheel Navy Pier",
+          "ll": [
+            41.8917,
+            -87.6086
+          ],
+          "fixed": true,
+          "fixedWhy": "Closes at 10 — ride first, wander after",
+          "leave": "21:26",
+          "walk": "",
+          "meta": "",
+          "pin": "10",
+          "ig": "centennialwheel",
+          "weatherWatch": true
+        },
+        {
+          "time": "21:30",
+          "title": "Fireworks — South Dock",
+          "where": "Navy Pier, south side",
+          "cat": "show",
+          "place": "Navy Pier South Dock",
+          "hero": true,
+          "ll": [
+            41.8913,
+            -87.607
+          ],
+          "fixed": true,
+          "fixedWhy": "Fireworks at 10 — claim a spot by 9:30",
+          "notes": [
+            "Last Saturday show of the season",
+            "Weather dependent with no rain date — check Navy Pier socials before dinner"
+          ],
+          "walk": "",
+          "meta": "",
+          "pin": "11",
+          "ig": "navypier",
+          "weatherWatch": true
+        }
+      ],
+      "legs": [
+        {
+          "mode": "car",
+          "line": "",
+          "mins": 8,
+          "cost": 0,
+          "note": "UBER · 875 N MICHIGAN AVE"
+        },
+        {
+          "mode": "walk",
+          "mins": 14,
+          "note": "",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "car",
+          "mins": 8,
+          "note": "UBER · 78 E WASHINGTON ST",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 3,
+          "note": "",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 4,
+          "fixed": true,
+          "note": "THROUGH THE PARK",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 12,
+          "note": "",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "car",
+          "mins": 10,
+          "note": "",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 8,
+          "note": "",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "car",
+          "mins": 12,
+          "note": "LEAVE 8:38 PM AT THE LATEST",
+          "line": "",
+          "cost": 0
+        },
+        {
+          "mode": "walk",
+          "mins": 4,
+          "note": "",
+          "line": "",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "label": "SUN",
+      "date": "9/6",
+      "weather": "77° / CLEAR",
+      "items": [
+        {
+          "time": "08:30",
+          "title": "Hotel breakfast",
+          "where": "640 N Wabash Ave",
+          "cat": "hotel",
+          "place": "Holiday Inn Express Chicago Magnificent Mile",
+          "ll": [
+            41.89382,
+            -87.62706
+          ],
+          "notes": [
+            "Included",
+            "Check out by 9:45",
+            "Uber at 10:15"
+          ],
+          "leave": "10:15",
+          "walk": "",
+          "meta": "",
+          "pin": "01"
+        },
+        {
+          "time": "10:50",
+          "title": "O'Hare",
+          "where": "Terminal 5, departures",
+          "cat": "plane",
+          "place": "O'Hare International Airport Chicago",
+          "ll": [
+            41.9742,
+            -87.9073
+          ],
+          "fixed": true,
+          "fixedWhy": "Hard deadline is 11am at the airport",
+          "notes": [
+            "Nothing planned — take it easy"
+          ],
+          "walk": "",
+          "meta": "",
+          "pin": "02"
+        }
+      ],
+      "legs": [
+        {
+          "mode": "car",
+          "mins": 35,
+          "note": "",
+          "line": "",
+          "cost": 0
+        }
+      ],
+      "photos": [
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Chicago_O%27Hare_International_Airport.jpg/960px-Chicago_O%27Hare_International_Airport.jpg",
+          "credit": "https://www.flickr.com/photos/15216811@N06/ / CC BY 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_O%27Hare_International_Airport.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Concourse_B%2C_Chicago_O%27Hare_airport.jpg/960px-Concourse_B%2C_Chicago_O%27Hare_airport.jpg",
+          "credit": "Dllu / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Concourse_B%2C_Chicago_O%27Hare_airport.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/American_Airlines_planes_at_the_Chicago_O%27Hare_International_Airport_%28ORD%29.jpg/960px-American_Airlines_planes_at_the_Chicago_O%27Hare_International_Airport_%28ORD%29.jpg",
+          "credit": "Matthew T Rader / CC BY-SA 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:American_Airlines_planes_at_the_Chicago_O%27Hare_International_Airport_%28ORD%29.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Cannabis_Amnesty_Box_at_Chicago_O%27Hare_Airport_June_2025.jpg/960px-Cannabis_Amnesty_Box_at_Chicago_O%27Hare_Airport_June_2025.jpg",
+          "credit": "4300streetcar / CC BY 4.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Cannabis_Amnesty_Box_at_Chicago_O%27Hare_Airport_June_2025.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Underground_pedestrian_walkway%2C_O%27Hare_International_Airport%2C_Chicago%2C_2025.jpg/960px-Underground_pedestrian_walkway%2C_O%27Hare_International_Airport%2C_Chicago%2C_2025.jpg",
+          "credit": "DimiTalen / CC0",
+          "href": "https://commons.wikimedia.org/wiki/File:Underground_pedestrian_walkway%2C_O%27Hare_International_Airport%2C_Chicago%2C_2025.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Chicago_Union_Station_1943.jpg/960px-Chicago_Union_Station_1943.jpg",
+          "credit": "Jack Delano / Public domain",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Union_Station_1943.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Chicago_union_station_hall.jpg/960px-Chicago_union_station_hall.jpg",
+          "credit": "Velvet / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_union_station_hall.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Chicago%2C_Illinois_by_Jack_Delano_1943.jpg/960px-Chicago%2C_Illinois_by_Jack_Delano_1943.jpg",
+          "credit": "Jack Delano / Public domain",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago%2C_Illinois_by_Jack_Delano_1943.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/2010-07-12_1880x2820_chicago_brooks_building.jpg/960px-2010-07-12_1880x2820_chicago_brooks_building.jpg",
+          "credit": "J. Crocker / Attribution",
+          "href": "https://commons.wikimedia.org/wiki/File:2010-07-12_1880x2820_chicago_brooks_building.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Architecture_Tour_29_West_Loop_Reflection_%28185544960%29.jpg/960px-Architecture_Tour_29_West_Loop_Reflection_%28185544960%29.jpg",
+          "credit": "discosour / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Architecture_Tour_29_West_Loop_Reflection_%28185544960%29.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Monadnock_Building%2C_Chicago_Loop%2C_Chicago%2C_Illinois_%289181557788%29.jpg/960px-Monadnock_Building%2C_Chicago_Loop%2C_Chicago%2C_Illinois_%289181557788%29.jpg",
+          "credit": "Ken Lund / CC BY-SA 2.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Monadnock_Building%2C_Chicago_Loop%2C_Chicago%2C_Illinois_%289181557788%29.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Chicago_Lakefront_Night_Skyline.jpg/960px-Chicago_Lakefront_Night_Skyline.jpg",
+          "credit": "Tony Webster / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_Lakefront_Night_Skyline.jpg"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Chicago_from_North_Avenue_Beach_June_2015_panorama_2.jpg/960px-Chicago_from_North_Avenue_Beach_June_2015_panorama_2.jpg",
+          "credit": "King of Hearts / CC BY-SA 3.0",
+          "href": "https://commons.wikimedia.org/wiki/File:Chicago_from_North_Avenue_Beach_June_2015_panorama_2.jpg"
+        }
+      ]
+    }
+  ]
+}
