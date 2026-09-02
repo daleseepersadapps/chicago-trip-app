@@ -68,6 +68,7 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
 <script src="./audio.js?v=2"></script>
 <script src="./firebase-config.js?v=2"></script>
 <script src="./photo-store.js?v=9"></script>
+<script src="./checks-store.js?v=1"></script>
 <script src="./photo-dome.js?v=41"></script>
 <script src="./photo-ui.js?v=4"></script>
 </helmet>
@@ -513,6 +514,13 @@ class Component extends DCLogic {
       if (!this._photoSub) {
         this._photoSub = () => this._each(g => { g.days = this._domeDays(); });
         window.addEventListener('chi-photos', this._photoSub);
+      }
+      // Someone ticked a stop off — on this phone or, on the shared list, anyone's.
+      // Clearing _lday matters as much as the redraw: the day rail's progress bar
+      // and drift() both read the tick list, so a cached day would show the old one.
+      if (!this._checkSub) {
+        this._checkSub = () => { this._lday = null; this.forceUpdate(); };
+        window.addEventListener('chi-checks', this._checkSub);
       }
       // the schedule must clear the top frames, whose edge sits above the pole
 
@@ -1237,7 +1245,14 @@ class Component extends DCLogic {
       return [ll.lat(), ll.lng()];
     });
   }
+  // The tick list lives in checks-store.js, which shares it across the group when
+  // Firebase is configured and falls back to this browser when it is not. No local
+  // cache here on purpose: a copy kept in the component would go stale the moment
+  // someone else's tick arrived over the wire.
   doneSet() {
+    if (window.chiChecks) return window.chiChecks.all();
+    // checks-store.js failed to load at all — read the same key it uses so the
+    // day still ticks off on this device rather than the checkboxes going dead.
     if (!this._done) {
       let saved = [];
       try { saved = JSON.parse(localStorage.getItem('chitown.done') || '[]'); } catch (e) { saved = []; }
@@ -1246,6 +1261,13 @@ class Component extends DCLogic {
     return this._done;
   }
   toggleDone(dayIdx, i) {
+    if (window.chiChecks) {
+      // The store applies it locally and emits 'chi-checks' straight away, so the
+      // re-render below is only for the no-store fallback path.
+      window.chiChecks.toggle(dayIdx, i);
+      this._lday = null;
+      return;
+    }
     const s = this.doneSet(), k = dayIdx + ':' + i;
     s.has(k) ? s.delete(k) : s.add(k);
     try { localStorage.setItem('chitown.done', JSON.stringify([...s])); } catch (e) {}

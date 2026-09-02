@@ -47,5 +47,39 @@ service cloud.firestore {
       // 'by' is still recorded and still unforgeable on create.
       allow delete: if request.auth != null;
     }
+
+    // The shared tick list: one document per stop the group has done.
+    //
+    // The id is '<day>_<index>', derived from the position in itinerary.json rather
+    // than generated, so two people ticking the same stop at the same moment write
+    // the same document instead of racing to create two.
+    match /checks/{checkId} {
+
+      // Everyone on the trip sees the same list, and the page reads it before
+      // anonymous sign-in has necessarily completed.
+      allow read: if true;
+
+      // Create and update share a condition because a tick is written with setDoc:
+      // the first tick creates, and a re-tick of a stop someone already ticked
+      // overwrites. Both must validate the same way.
+      allow create, update: if request.auth != null
+        && request.resource.data.keys().hasOnly(['day', 'idx', 'by', 'at'])
+        && request.resource.data.day is int
+        && request.resource.data.day >= 0
+        && request.resource.data.day <= 30
+        && request.resource.data.idx is int
+        && request.resource.data.idx >= 0
+        && request.resource.data.idx <= 100
+        // the document must sit at the id its own fields describe, so a tick cannot
+        // be written against one stop while claiming to be another
+        && checkId == string(request.resource.data.day) + '_' + string(request.resource.data.idx)
+        && request.resource.data.by == request.auth.uid    // no forging authorship
+        && request.resource.data.at is int;
+
+      // Unticking is deleting, and anyone may untick anything — four people standing
+      // in the same place, one of whom tapped the wrong row. 'by' records who ticked
+      // it and stays unforgeable, but it confers no ownership.
+      allow delete: if request.auth != null;
+    }
   }
 }
