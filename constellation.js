@@ -161,5 +161,9 @@
       return `rgba(${parseInt(f.slice(0, 2), 16)},${parseInt(f.slice(2, 4), 16)},${parseInt(f.slice(4, 6), 16)},${a})`;
     }
   }
-  customElements.define('star-field', StarField);
+  // <x-import> loads this once today, so a second define never fires — but that is
+  // the loader's behaviour, not a guarantee. An unguarded define throws outright the
+  // second time, which would take the star field down with it. Same guard as
+  // photo-dome and image-slot.
+  if (!customElements.get('star-field')) customElements.define('star-field', StarField);
 })();

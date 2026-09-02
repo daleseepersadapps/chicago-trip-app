@@ -352,5 +352,7 @@
       return `rgba(${r},${g},${b},${a})`;
     }
   }
-  customElements.define('globe-canvas', GlobeCanvas);
+  // Guarded for the same reason as star-field: <x-import> happens to load this once,
+  // but a second define would throw and take the globe with it.
+  if (!customElements.get('globe-canvas')) customElements.define('globe-canvas', GlobeCanvas);
 })();

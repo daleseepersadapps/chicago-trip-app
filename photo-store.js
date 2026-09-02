@@ -15,6 +15,14 @@
 // visitors, not a determined one. What IS enforced lives in firestore.rules /
 // storage.rules — sign-in required, size and type caps, and delete-your-own-only.
 (function () {
+  // This file is evaluated twice on load — one <script> tag, two runs. Unguarded that
+  // built the album twice: two Firestore snapshot listeners on the same collection,
+  // so every change billed two reads and fired 'chi-photos' twice, rebuilding the
+  // dome twice for one upload. The second api also replaced the first on window
+  // while the first kept listening, so the orphan could never be torn down.
+  // audio.js guards for the same reason.
+  if (window.chiPhotos) return;
+
   const CFG = window.CHI_PHOTO_CONFIG || {};
   const FB = CFG.firebase || {};
   const SHARED = !!FB.projectId;

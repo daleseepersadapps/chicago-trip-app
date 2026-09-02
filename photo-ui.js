@@ -6,6 +6,12 @@
 //
 // Exposes window.chiPhotoUnlock(cb) -> cb(true) when the album is unlocked.
 (function () {
+  // Evaluated twice on load, like the other helmet scripts. Only the exported
+  // function is replaced rather than any listener, so this was harmless — but the
+  // dialog's module state (`open`) would have been split across two closures the
+  // moment anything else took a reference to the first ask().
+  if (window.chiPhotoUnlock) return;
+
   const ACCENT = '#ff7a3d';
   const Z = 960;   // over the day rail (950), which is the highest thing on screen
 

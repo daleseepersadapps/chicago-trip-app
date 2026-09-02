@@ -67,9 +67,9 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
 <script src="./weather.js?v=2"></script>
 <script src="./audio.js?v=2"></script>
 <script src="./firebase-config.js?v=2"></script>
-<script src="./photo-store.js?v=8"></script>
+<script src="./photo-store.js?v=9"></script>
 <script src="./photo-dome.js?v=41"></script>
-<script src="./photo-ui.js?v=3"></script>
+<script src="./photo-ui.js?v=4"></script>
 </helmet>
 
 <div style="width:100vw;height:100dvh;background:#000;position:relative;overflow:hidden">
@@ -77,12 +77,12 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
   <div style="position:absolute;left:0;top:8%;width:26%;height:26%;background:linear-gradient(160deg,rgba(216,226,236,.16) 0%,rgba(216,226,236,.03) 70%,rgba(0,0,0,0) 100%);filter:blur(4px)"></div>
   <div style="position:absolute;left:50%;bottom:16%;width:150%;height:44%;margin-left:-75%;background:radial-gradient(ellipse at 50% 100%,rgba(200,224,255,.10) 0%,rgba(160,200,255,.03) 44%,rgba(0,0,0,0) 74%);filter:blur(16px);pointer-events:none"></div>
   <div style="position:absolute;inset:0">
-    <x-import style="position:absolute;inset:0" component-from-global-scope="star-field" from="./constellation.js?v=8" accent="#9ec8ff" hint-size="100%,100%"></x-import>
+    <x-import style="position:absolute;inset:0" component-from-global-scope="star-field" from="./constellation.js?v=9" accent="#9ec8ff" hint-size="100%,100%"></x-import>
   </div>
   <div id="chi-clouds" style="position:absolute;inset:0;z-index:0;background:radial-gradient(130% 62% at 50% 84%,#22242a 0%,#14151a 34%,#08080d 68%,#030307 100%)"></div>
   <div id="gd6d" style="position:absolute;left:0;right:0;top:0;bottom:0;z-index:1"></div>
   <div style="position:absolute;inset:0;pointer-events:none">
-    <x-import style="position:absolute;inset:0" component-from-global-scope="globe-canvas" from="./globe-canvas.js?v=6" only-smoke="on" smoke="on" smoke-color="#cfe2ff" accent="#cfe2ff" hint-size="100%,100%"></x-import>
+    <x-import style="position:absolute;inset:0" component-from-global-scope="globe-canvas" from="./globe-canvas.js?v=7" only-smoke="on" smoke="on" smoke-color="#cfe2ff" accent="#cfe2ff" hint-size="100%,100%"></x-import>
   </div>
   <div style="position:absolute;left:0;right:0;bottom:0;height:170px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,#000 62%);pointer-events:none"></div>
   <div style="position:absolute;left:0;right:0;bottom:82px;height:22px;background:repeating-linear-gradient(90deg,#000 0 5px,rgba(0,0,0,0) 5px 8px);opacity:.9;pointer-events:none"></div>
