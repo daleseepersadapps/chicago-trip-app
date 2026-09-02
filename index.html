@@ -69,6 +69,7 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
 <script src="./firebase-config.js?v=2"></script>
 <script src="./photo-store.js?v=9"></script>
 <script src="./checks-store.js?v=1"></script>
+<script src="./geo-checks.js?v=1"></script>
 <script src="./photo-dome.js?v=41"></script>
 <script src="./photo-ui.js?v=4"></script>
 </helmet>
@@ -463,6 +464,19 @@ class Component extends DCLogic {
     this._wake = () => { if (!document.hidden) this._wakeUp(); };
     document.addEventListener('visibilitychange', this._wake);
     window.addEventListener('focus', this._wake);
+    // A narrow window onto the schedule for geo-checks.js, which ticks stops off by
+    // GPS. It needs the stops, and it needs liveDay() — the "before 4am belongs to
+    // last night" rule is subtle enough that a second copy of it would drift out of
+    // step with this one. Built BEFORE _loadItinerary so the flags it carries are
+    // never dropped by losing a race with the fetch. flags stays null until
+    // itinerary.json lands, and geo-checks does nothing while it is null, so a failed
+    // fetch means no ticking rather than ticking against a stale schedule.
+    window.CHI_APP = window.CHI_APP || {
+      get days() { return TRIP; },
+      get dates() { return TRIP_DATES; },
+      liveDay: () => this.liveDay(),
+      flags: null
+    };
     this._loadItinerary();
     this._qOrder = QUOTES.map((_, i) => i).sort(() => Math.random() - 0.5);
     this._qi = 0;
@@ -580,6 +594,17 @@ class Component extends DCLogic {
       this._each(g => { g.days = this._domeDays(); });
       // itinerary.json can move the dates, so re-ask for the forecast that matches
       if (window.chiWeather) window.chiWeather.load(TRIP_DATES);
+      // Feature flags ride along with the schedule because this file is fetched
+      // network-first with a cache-buster on every load — flipping one here reaches
+      // every phone within seconds, with no ?v= bump and no cache fight. That is the
+      // only kill switch that works from a hotel room.
+      if (window.CHI_APP) {
+        window.CHI_APP.flags = {
+          autoTick: j.autoTick === true,          // opt IN, so a missing key is off
+          autoTickBanner: j.autoTickBanner === true
+        };
+        window.dispatchEvent(new CustomEvent('chi-trip'));
+      }
       this.forceUpdate();
     }).catch(() => {});
   }
@@ -1357,9 +1382,15 @@ class Component extends DCLogic {
     if (!day) return null;
     const c = this.chiNow(this.state.demoLive ? SIM : Date.now());
     const done = this.doneSet();
+    // Anchor on the first un-ticked stop AFTER the last ticked one, not the first
+    // un-ticked stop overall. A stop you skipped is never ticked, and scanning from
+    // zero anchors on it forever — so skipping Crown Fountain used to mean being told
+    // you were falling further behind all evening, about a stop you had chosen not to
+    // do. Anything before the last tick is behind you, whether you did it or not.
+    let lastDone = -1;
+    for (let i = 0; i < day.items.length; i++) if (done.has(dayIdx + ':' + i)) lastDone = i;
     let idx = -1, due = null;
-    for (let i = 0; i < day.items.length; i++) {
-      if (done.has(dayIdx + ':' + i)) continue;
+    for (let i = lastDone + 1; i < day.items.length; i++) {
       const it = day.items[i];
       const at = it.leave ? DMIN(it.leave) : (it.time ? DMIN(it.time) : null);
       if (at === null) continue;

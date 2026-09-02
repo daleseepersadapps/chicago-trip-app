@@ -1,4 +1,6 @@
 {
+  "autoTick": true,
+  "autoTickBanner": false,
   "days": [
     {
       "label": "THU",
