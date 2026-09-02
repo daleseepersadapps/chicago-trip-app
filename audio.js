@@ -9,6 +9,15 @@
 // the app and music competing with it while you navigate is noise. It returns when
 // you come back to the globe.
 (function () {
+  // This file is evaluated twice on load — one <script> tag, two runs. Unguarded that
+  // means two Audio elements and two mute buttons: both arm on the same first tap, so
+  // they start together and the doubling is inaudible. The day map is what pulls them
+  // apart. Ducking pauses each one only at the END of its own volume fade, and those
+  // two fades tick on independent 40ms intervals, so they stop a few frames apart and
+  // resume from different points. Every trip out to a map and back widens the gap
+  // until you can hear both. weather.js guards its custom element for the same reason.
+  if (window.chiAudio) return;
+
   const SRC = './theme.mp3';
   const KEY = 'chitown.muted';
   const VOL = 0.32;              // sits under the app rather than over it
