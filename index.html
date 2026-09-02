@@ -104,6 +104,9 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
     <div style="position:absolute;inset:0">
       <div id="livemap" style="position:absolute;inset:0;z-index:0;background:#0a1420;opacity: {{ d5.liveMapOp }};transition:opacity .5s ease"></div>
       <div style="position:absolute;z-index:460;right:14px;top:56px;font:400 7.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:rgba(238,244,255,.34);pointer-events:none">{{ d5.poiNote }}</div>
+      <div style="position:absolute;z-index:500;right:16px;bottom: {{ d5.meBtnBottom }};display: {{ d5.meBtnShow }};align-items:center;justify-content:center;width:38px;height:38px;background:rgba(6,10,16,.82);border:1px solid rgba(226,238,255,.24);border-radius:50%;cursor:pointer;pointer-events: {{ d5.openPE }};backdrop-filter:blur(6px);box-shadow:0 6px 18px -6px rgba(0,0,0,.8);transition:bottom .28s ease" onClick="{{ d5.meBtnTap }}">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#5aa9ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.4"/><path d="M12 2.6v3.1M12 18.3v3.1M2.6 12h3.1M18.3 12h3.1"/></svg>
+      </div>
       <div style="position:absolute;z-index:500;left:18px;top:48px;display:flex;align-items:center;gap:9px;padding:9px 15px 9px 11px;background:rgba(6,10,16,.82);border:1px solid rgba(226,238,255,.24);border-radius:24px;cursor:pointer;pointer-events: {{ d5.openPE }};backdrop-filter:blur(6px)" onClick="{{ d5.close }}">
         <span style="font:700 14px/1;color:#9ec8ff">←</span>
         <span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#eef4ff">ALL DAYS</span>
@@ -1702,6 +1705,26 @@ class Component extends DCLogic {
         ? 'linear-gradient(180deg,rgba(5,8,12,0) 0%,rgba(5,8,12,.9) 46%,#05080c 100%)'
         : '#05080c',
       sheetTop: (this.state.drag !== null && this.state.drag !== undefined ? this.state.drag : this.sheetStop()) + '%',
+      // Recentre button. Pinned to the drawer's top edge rather than the viewport, so
+      // it rides up and down with the sheet instead of hiding behind it — the sheet is
+      // draggable and its "bottom of the map" moves.
+      meBtnBottom: 'calc(' + (100 - (this.state.drag !== null && this.state.drag !== undefined
+        ? this.state.drag : this.sheetStop())) + '% + 14px)',
+      // Hidden outright when there is no position to centre on. A button that does
+      // nothing when pressed is worse than one that is not there.
+      meBtnShow: (window.chiGeo && window.chiGeo.last()) ? 'flex' : 'none',
+      meBtnTap: () => {
+        const f = window.chiGeo && window.chiGeo.last();
+        if (!f || !this._gmap) return;
+        this.buzz(10);
+        this._gmap.panTo({ lat: f.lat, lng: f.lng });
+        if (this._gmap.getZoom() < 15) this._gmap.setZoom(15);
+        // panTo centres in the whole map div, but the drawer covers its lower half,
+        // so a plain centre would drop the dot behind the sheet. Nudge it up by half
+        // the covered band to land in the middle of what you can actually see.
+        const pad = this._mapPad();
+        if (pad && pad.bottom > 24) this._gmap.panBy(0, Math.round(pad.bottom / 2));
+      },
       sheetTr: this.state.drag !== null && this.state.drag !== undefined ? 'none' : 'top .32s cubic-bezier(.32,.72,0,1)',
       sheetHint: (this.state.sheet ?? 1) === 2 ? 'DRAG DOWN FOR MAP' : (this.state.sheet ?? 1) === 0 ? 'DRAG UP FOR SCHEDULE' : 'DRAG TO RESIZE',
       // pointerup after a drag also fires click — ignore that one
