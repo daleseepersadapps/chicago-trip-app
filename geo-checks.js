@@ -64,10 +64,17 @@
   }
 
   function enabled() {
-    if (read(OFF, false) === true) return false;
+    if (read(OFF, false) === true) return false;          // this device, last resort
+    // The switches at the top of index.html. HTML is served network-first, so those
+    // reach a phone without a ?v= bump — which is why the kill switch lives there and
+    // not in this file. Absent means off: if the block were ever removed, location
+    // use stops rather than silently continuing.
+    const sw = window.CHI_SWITCHES;
+    if (!sw || sw.geo !== true || sw.autoTick !== true) return false;
     const app = window.CHI_APP;
     // flags is null until itinerary.json lands. Staying off until then means a failed
-    // fetch can never tick against whatever schedule happens to be in memory.
+    // fetch can never tick against whatever schedule happens to be in memory. Both
+    // sources must agree, so turning either one off is enough to stop this.
     return !!(app && app.flags && app.flags.autoTick);
   }
 

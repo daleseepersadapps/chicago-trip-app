@@ -268,6 +268,30 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
 
 </x-dc>
 <script type="text/x-dc" data-dc-script>
+// ═══════════════════════════════════════════════════════════════════════════════
+//  SWITCHES — flip, commit, push. Live on every phone at the next app open.
+//
+//  These live in index.html deliberately. sw.js serves HTML network-first, so a
+//  change here needs no ?v= bump and cannot be pinned by a cache. The same switch
+//  inside geo-checks.js would sit behind its versioned URL and do nothing until
+//  index.html was edited too — two files, at exactly the moment you least want a
+//  second step.
+//
+//  Turning one OFF always wins: itinerary.json carries the same flags, and a
+//  feature runs only if BOTH say yes. So this file alone is enough to kill
+//  anything, whatever the JSON says.
+//
+//  Recovery ladder, fastest first:
+//    1. itinerary.json  -> "autoTick": false        (seconds, no rebuild)
+//    2. here            -> autoTick: false          (one push, ~1 min)
+//    3. on one phone    -> window.chiGeo.off(true)  (that device only)
+// ═══════════════════════════════════════════════════════════════════════════════
+window.CHI_SWITCHES = {
+  geo: true,          // master. false = no location use at all, anywhere.
+  autoTick: true,     // tick a stop off once GPS shows you have left it
+  liveBanner: false   // position-aware headline. NOT BUILT YET — reserved.
+};
+
 const TRIP = [
   { label: 'THU', date: '9/3', weather: '78° / HUMID · CLEAR PM',
     legs: [
