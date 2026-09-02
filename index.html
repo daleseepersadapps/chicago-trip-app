@@ -1390,25 +1390,49 @@ class Component extends DCLogic {
       // the sheet has to come up first and the scroll has to wait for the re-render
       // that turns scrolling back on, plus the .32s slide.
       if (shut) this.setSheet(1);
-      this._scrollToStop(k, shut ? 380 : 60);
+      this._scrollToStop(k, shut ? 300 : 60);
     }
   }
   // Bring a stop's card into view inside the drawer. Measured against the container
   // rather than offsetTop, which would be wrong the moment anything between the row
   // and the scroll box becomes a positioning context.
+  //
+  // Written as a settle loop rather than one shot, because two things on a phone make
+  // a single attempt unreliable:
+  //
+  //  - Selecting a stop EXPANDS its card, which changes the height of that row and
+  //    moves everything below it. Measure before React has committed that and the
+  //    arithmetic is against a layout that no longer exists. Desktop happened to
+  //    commit inside 60ms; a phone does not promise to.
+  //  - iOS gives an element with -webkit-overflow-scrolling:touch its own momentum
+  //    layer, and that layer routinely swallows programmatic scrolls. Flipping the
+  //    property off around the assignment hands the scroll back to the main thread.
+  //
+  // So: scroll, look again, correct. It converges in one or two passes and stops
+  // early once the row is where it should be.
   _scrollToStop(k, delay) {
     clearTimeout(this._scrollT);
-    this._scrollT = setTimeout(() => {
+    const attempt = (tries) => {
       const box = document.querySelector('[data-list="1"]');
       const row = document.querySelector('[data-stop="' + k + '"]');
-      if (!box || !row) return;
+      // Nothing to scroll yet — the sheet is still sliding up, or the row has not
+      // rendered. Wait rather than give up; this is the collapsed-drawer path.
+      if (!box || !row || getComputedStyle(box).overflowY === 'hidden') {
+        if (tries > 0) this._scrollT = setTimeout(() => attempt(tries - 1), 140);
+        return;
+      }
       const b = box.getBoundingClientRect(), r = row.getBoundingClientRect();
-      const to = box.scrollTop + (r.top - b.top) - 10;
+      const delta = (r.top - b.top) - 10;
+      if (Math.abs(delta) <= 2) return;                    // already in place
       const max = Math.max(0, box.scrollHeight - box.clientHeight);
-      const top = Math.max(0, Math.min(to, max));
-      if (box.scrollTo) box.scrollTo({ top: top, behavior: 'smooth' });
-      else box.scrollTop = top;
-    }, delay || 60);
+      const top = Math.max(0, Math.min(box.scrollTop + delta, max));
+      const prev = box.style.webkitOverflowScrolling;
+      box.style.webkitOverflowScrolling = 'auto';
+      box.scrollTop = top;                                 // plain assignment: works everywhere
+      box.style.webkitOverflowScrolling = prev || 'touch';
+      if (tries > 0) this._scrollT = setTimeout(() => attempt(tries - 1), 220);
+    };
+    this._scrollT = setTimeout(() => attempt(5), delay || 60);
   }
   clearStop() {
     this.setState({ stopSel: -1 });
