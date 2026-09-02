@@ -5,6 +5,13 @@
 // Camera matches the old WebGL globe exactly: 24° tilt, northern hemisphere only,
 // pole landing at 45.2% of the host's height (was 47.4%, raised when the dome grew).
 (function () {
+  // Which way the dome turns, and therefore which way the calendar reads.
+  //  -1  days run left to right, the globe drifting to match
+  //  +1  the original, days running right to left
+  // One constant drives both: the idle drift below, and the day-to-sector mapping in
+  // _flip. They have to move together — reverse the drift alone and the dates start
+  // arriving backwards, which is the bug the _flip comment was written to prevent.
+  const SPIN = -1;
   const TILT = 24;
   const TILT_COS = Math.cos(TILT * Math.PI / 180);
   const LAT_MAX = 84 * Math.PI / 180;   // full sphere: -84° … +84°
@@ -547,10 +554,12 @@
     }
 
     _n() { return Math.max(1, (this._days || []).length || 4); }
-    // The globe turns one way and the calendar has to advance the other, so day i is
-    // laid out in sector (n - i) % n. That mapping is its own inverse, which is why
+    // The globe turns one way and the calendar has to advance the other, so the day
+    // and the sector it lives in are not the same number. Which way round depends on
+    // SPIN: turning right to left, day i sits in sector (n - i); turning left to
+    // right, it sits in sector i. Both mappings are their own inverse, which is why
     // one function converts both ways — and why this is the only place it happens.
-    _flip(x) { const n = this._n(); return ((n - x) % n + n) % n; }
+    _flip(x) { const n = this._n(); const k = SPIN > 0 ? n - x : x; return ((k % n) + n) % n; }
 
     nearestDay() {
       const n = this._n();
@@ -632,10 +641,10 @@
         } else {
           this._fade = Math.max(0, this._fade - dt * 3);
           if (this._lock === null) {
-            // The original drift direction. Days still arrive in order because the
-            // day-to-sector mapping is flipped instead — see _flip — so the spin and
-            // the calendar are decoupled.
-            this._yaw += (0.075 + this._vel) * dt;
+            // Idle drift. Only the constant takes SPIN — _vel is the user's own fling
+            // and must stay in the direction they threw it. Days still arrive in order
+            // either way because the day-to-sector mapping turns with it; see _flip.
+            this._yaw += (0.075 * SPIN + this._vel) * dt;
           } else if (performance.now() - (this._idleAt || 0) > 7000) {
             const n = this._n();
             const sector = (Math.PI * 2) / n;

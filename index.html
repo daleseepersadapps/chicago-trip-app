@@ -69,8 +69,8 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
 <script src="./firebase-config.js?v=2"></script>
 <script src="./photo-store.js?v=9"></script>
 <script src="./checks-store.js?v=1"></script>
-<script src="./geo-checks.js?v=1"></script>
-<script src="./photo-dome.js?v=41"></script>
+<script src="./geo-checks.js?v=2"></script>
+<script src="./photo-dome.js?v=42"></script>
 <script src="./photo-ui.js?v=4"></script>
 </helmet>
 
@@ -965,6 +965,48 @@ class Component extends DCLogic {
     return m;
   }
 
+  // "You are here". Kept outside _gover on purpose: that array is torn down and
+  // rebuilt every time the day redraws, and a dot that vanishes and reappears reads
+  // as a glitch. This one is created once and then just moved.
+  //
+  // The halo is the fix's own accuracy drawn to scale, so the dot never claims more
+  // precision than it has — indoors it grows into a vague cloud, which is the honest
+  // picture. chiGeo.last() returns null on a stale fix or with location switched off,
+  // and null removes the marker rather than leaving it parked somewhere you left.
+  _syncMe() {
+    const G = window.google && window.google.maps;
+    if (!G || !this._gmap) return;
+    const fix = window.chiGeo ? window.chiGeo.last() : null;
+    if (!fix) { if (this._me) { this._me.setMap(null); this._me = null; } return; }
+    if (!document.getElementById('chi-me-css')) {
+      const st = document.createElement('style');
+      st.id = 'chi-me-css';
+      st.textContent = '@keyframes chiMe{0%{transform:scale(.75);opacity:.55}' +
+        '70%{transform:scale(1.5);opacity:0}100%{transform:scale(1.5);opacity:0}}';
+      document.head.appendChild(st);
+    }
+    // metres per pixel at this latitude and zoom, so the halo means something
+    const mpp = 156543.03392 * Math.cos(fix.lat * Math.PI / 180) / Math.pow(2, this._gmap.getZoom());
+    const r = Math.max(9, Math.min(140, Math.round((fix.acc || 40) / mpp)));
+    const html =
+      '<div style="position:relative;width:16px;height:16px">' +
+        '<div style="position:absolute;left:50%;top:50%;width:' + (r * 2) + 'px;height:' + (r * 2) +
+        'px;margin:-' + r + 'px 0 0 -' + r + 'px;border-radius:50%;background:rgba(90,169,255,.16);' +
+        'border:1px solid rgba(90,169,255,.3)"></div>' +
+        '<div style="position:absolute;inset:-9px;border-radius:50%;background:rgba(90,169,255,.5);' +
+        'animation:chiMe 2.6s ease-out infinite"></div>' +
+        '<div style="position:absolute;inset:0;border-radius:50%;background:#5aa9ff;' +
+        'border:2.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.4),0 2px 9px rgba(0,0,0,.55)"></div>' +
+      '</div>';
+    if (!this._me) {
+      this._me = this._htmlMarker([fix.lat, fix.lng], html, 'mehere', 460, null);
+    } else {
+      this._me.pos = [fix.lat, fix.lng];
+      if (this._me.div) this._me.div.innerHTML = html;   // halo tracks zoom + accuracy
+      this._me.draw();
+    }
+  }
+
   // a short tap of feedback — never on passive state changes, only real taps
   buzz(ms) { if (navigator.vibrate) navigator.vibrate(ms || 12); }
 
@@ -1096,7 +1138,7 @@ class Component extends DCLogic {
     (this.state.sheet ?? 1) === 2 ? setTimeout(go, 340) : go();
   }
 
-  componentDidUpdate() { this._syncLiveMap(); }
+  componentDidUpdate() { this._syncLiveMap(); this._syncMe(); }
 
   // "up next" for a day: the next leave-by, else the next arrival. null if not today.
   nextInfo(dayIdx) {

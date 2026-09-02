@@ -46,6 +46,10 @@
   const SLACK = 45;            // min — tolerance either side of the scheduled window
   const RECENT = 90;           // min — after this a stop is the humans' business
   const POLL_MS = 90000;       // ms  — one fix a minute and a half, visible only
+  // How long a fix may be drawn on the map. Longer than FRESH_MS because a dot that
+  // blinks out between polls reads as broken, while a five-minute-old position with a
+  // halo is still a useful answer to "roughly where am I".
+  const SHOW_MS = 300000;
 
   let timer = null, lastFixAt = 0, armed = false;
 
@@ -238,9 +242,25 @@
     return { idx: near[0].i, metres: Math.round(near[0].m), acc: last.acc, t: last.t };
   }
 
+  // The newest fix, if it is recent enough to draw as "you are here". Deliberately
+  // laxer than here(): a dot with a halo the size of its own error is honest about
+  // being approximate, where naming a stop is a claim that has to be right. Still
+  // returns null once the fix is stale, so the map shows nothing rather than
+  // stranding a dot where you were twenty minutes ago.
+  function last() {
+    const sw = window.CHI_SWITCHES;
+    if (!sw || sw.geo !== true) return null;
+    const c = read(CRUMBS, []);
+    if (!c.length) return null;
+    const f = c[c.length - 1];
+    if (Date.now() - f.t > SHOW_MS) return null;
+    return f;
+  }
+
   window.chiGeo = {
     get enabled() { return enabled(); },
     here: here,
+    last: last,
     get crumbs() { return read(CRUMBS, []).length; },
     get lastFixAt() { return lastFixAt; },
     get fired() { return read(FIRED, {}); },
