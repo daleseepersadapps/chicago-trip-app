@@ -131,8 +131,20 @@
     // The hour a stop actually happens — what decides an outdoor plan
     at(date, hhmm) {
       if (!data || !data.hourly) return null;
-      const h = String(parseInt(String(hhmm).split(':')[0], 10)).padStart(2, '0');
-      const i = data.hourly.time.indexOf(date + 'T' + h + ':00');
+      const hr = parseInt(String(hhmm).split(':')[0], 10);
+      let d = date;
+      // A stop in the small hours is authored on the day the evening started — Friday's
+      // timeline ends at 00:02, which is Saturday's 00:00 on the forecast. Same rule as
+      // DMIN in the page: anything before 4am belongs to the night before it. Without
+      // this the chip reads the hour 24 hours early.
+      if (hr < 4) {
+        const t = new Date(date + 'T12:00:00');
+        t.setDate(t.getDate() + 1);
+        d = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0')
+          + '-' + String(t.getDate()).padStart(2, '0');
+      }
+      const h = String(hr).padStart(2, '0');
+      const i = data.hourly.time.indexOf(d + 'T' + h + ':00');
       if (i < 0) return null;
       const code = data.hourly.weather_code[i];
       return {

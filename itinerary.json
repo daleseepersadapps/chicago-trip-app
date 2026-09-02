@@ -168,7 +168,8 @@
           "walk": "",
           "meta": "",
           "pin": "04",
-          "ig": "chicagoriverwalk"
+          "ig": "chicagoriverwalk",
+          "weatherWatch": true
         },
         {
           "time": "16:18",
@@ -246,7 +247,8 @@
             },
             "11 min of walking in total, the rest is standing and looking",
             "Skip Marina City if we are running late — it saves 5 min"
-          ]
+          ],
+          "weatherWatch": true
         },
         {
           "time": "21:18",
@@ -281,7 +283,8 @@
             },
             "Floodlit white, and it faces the bridge — best seen from across the river",
             "Uber to LondonHouse from here, or walk it in 3 min over the bridge"
-          ]
+          ],
+          "weatherWatch": true
         },
         {
           "time": "21:31",
@@ -487,67 +490,17 @@
           ],
           "notes": [
             "Inside RH Chicago — the atrium courtyard",
-            "Fills up by 11, worth being early",
-            "Water Tower",
-            "Tribune Tower",
-            "Wrigley Building"
+            "Order at 10:00 sharp — the kitchen is the slow part",
+            "Out the door at 10:45, the whole day hangs off this"
           ],
-          "leave": "11:40",
+          "leave": "10:45",
           "walk": "",
           "meta": "",
           "pin": "01",
-          "ig": "3artsclubcafe",
-          "waypoints": [
-            {
-              "name": "Water Tower",
-              "place": "Chicago Water Tower",
-              "ll": [
-                41.8971,
-                -87.6247
-              ],
-              "ig": "chicagowatertower"
-            },
-            {
-              "name": "Tribune Tower",
-              "place": "Tribune Tower Chicago",
-              "ll": [
-                41.8902,
-                -87.6238
-              ],
-              "ig": "tribunetower"
-            },
-            {
-              "name": "Wrigley Building",
-              "place": "The Wrigley Building Chicago",
-              "ll": [
-                41.8897,
-                -87.62459
-              ],
-              "ig": "wrigleybuilding"
-            }
-          ]
+          "ig": "3artsclubcafe"
         },
         {
-          "time": "11:49",
-          "title": "Magnificent Mile walk",
-          "where": "North to south, ending at DuSable Bridge",
-          "cat": "skyline",
-          "place": "DuSable Bridge Chicago",
-          "ll": [
-            41.8885,
-            -87.6244
-          ],
-          "notes": [
-            "North to south, ending at DuSable Bridge"
-          ],
-          "leave": "12:30",
-          "walk": "",
-          "meta": "",
-          "pin": "02",
-          "ig": "magnificentmile"
-        },
-        {
-          "time": "12:46",
+          "time": "11:01",
           "title": "Art Institute",
           "where": "111 S Michigan Ave",
           "cat": "museum",
@@ -557,24 +510,54 @@
             -87.6237
           ],
           "fixed": true,
-          "fixedWhy": "Thorne Miniature Rooms first, 12:55 — easy to run out of time for",
+          "fixedWhy": "11:55 is a hard out — the 12:45 Pokémon entry is timed and will not wait",
           "notes": [
-            "Coat check, then straight down to the lower level",
+            "Tickets on your phone before you arrive — do not queue at the desk",
+            "Skip the coat check, it is a 10 minute round trip you do not have",
+            "Thorne Miniature Rooms first — lower level, straight down",
             {
-              "t": "1:20 — \"What to See in an Hour\" route on your phone",
+              "t": "11:25 — one thing only after Thorne: the Impressionists, up the Grand Staircase",
               "url": "https://www.artic.edu/highlights/3/what-to-see-in-an-hour"
             },
-            "2:20 — free time",
-            "Download the museum app at the hotel, gallery wifi is patchy"
+            "Set an alarm for 11:50"
           ],
-          "leave": "14:51",
+          "leave": "11:55",
           "walk": "",
           "meta": "",
-          "pin": "03",
+          "pin": "02",
           "ig": "artinstituteofchicago"
         },
         {
-          "time": "15:02",
+          "time": "12:10",
+          "title": "Field Museum — Pokémon Fossil Museum",
+          "where": "1400 S DuSable Lake Shore Dr",
+          "cat": "museum",
+          "place": "Field Museum of Natural History Chicago",
+          "ll": [
+            41.8663,
+            -87.617
+          ],
+          "fixed": true,
+          "fixedWhy": "Timed add-on entry at 12:45 — the buffer is the bag check, not the art",
+          "notes": [
+            "General admission AND the Pokémon add-on both need to be in your wallet",
+            "Bag check at the door — budget 15 minutes just to get inside",
+            "12:35 — be at the exhibition hall, it is a walk from the entrance",
+            {
+              "t": "12:45 — Pokémon Fossil Museum, timed entry",
+              "url": "https://www.fieldmuseum.org/exhibition/pokemon"
+            },
+            "2:00 — SUE the T. rex, then Evolving Planet",
+            "Soldier Field is an 8 minute walk from here — you are coming back tonight"
+          ],
+          "leave": "15:20",
+          "walk": "",
+          "meta": "",
+          "pin": "03",
+          "ig": "fieldmuseum"
+        },
+        {
+          "time": "15:40",
           "title": "Hotel — break",
           "where": "640 N Wabash Ave",
           "cat": "hotel",
@@ -584,7 +567,7 @@
             -87.62706
           ],
           "fixed": true,
-          "fixedWhy": "Pack the clear bag now — no bag check at the stadium",
+          "fixedWhy": "Pack the clear bag now — 42 minutes, no bag check at the stadium",
           "notes": [
             "Clear bag only: max 12\"x6\"x12\", or a clutch under 4.5\"x6.5\"",
             "Tickets in your phone wallet — 63,000 phones at the gates",
@@ -660,7 +643,8 @@
           "walk": "",
           "meta": "",
           "pin": "07",
-          "leave": "23:48"
+          "leave": "23:48",
+          "weatherWatch": true
         },
         {
           "time": "00:02",
@@ -681,23 +665,23 @@
         {
           "mode": "car",
           "line": "",
-          "mins": 9,
-          "cost": 0,
-          "note": "UBER TO THE WATER TOWER · THE MILE STARTS THERE"
-        },
-        {
-          "mode": "walk",
-          "line": "",
           "mins": 16,
           "cost": 0,
-          "note": "NORTH TO SOUTH DOWN MICHIGAN AVE"
+          "note": "UBER · ORDER IT AT 10:40 · MICHIGAN AVE SOUTH"
         },
         {
           "mode": "car",
           "line": "",
-          "mins": 11,
+          "mins": 15,
           "cost": 0,
-          "note": "UBER — SAVE THE LEGS FOR THE SHOW"
+          "note": "UBER DOWN COLUMBUS · THE 30 MIN WALK THROUGH GRANT PARK IS A TRAP TODAY"
+        },
+        {
+          "mode": "car",
+          "line": "",
+          "mins": 20,
+          "cost": 0,
+          "note": "UBER NORTH · SAVE THE LEGS FOR THE SHOW"
         },
         {
           "mode": "walk",
@@ -862,7 +846,8 @@
           "walk": "",
           "meta": "",
           "pin": "02",
-          "ig": "360chicago"
+          "ig": "360chicago",
+          "weatherWatch": true
         },
         {
           "time": "13:36",
@@ -947,7 +932,8 @@
           "walk": "",
           "meta": "",
           "pin": "05",
-          "ig": "cloudgate"
+          "ig": "cloudgate",
+          "weatherWatch": true
         },
         {
           "time": "16:27",
@@ -963,7 +949,8 @@
           "walk": "",
           "meta": "",
           "pin": "06",
-          "ig": "crownfountain"
+          "ig": "crownfountain",
+          "weatherWatch": true
         },
         {
           "time": "17:11",
@@ -982,7 +969,8 @@
           "walk": "",
           "meta": "",
           "pin": "07",
-          "ig": "buckinghamfountain"
+          "ig": "buckinghamfountain",
+          "weatherWatch": true
         },
         {
           "time": "17:49",
