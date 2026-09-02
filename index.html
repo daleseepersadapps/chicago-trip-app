@@ -1589,6 +1589,16 @@ class Component extends DCLogic {
     const doneSet = this.doneSet();
     const upNext = open !== null && open !== undefined ? this.nextInfo(open) : null;
     const dr = open !== null && open !== undefined ? this.drift(open) : null;
+    // Position-aware banner. Both switches must agree, exactly like autoTick, so
+    // either one turns it off on its own — and it changes the LABEL only. The stop
+    // name, the countdown and the clock time stay driven by the schedule, so a wrong
+    // fix costs eight small characters rather than a banner full of confident
+    // nonsense. chiGeo.here() returns null whenever it cannot be sure, and null lands
+    // on the ordinary wording, so the failure mode is the app you already had.
+    const bannerOn = !!(window.CHI_SWITCHES && window.CHI_SWITCHES.liveBanner === true
+      && window.CHI_APP && window.CHI_APP.flags && window.CHI_APP.flags.autoTickBanner === true);
+    const atNow = (bannerOn && window.chiGeo && open !== null && open !== undefined
+      && this.liveDay() === open) ? window.chiGeo.here(open) : null;
     const cd = this.countdown();
     const wx = window.chiWeather;
     const wxDate = TRIP_DATES[open ?? sel ?? 1];
@@ -1676,7 +1686,15 @@ class Component extends DCLogic {
       wxCol: wxDay && wxDay.rain >= 50 ? '#ff8a5c'
         : wxDay && wxDay.kind === 'clear' ? '#ffd166' : 'rgba(206,228,255,.8)',
       upShow: upNext ? 'flex' : 'none',
-      upLabel: upNext ? '▲ UP NEXT · ' + upNext.label : '',
+      // Only ever swapped when the fix places you at the very stop named on the row
+      // below, so the label and the name can never contradict each other. A "still
+      // here, you are late" state was tried and dropped: once a stop's leave time has
+      // passed, upNext has already moved to the next one, so the banner would have
+      // read STILL HERE above the name of a place you had not reached. The drift
+      // panel underneath already reports lateness, and names the right stop doing it.
+      upLabel: upNext
+        ? ((atNow && atNow.idx === upNext.idx ? '● HERE NOW · ' : '▲ UP NEXT · ') + upNext.label)
+        : '',
       upName: upNext ? upNext.item.title : '',
       upIn: upNext ? (upMins < 60 ? upMins + ' MIN' : Math.floor(upMins / 60) + 'H ' + String(upMins % 60).padStart(2, '0') + 'M') : '',
       upAt: upNext ? T12(upNext.item[upNext.label === 'LEAVE' ? 'leave' : 'time']) : '',

@@ -27,7 +27,20 @@
   const MAX_CRUMBS = 240;
   const MAX_ACC = 100;         // m   — a fix sloppier than this tells us nothing
   const FRESH_MS = 120000;     // ms  — and one older than this is about the past
-  const NEAR = 60;             // m   — "at" the stop, widened by the fix's own error
+  // 90 rather than 60 because a stop is a building, not a point, and the app resolves
+  // stops through Google Places at runtime — the Art Institute's resolved marker sits
+  // 112m from the authored coordinate. Still comfortably under the closest pair of
+  // same-day stops that the clock cannot separate (Centennial Wheel to the fireworks,
+  // 140m), so widening buys recall without buying confusion.
+  const NEAR = 90;             // m   — "at" the stop, widened by the fix's own error
+  // here() gets a wider radius than the tick test, because the two ask different
+  // questions. Ticking asks "was I there at any point", across dozens of crumbs, so it
+  // can afford to be strict and still catch you. here() asks "where am I right now"
+  // off a single fix, and has to cope with a venue being larger than a point: the app
+  // resolves stops through Google Places at runtime, and the Art Institute's resolved
+  // location sits 112m from the authored one, either of which is fairly "the Art
+  // Institute". Ambiguity from the wider net is settled by the clock, not by guessing.
+  const HERE_NEAR = 130;
   const AWAY = 150;            // m   — "gone from" the stop
   const FAR = 500;             // m   — gone far enough that the clock stops mattering
   const SLACK = 45;            // min — tolerance either side of the scheduled window
@@ -181,8 +194,53 @@
   setTimeout(() => { if (enabled()) arm(); }, 3000);
   window.addEventListener('pointerdown', () => { if (enabled()) arm(); }, { once: true, capture: true });
 
+  // Which stop are you standing in right now, if that can be said with confidence?
+  //
+  // Returns null far more often than not, and that is the point: the caller renders
+  // the ordinary schedule wording whenever this says nothing, so silence costs
+  // nothing and a guess costs trust. Null when there is no fresh fix, when the fix
+  // is vague, when nothing is close, and — the case that matters — when the answer
+  // is ambiguous.
+  //
+  // Position alone cannot separate every stop. The hotel appears three times a day
+  // at identical coordinates, and Centennial Wheel sits 140m from the fireworks. So
+  // position narrows, then the clock decides: of the stops you might be at, exactly
+  // one should be happening now, or we say nothing at all.
+  function here(di) {
+    const sw = window.CHI_SWITCHES;
+    if (!sw || sw.geo !== true) return null;
+    const app = window.CHI_APP;
+    const day = app && (app.days || [])[di];
+    if (!day || !day.items) return null;
+
+    const crumbs = read(CRUMBS, []);
+    if (!crumbs.length) return null;
+    const last = crumbs[crumbs.length - 1];
+    if (Date.now() - last.t > FRESH_MS) return null;      // about the past, not now
+    if (last.acc > MAX_ACC) return null;                  // too vague to name a place
+
+    let near = [];
+    day.items.forEach((it, i) => {
+      if (!it.ll) return;
+      const m = metres(last.lat, last.lng, it.ll[0], it.ll[1]);
+      if (m <= Math.max(HERE_NEAR, last.acc)) near.push({ i: i, m: m });
+    });
+    if (!near.length) return null;
+    if (near.length > 1) {
+      const now = chiMin(Date.now());
+      near = near.filter(n => {
+        const it = day.items[n.i];
+        const s = DMIN(it.time), e = it.leave ? DMIN(it.leave) : s + 30;
+        return now >= s - SLACK && now <= e + SLACK;
+      });
+      if (near.length !== 1) return null;                 // still ambiguous: say nothing
+    }
+    return { idx: near[0].i, metres: Math.round(near[0].m), acc: last.acc, t: last.t };
+  }
+
   window.chiGeo = {
     get enabled() { return enabled(); },
+    here: here,
     get crumbs() { return read(CRUMBS, []).length; },
     get lastFixAt() { return lastFixAt; },
     get fired() { return read(FIRED, {}); },
