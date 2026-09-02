@@ -149,9 +149,9 @@ if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
           <div style="font:600 11.5px/1.45 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;letter-spacing:.02em;color:#9ec8ff">{{ d5.sub }}</div>
         </div>
       </div>
-      <div style="flex:1;min-height:0;overflow-y: {{ d5.listScroll }};touch-action: {{ d5.listTouch }};-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:4px 0 calc(104px + env(safe-area-inset-bottom))" onPointerDown="{{ d5.listDrag }}">
+      <div data-list="1" style="flex:1;min-height:0;overflow-y: {{ d5.listScroll }};touch-action: {{ d5.listTouch }};-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:4px 0 calc(104px + env(safe-area-inset-bottom))" onPointerDown="{{ d5.listDrag }}">
         <sc-for list="{{ d5.stops }}" as="s" hint-placeholder-count="4">
-          <div style="display:flex;gap:13px;padding:15px 20px;border-radius:14px;margin:0 12px;border:1px solid {{ s.cardBd }};background: {{ s.rowBg }};cursor:pointer" onClick="{{ s.tap }}">
+          <div data-stop="{{ s.idx }}" style="display:flex;gap:13px;padding:15px 20px;border-radius:14px;margin:0 12px;border:1px solid {{ s.cardBd }};background: {{ s.rowBg }};cursor:pointer" onClick="{{ s.tap }}">
             <div style="width:28px;flex:none;display:flex;justify-content:center;padding-top:2px">
               <div style="width:28px;height:28px;flex:none;box-sizing:border-box;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid {{ s.catCol }};background: {{ s.badgeBg }};font:700 12px/1 ui-monospace,Menlo,monospace;color: {{ s.numCol }}">{{ s.n }}</div>
             </div>
@@ -855,7 +855,7 @@ class Component extends DCLogic {
         </div>`,
         'blip' + (isDone ? ' done' : '') + (hot ? ' hot' : '') + (isSel ? ' sel' : ''),
         isSel ? 1000 : hot ? 600 : 500,
-        () => this.selectStop(group.includes(nextIdx) ? nextIdx : group.find(g => !done.has(open + ':' + g)) ?? group[0])));
+        () => this.selectStop(group.includes(nextIdx) ? nextIdx : group.find(g => !done.has(open + ':' + g)) ?? group[0], true)));
     });
 
     this._settleOverlap();
@@ -866,7 +866,7 @@ class Component extends DCLogic {
           <div style="width:11px;height:11px;flex:none;border-radius:50%;border:2px solid ${live ? '#ffd166' : '#9ec8ff'};background:#05080c;box-shadow:0 0 0 3px rgba(5,8,12,.75)"></div>
           <div style="white-space:nowrap;padding:2px 7px;border-radius:9px;background:rgba(5,8,12,.86);border:1px solid ${live ? 'rgba(255,209,102,.5)' : 'rgba(158,200,255,.34)'};font:600 9px/1.4 &quot;Helvetica Neue&quot;,Helvetica,sans-serif;color:${live ? '#ffe0a3' : 'rgba(238,244,255,.82)'}">${w.name}</div>
         </div>`,
-        'wpin', live ? 420 : 300, () => this.selectStop(w.of)));
+        'wpin', live ? 420 : 300, () => this.selectStop(w.of, true)));
     });
 
     if (pts.length && this._lframed !== open) {
@@ -1368,7 +1368,7 @@ class Component extends DCLogic {
     this._lday = null;
     this.forceUpdate();
   }
-  selectStop(i) {
+  selectStop(i, fromMap) {
     const day = TRIP[this.state.dayOpen];
     if (!day) return;
     const n = day.items.length;
@@ -1382,6 +1382,33 @@ class Component extends DCLogic {
       const dy = this._visibleShift();
       if (dy) this._gmap.panBy(0, dy);
     }
+    // Tapping a pin should land you on its card. Only from the map — a tap on the
+    // card itself is already there, and scrolling under someone's finger is rude.
+    if (fromMap) {
+      const shut = (this.state.sheet ?? 1) === 0;
+      // At the bottom stop the list is overflow:hidden and cannot scroll at all, so
+      // the sheet has to come up first and the scroll has to wait for the re-render
+      // that turns scrolling back on, plus the .32s slide.
+      if (shut) this.setSheet(1);
+      this._scrollToStop(k, shut ? 380 : 60);
+    }
+  }
+  // Bring a stop's card into view inside the drawer. Measured against the container
+  // rather than offsetTop, which would be wrong the moment anything between the row
+  // and the scroll box becomes a positioning context.
+  _scrollToStop(k, delay) {
+    clearTimeout(this._scrollT);
+    this._scrollT = setTimeout(() => {
+      const box = document.querySelector('[data-list="1"]');
+      const row = document.querySelector('[data-stop="' + k + '"]');
+      if (!box || !row) return;
+      const b = box.getBoundingClientRect(), r = row.getBoundingClientRect();
+      const to = box.scrollTop + (r.top - b.top) - 10;
+      const max = Math.max(0, box.scrollHeight - box.clientHeight);
+      const top = Math.max(0, Math.min(to, max));
+      if (box.scrollTo) box.scrollTo({ top: top, behavior: 'smooth' });
+      else box.scrollTop = top;
+    }, delay || 60);
   }
   clearStop() {
     this.setState({ stopSel: -1 });
@@ -1841,6 +1868,8 @@ class Component extends DCLogic {
         const st = lg ? (MODE[lg.mode] || MODE.walk) : null;
         const show = !!lg && lg.mode !== 'none' && i < day.items.length - 1;
         return {
+        // stamped onto the row as data-stop so a map pin can find its card
+        idx: i,
         n: isDone ? '✓' : i + 1,
         time: T12(it.time), title: it.title, meta: it.meta,
         catCol: (CAT[it.cat] || CAT.stop).col,
