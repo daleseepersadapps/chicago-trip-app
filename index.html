@@ -1536,8 +1536,14 @@ class Component extends DCLogic {
       cdBig: cd ? cd.big : '',
       cdSub: cd ? cd.sub : '',
       cdCol: cd ? cd.col : '#ff5c1a',
-      modeChip: liveIdx === null ? 'PREVIEW' : 'NOW',
-      modeChipCol: liveIdx === null ? 'rgba(255,190,140,.6)' : '#ff5c1a',
+      // The chip labels the day the dome is FACING, alongside facingName/facingDate
+      // above, so it has to compare against that day — not merely ask whether the
+      // trip is under way. Keyed off liveIdx alone it read "NOW" on every day once
+      // the trip started, so spinning to Saturday on the Friday said "Saturday · NOW".
+      // liveIdx is null off-trip, and facingIdx is always a number, so that case
+      // still falls through to PREVIEW.
+      modeChip: liveIdx === facingIdx ? 'NOW' : 'PREVIEW',
+      modeChipCol: liveIdx === facingIdx ? '#ff5c1a' : 'rgba(255,190,140,.6)',
       demoLabel: this.state.demoLive ? 'Showing: Friday of the trip, 17:52 — live' : 'Showing: today, before the trip — preview',
       demoToggle: () => { this.setState({ demoLive: !this.state.demoLive }, () => this._applyMode()); },
       // Dense days must fit the band, not grow out of it: tighten type and gaps,
