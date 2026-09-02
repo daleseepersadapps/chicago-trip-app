@@ -945,7 +945,7 @@
             41.8814,
             -87.6242
           ],
-          "leave": "16:59",
+          "leave": "16:48",
           "walk": "",
           "meta": "",
           "pin": "06",
@@ -953,7 +953,7 @@
           "weatherWatch": true
         },
         {
-          "time": "17:11",
+          "time": "17:00",
           "title": "Buckingham Fountain",
           "where": "Grant Park",
           "cat": "skyline",
@@ -963,9 +963,10 @@
             -87.6189
           ],
           "notes": [
-            "Big display runs 20 min on the hour — we catch the tail of the 5:00"
+            "Big display runs the first 20 min of the hour — we get the whole 5:00",
+            "Fountain shuts off for the night at about 10:55, so this is the only look"
           ],
-          "leave": "17:39",
+          "leave": "17:25",
           "walk": "",
           "meta": "",
           "pin": "07",
@@ -973,7 +974,7 @@
           "weatherWatch": true
         },
         {
-          "time": "17:49",
+          "time": "17:35",
           "title": "Hotel — break",
           "where": "640 N Wabash Ave",
           "cat": "hotel",
@@ -983,7 +984,7 @@
             -87.62706
           ],
           "fixed": true,
-          "fixedWhy": "Shortest break of the trip — 65 minutes",
+          "fixedWhy": "Still the shortest break of the trip — 79 minutes",
           "notes": [
             "Shower, change",
             "Jacket for the pier"
